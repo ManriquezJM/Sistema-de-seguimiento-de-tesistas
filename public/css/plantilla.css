@@ -20,15 +20,20 @@
     opacity: 0;
 }
 
-.slide-fade-enter-active{
+.slide-fade-enter-active,
+.slide-fade-leave-active{
     transition: all 0.2s ease;
 }
 
-.slide-fade-leave.to{
+.slide-fade-leave-to{
     transform: translateX(-10px);
     opacity: 0;
 }
 
-.slide-fade-enter-active{
-    transition: all 0.2s ease;
+.btnWidth{
+    width: 49% !important;
+}
+
+.el-select{
+    width: 100% !important;
 }

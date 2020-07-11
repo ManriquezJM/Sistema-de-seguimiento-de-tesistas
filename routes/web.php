@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{optional?}', function () {
     return view('app');
 })->name('basepath');
+
+Route::get('/administracion/usuario/getlistarUsuarios', 'Administracion\UsersController@getlistarUsuarios');

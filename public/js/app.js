@@ -3910,6 +3910,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3926,8 +3931,38 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         value: 'I',
         label: 'Inactivo'
-      }]
+      }],
+      pageNumber: 0,
+      perPage: 5
     };
+  },
+  computed: {
+    pageCount: function pageCount() {
+      //obtener el numero de paginas 
+      var a = this.listUsuarios.length,
+          b = this.perPage;
+      return Math.ceil(a / b);
+    },
+    listarUsuariosPaginated: function listarUsuariosPaginated() {
+      //
+      var inicio = this.pageNumber * this.perPage,
+          fin = inicio + this.perPage;
+      return this.listUsuarios.slice(inicio, fin);
+    },
+    pagesList: function pagesList() {
+      var a = this.listUsuarios.length,
+          b = this.perPage;
+      var pageCount = Math.ceil(a / b);
+      var count = 0,
+          pagesArray = [];
+
+      while (count < pageCount) {
+        pagesArray.push(count);
+        count++;
+      }
+
+      return pagesArray;
+    }
   },
   methods: {
     limpiarCriteriosBsq: function limpiarCriteriosBsq() {
@@ -3939,8 +3974,10 @@ __webpack_require__.r(__webpack_exports__);
     limpiarBandejaUsuarios: function limpiarBandejaUsuarios() {
       this.listUsuarios = [];
     },
-    getlistarUsuarios: function getlistarUsuarios() {
-      var url = '/administracion/usuario/getlistarUsuarios';
+    getListarUsuarios: function getListarUsuarios() {
+      var _this = this;
+
+      var url = '/administracion/usuario/getListarUsuarios';
       axios.get(url, {
         params: {
           'cNombre': this.fillBsqUsuarios.cNombre,
@@ -3949,10 +3986,254 @@ __webpack_require__.r(__webpack_exports__);
           'cEstado': this.fillBsqUsuarios.cEstado
         }
       }).then(function (response) {
+        //this.inicializarPaginacion();
         console.log(response.data);
+        _this.listUsuarios = response.data;
       });
+    },
+    nextPage: function nextPage() {
+      this.pageNumber++;
+    },
+    prevPage: function prevPage() {
+      this.pageNumber--;
+    },
+    selectPage: function selectPage(page) {
+      this.pageNumber = page;
+    },
+    inicializarPaginacion: function inicializarPaginacion() {
+      this.pageNumber = 0;
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/usuarios/create.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modulos/usuarios/create.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      fillCrearUsuarios: {
+        cNombre: '',
+        cApellido: '',
+        cCorreo: '',
+        cContrasena: '',
+        cEscuela: ''
+      },
+      modalShow: false,
+      mostrarModal: {
+        display: 'block',
+        background: '#0000006b'
+      },
+      ocultarModal: {
+        display: 'none'
+      },
+      error: 0,
+      mensajeError: []
+      /*
+      fillBsqEscuelas:{
+          cId: '',
+          cEscuela: '',
+      },
+      listEscuelas:[],
+      listNEscuelas:[
+        {value: this.fillBsqEscuelas.cId, label: this.fillBsqEscuelas.cEscuela}
+      ],
+      */
+
+    };
+  },
+  computed: {},
+  methods: {
+    abrirModal: function abrirModal() {
+      this.modalShow = !this.modalShow;
+    },
+    setRegistrarUsuario: function setRegistrarUsuario() {
+      //if (this.validarRegistrarUsuario()){
+      //  this.modalShow = true;
+      //  return;
+      this.setGuardarUsuario();
+    },
+    validarRegistrarUsuario: function validarRegistrarUsuario() {
+      this.error = 0;
+      this.mensajeError = [];
+
+      if (!this.fillCrearUsuarios.cNombre) {
+        this.mensajeError.push("el nombre es un campo obligatorio");
+      }
+
+      if (!this.fillCrearUsuarios.cApellido) {
+        this.mensajeError.push("el apellido es un campo obligatorio");
+      }
+
+      if (!this.fillCrearUsuarios.cCorreo) {
+        this.mensajeError.push("el correo es un campo obligatorio");
+      }
+
+      if (!this.fillCrearUsuarios.cContrasena) {
+        this.mensajeError.push("la contraseña es un campo obligatorio");
+      }
+
+      if (!this.fillCrearUsuarios.cEscuela) {
+        this.mensajeError.push("la escuela es un campo obligatorio");
+      }
+
+      if (this.mensajeError.length) {
+        this.error = 1;
+      }
+
+      return this.error;
+    },
+    setGuardarUsuario: function setGuardarUsuario() {
+      var url = '/administracion/usuario/setRegistrarUsuario';
+      axios.post(url, {
+        'cNombre': this.fillCrearUsuarios.cNombre,
+        'cApellido': this.fillCrearUsuarios.cApellido,
+        'cCorreo': this.fillCrearUsuarios.cCorreo,
+        'cContrasena': this.fillCrearUsuarios.cContrasena,
+        'cEscuela': this.fillCrearUsuarios.cEscuela
+      }).then(function (response) {
+        console.log("registro de usuario exitoso");
+      });
+    }
+    /*
+    getListarEscuelas(){
+      var url = '/administracion/usuario/getListarEscuelas'
+      axios.get(url, {
+        params: {
+          'cId' : this.fillBsqEscuelas.cId,
+          'cEscuela' : this.fillBsqEscuelas.cEscuela,
+        }
+      }).then(response => {
+          this.listEscuelas = response.data;
+      })
+    },*/
+
+  } // cierre methods
+
 });
 
 /***/ }),
@@ -100977,7 +101258,10 @@ var render = function() {
             [
               _c(
                 "router-link",
-                { staticClass: "btn btn-info bnt-sm", attrs: { to: "/" } },
+                {
+                  staticClass: "btn btn-info bnt-sm",
+                  attrs: { to: "/usuarios/crear" }
+                },
                 [
                   _c("i", { staticClass: "fas fa-plus-square" }),
                   _vm._v(" Nuevo Usuario\n            ")
@@ -101018,6 +101302,21 @@ var render = function() {
                             attrs: { type: "text" },
                             domProps: { value: _vm.fillBsqUsuarios.cNombre },
                             on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.getListarUsuarios($event)
+                              },
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
@@ -101056,6 +101355,21 @@ var render = function() {
                             attrs: { type: "text" },
                             domProps: { value: _vm.fillBsqUsuarios.cApellido },
                             on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.getListarUsuarios($event)
+                              },
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
@@ -101094,6 +101408,21 @@ var render = function() {
                             attrs: { type: "text" },
                             domProps: { value: _vm.fillBsqUsuarios.cCorreo },
                             on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.getListarUsuarios($event)
+                              },
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
@@ -101171,7 +101500,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.getlistarUsuarios($event)
+                            return _vm.getListarUsuarios($event)
                           }
                         }
                       },
@@ -101199,100 +101528,238 @@ var render = function() {
             _c("div", { staticClass: "card card-info" }, [
               _vm._m(2),
               _vm._v(" "),
-              _c("div", { staticClass: "card-body table-resposive" }, [
-                _c(
-                  "table",
-                  {
-                    staticClass:
-                      "table table-hover table-head-fixed text-nowrap projects"
-                  },
-                  [
-                    _vm._m(3),
-                    _vm._v(" "),
-                    _c("tbody", [
-                      _c("tr", [
-                        _c("td", [_vm._v("jose matias")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("manriquez")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Ing. civil informatica")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("manriquez@gmail.com")]),
-                        _vm._v(" "),
-                        _vm._m(4),
-                        _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-body table-resposive" },
+                [
+                  _vm.listarUsuariosPaginated.length
+                    ? [
                         _c(
-                          "td",
+                          "table",
+                          {
+                            staticClass:
+                              "table table-hover table-head-fixed text-nowrap projects"
+                          },
                           [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "btn btn-primary btn-sm",
-                                attrs: { to: "/" }
-                              },
-                              [
-                                _c("i", { staticClass: "fas fa-folder" }),
-                                _vm._v(" Ver\n                        ")
-                              ]
-                            ),
+                            _vm._m(3),
                             _vm._v(" "),
                             _c(
-                              "router-link",
-                              {
-                                staticClass: "btn btn-info btn-sm",
-                                attrs: { to: "/" }
-                              },
-                              [
-                                _c("i", { staticClass: "fas fa-pencil-alt" }),
-                                _vm._v(" Editar\n                        ")
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "btn btn-success btn-sm",
-                                attrs: { to: "/" }
-                              },
-                              [
-                                _c("i", { staticClass: "fas fa-key" }),
-                                _vm._v(" Permisos\n                        ")
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "btn btn-danger btn-sm",
-                                attrs: { to: "/" }
-                              },
-                              [
-                                _c("i", { staticClass: "fas fa-trash" }),
-                                _vm._v(" Desactivar\n                        ")
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "btn btn-primary btn-sm",
-                                attrs: { to: "/" }
-                              },
-                              [
-                                _c("i", { staticClass: "fas fa-chekck" }),
-                                _vm._v(" Activar\n                        ")
-                              ]
+                              "tbody",
+                              _vm._l(_vm.listarUsuariosPaginated, function(
+                                item,
+                                index
+                              ) {
+                                return _c("tr", { key: index }, [
+                                  _c("td", {
+                                    domProps: {
+                                      textContent: _vm._s(item.nombres)
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("td", {
+                                    domProps: {
+                                      textContent: _vm._s(item.apellidos)
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("td", {
+                                    domProps: {
+                                      textContent: _vm._s(item.email)
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "td",
+                                    [
+                                      item.state == "A"
+                                        ? [
+                                            _c("span", {
+                                              staticClass:
+                                                "badge badge-success",
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  item.state_alias
+                                                )
+                                              }
+                                            })
+                                          ]
+                                        : [
+                                            _c("span", {
+                                              staticClass: "badge badge-danger",
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  item.state_alias
+                                                )
+                                              }
+                                            })
+                                          ]
+                                    ],
+                                    2
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "td",
+                                    [
+                                      _c(
+                                        "router-link",
+                                        {
+                                          staticClass: "btn btn-primary btn-sm",
+                                          attrs: { to: "/" }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-folder"
+                                          }),
+                                          _vm._v(
+                                            " Ver\n                        "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "router-link",
+                                        {
+                                          staticClass: "btn btn-info btn-sm",
+                                          attrs: { to: "/" }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-pencil-alt"
+                                          }),
+                                          _vm._v(
+                                            " Editar\n                        "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "router-link",
+                                        {
+                                          staticClass: "btn btn-success btn-sm",
+                                          attrs: { to: "/" }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-key"
+                                          }),
+                                          _vm._v(
+                                            " Permisos\n                        "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "router-link",
+                                        {
+                                          staticClass: "btn btn-danger btn-sm",
+                                          attrs: { to: "/" }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-trash"
+                                          }),
+                                          _vm._v(
+                                            " Desactivar\n                        "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "router-link",
+                                        {
+                                          staticClass: "btn btn-primary btn-sm",
+                                          attrs: { to: "/" }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-chekck"
+                                          }),
+                                          _vm._v(
+                                            " Activar\n                        "
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ])
+                              }),
+                              0
                             )
-                          ],
-                          1
-                        )
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._m(5)
-              ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "card-footer clearfix" }, [
+                          _c(
+                            "ul",
+                            {
+                              staticClass:
+                                "pagination pagination-sm m-0 float-right"
+                            },
+                            [
+                              _vm.pageNumber > 0
+                                ? _c("li", { staticClass: "page-item" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "page-link",
+                                        attrs: { href: "#" }
+                                      },
+                                      [_vm._v("Ant")]
+                                    )
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm._l(_vm.pagesList, function(page, index) {
+                                return _c(
+                                  "li",
+                                  {
+                                    key: index,
+                                    staticClass: "page-item",
+                                    class: [
+                                      page == _vm.pageNumber ? "active" : ""
+                                    ]
+                                  },
+                                  [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "page-link",
+                                        attrs: { href: "#" },
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.selectPage(page)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v(" " + _vm._s(page + 1))]
+                                    )
+                                  ]
+                                )
+                              }),
+                              _vm._v(" "),
+                              _vm.pageNumber < _vm.pageCount - 1
+                                ? _c("li", { staticClass: "page-item" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "page-link",
+                                        attrs: { href: "#" }
+                                      },
+                                      [_vm._v("Post")]
+                                    )
+                                  ])
+                                : _vm._e()
+                            ],
+                            2
+                          )
+                        ])
+                      ]
+                    : [_vm._m(4)]
+                ],
+                2
+              )
             ])
           ])
         ])
@@ -101341,8 +101808,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Apellidos")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Escuela")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Correo")]),
         _vm._v(" "),
         _c("th", [_vm._v("Estado")]),
@@ -101355,33 +101820,458 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("span", { staticClass: "badge badge.succes" }, [_vm._v("Activo")])
+    return _c("div", { staticClass: "callout callout-info" }, [
+      _c("h5", [_vm._v(" No se han encontrado resultados...")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/usuarios/create.vue?vue&type=template&id=a055710e&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modulos/usuarios/create.vue?vue&type=template&id=a055710e& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "container container-fluid" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c(
+            "div",
+            { staticClass: "card-tools" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-info bnt-sm",
+                  attrs: { to: "/usuarios" }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-arrow-left" }),
+                  _vm._v(" Regresar\n          ")
+                ]
+              )
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "container-fluid" }, [
+            _c("div", { staticClass: "card card-info" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("form", { attrs: { role: "form" } }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "form-group row" }, [
+                        _c(
+                          "label",
+                          { staticClass: "col-md-3 col-form-label" },
+                          [_vm._v("Nombres")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-9" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.fillCrearUsuarios.cNombre,
+                                expression: "fillCrearUsuarios.cNombre"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: { value: _vm.fillCrearUsuarios.cNombre },
+                            on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.setRegistrarUsuario($event)
+                              },
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.fillCrearUsuarios,
+                                  "cNombre",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "form-group row" }, [
+                        _c(
+                          "label",
+                          { staticClass: "col-md-3 col-form-label" },
+                          [_vm._v("Apellidos")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-9" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.fillCrearUsuarios.cApellido,
+                                expression: "fillCrearUsuarios.cApellido"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: {
+                              value: _vm.fillCrearUsuarios.cApellido
+                            },
+                            on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.setRegistrarUsuario($event)
+                              },
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.fillCrearUsuarios,
+                                  "cApellido",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "form-group row" }, [
+                        _c(
+                          "label",
+                          { staticClass: "col-md-3 col-form-label" },
+                          [_vm._v("Correo")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-9" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.fillCrearUsuarios.cCorreo,
+                                expression: "fillCrearUsuarios.cCorreo"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: { value: _vm.fillCrearUsuarios.cCorreo },
+                            on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.setRegistrarUsuario($event)
+                              },
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.fillCrearUsuarios,
+                                  "cCorreo",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "form-group row" }, [
+                        _c(
+                          "label",
+                          { staticClass: "col-md-3 col-form-label" },
+                          [_vm._v("Contraseña")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-9" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.fillCrearUsuarios.cContrasena,
+                                expression: "fillCrearUsuarios.cContrasena"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: {
+                              value: _vm.fillCrearUsuarios.cContrasena
+                            },
+                            on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.setRegistrarUsuario($event)
+                              },
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.fillCrearUsuarios,
+                                  "cContrasena",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "form-group row" }, [
+                        _c(
+                          "label",
+                          { staticClass: "col-md-3 col-form-label" },
+                          [_vm._v("Escuela")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-9" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.fillCrearUsuarios.cEscuela,
+                                expression: "fillCrearUsuarios.cEscuela"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: { value: _vm.fillCrearUsuarios.cEscuela },
+                            on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.setRegistrarUsuario($event)
+                              },
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.fillCrearUsuarios,
+                                  "cEscuela",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-footer" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-4 offset-4" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-flat btn-info btnWidth",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.setRegistrarUsuario($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Registrar")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-flat btn-default btnWidth",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.limpiarCriteriosBsq($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Limpiar")]
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-info" })
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        class: { show: _vm.modalShow },
+        style: _vm.modalShow ? _vm.mostrarModal : _vm.ocultarModal
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h5", { staticClass: "modal-title" }, [
+                  _vm._v("Sistema de tesis UCM")
+                ]),
+                _vm._v(" "),
+                _c("button", {
+                  staticClass: "close",
+                  on: { click: _vm.abrirModal }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-body" },
+                _vm._l(_vm.mensajeError, function(item, index) {
+                  return _c("div", {
+                    key: index,
+                    staticClass: "callout callout-danger",
+                    staticStyle: { padding: "5px" },
+                    domProps: { textContent: _vm._s(item) }
+                  })
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    on: { click: _vm.abrirModal }
+                  },
+                  [_vm._v("Cerrar")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "content-header" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("h1", { staticClass: "m-0 text-dark" }, [
+              _vm._v("Crear Usuario")
+            ])
+          ])
+        ])
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer clearfix" }, [
-      _c("ul", { staticClass: "pagination pagination-sm m-0 float-right" }, [
-        _c("li", { staticClass: "page-item" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("Ant")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "page-item active" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("1")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "page-item" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("Post")
-          ])
-        ])
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [
+        _vm._v("Formulario Registrar Usuario")
       ])
     ])
   }
@@ -117844,6 +118734,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/modulos/usuarios/create.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/modulos/usuarios/create.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _create_vue_vue_type_template_id_a055710e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./create.vue?vue&type=template&id=a055710e& */ "./resources/js/components/modulos/usuarios/create.vue?vue&type=template&id=a055710e&");
+/* harmony import */ var _create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create.vue?vue&type=script&lang=js& */ "./resources/js/components/modulos/usuarios/create.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _create_vue_vue_type_template_id_a055710e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _create_vue_vue_type_template_id_a055710e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/modulos/usuarios/create.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/modulos/usuarios/create.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/modulos/usuarios/create.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./create.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/usuarios/create.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/modulos/usuarios/create.vue?vue&type=template&id=a055710e&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/modulos/usuarios/create.vue?vue&type=template&id=a055710e& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_create_vue_vue_type_template_id_a055710e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./create.vue?vue&type=template&id=a055710e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/usuarios/create.vue?vue&type=template&id=a055710e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_create_vue_vue_type_template_id_a055710e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_create_vue_vue_type_template_id_a055710e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/plantilla/Footer.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/plantilla/Footer.vue ***!
@@ -118074,6 +119033,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     path: '/usuarios',
     component: __webpack_require__(/*! ./components/modulos/usuarios/Index */ "./resources/js/components/modulos/usuarios/Index.vue")["default"]
   }, {
+    path: '/usuarios/crear',
+    component: __webpack_require__(/*! ./components/modulos/usuarios/create */ "./resources/js/components/modulos/usuarios/create.vue")["default"]
+  }, {
     path: '/areatesis',
     component: __webpack_require__(/*! ./components/modulos/areatesis/Index */ "./resources/js/components/modulos/areatesis/Index.vue")["default"]
   }, {
@@ -118086,10 +119048,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     path: '/escuelas',
     component: __webpack_require__(/*! ./components/modulos/escuelas/Index */ "./resources/js/components/modulos/escuelas/Index.vue")["default"]
   }, {
-    path: '/documentos',
+    path: '/documentos ',
     component: __webpack_require__(/*! ./components/modulos/documentos/Index */ "./resources/js/components/modulos/documentos/Index.vue")["default"]
   }],
-  mode: 'history'
+  mode: 'history',
+  linkExactActiveClass: 'active'
 }));
 
 /***/ }),

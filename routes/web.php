@@ -13,8 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/administracion/usuario/getListarUsuarios', 'Administracion\UsersController@getListarUsuarios');
+Route::post('administracion/usuario/setRegistrarUsuario', 'Administracion\UsersController@setRegistrarUsuario');
+//Route::get('/administracion/usuario/getListarEscuelas', 'Administracion\UsersController@getListarEscuelas');
+
+
 Route::get('/{optional?}', function () {
     return view('app');
 })->name('basepath');
-
-Route::get('/administracion/usuario/getlistarUsuarios', 'Administracion\UsersController@getlistarUsuarios');
+    //->where('optional', '.*');

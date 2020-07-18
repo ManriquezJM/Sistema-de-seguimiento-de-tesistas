@@ -7,8 +7,16 @@ export default new Router({
     routes: [
         { path: '/', component: require('./components/modulos/dashboard/Index').default },
 
+
+/*********      RUTAS MODULO ADMINISTRACION DE USUARIOS           *********/
         { path: '/usuarios', component: require('./components/modulos/usuarios/Index').default },
         { path: '/usuarios/crear', component: require('./components/modulos/usuarios/create').default },
+        { 
+            path: '/usuarios/editar/:id_user',
+            name: 'usuarios.editar',
+            component: require('./components/modulos/usuarios/edit').default,
+            props: true
+        },
 
 
 
@@ -19,5 +27,5 @@ export default new Router({
         { path: '/documentos ', component: require('./components/modulos/documentos/Index').default }
     ],
     mode: 'history',
-    linkExactActiveClass: 'active'
+    linkActiveClass: 'active'
 })

@@ -114,21 +114,25 @@
                         </template>
                       </td>
                       <td>
-                        <router-link class="btn btn-primary btn-sm" :to="'/'">
+                        <router-link class="btn btn-flat btn-primary btn-sm" :to="'/'">
                           <i class="fas fa-folder"></i> Ver
                         </router-link>
-                        <router-link class="btn btn-info btn-sm" :to="'/'">
-                          <i class="fas fa-pencil-alt"></i> Editar
-                        </router-link>
-                        <router-link class="btn btn-success btn-sm" :to="'/'">
-                          <i class="fas fa-key"></i> Permisos
-                        </router-link>
-                        <router-link class="btn btn-danger btn-sm" :to="'/'">
-                          <i class="fas fa-trash"></i> Desactivar
-                        </router-link>
-                        <router-link class="btn btn-primary btn-sm" :to="'/'">
-                          <i class="fas fa-chekck"></i> Activar
-                        </router-link>
+                        <template v-if="item.state == 'A'">
+                          <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'usuarios.editar', params:{id_user: item.id_user}}">
+                            <i class="fas fa-pencil-alt"></i> Editar
+                          </router-link>
+                          <router-link class="btn btn-flat btn-success btn-sm" :to="'/'">
+                            <i class="fas fa-key"></i> Permisos
+                          </router-link>
+                          <router-link class="btn btn-flat btn-danger btn-sm" :to="'/'">
+                            <i class="fas fa-trash"></i> Desactivar
+                          </router-link>
+                        </template>
+                        <template v-else>
+                          <router-link class="btn btn-flat btn-primary btn-sm" :to="'/'">
+                            <i class="fas fa-chekck"></i> Activar
+                          </router-link>
+                        </template>
                       </td>
                     </tr>
                   </tbody>
@@ -171,7 +175,8 @@ export default {
         cNombre: '',
         cApellido: '',
         cCorreo: '',
-        cEstado: ''
+        cEstado: '',
+        cEscuela: '',
       },
       listUsuarios:[],
       listEstados: [
@@ -227,10 +232,10 @@ export default {
           'cApellido' : this.fillBsqUsuarios.cApellido,
           'cCorreo' : this.fillBsqUsuarios.cCorreo,
           'cEstado' : this.fillBsqUsuarios.cEstado,
+          'cEscuela' : this.fillBsqUsuarios.cEscuela,
         }
       }).then(response => {
-          //this.inicializarPaginacion();
-          console.log(response.data)
+          this.inicializarPaginacion();
           this.listUsuarios = response.data;
       })
     },

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/administracion/usuario/getListarUsuarios', 'Administracion\UsersController@getListarUsuarios');
 Route::post('administracion/usuario/setRegistrarUsuario', 'Administracion\UsersController@setRegistrarUsuario');
+Route::post('administracion/usuario/setEditarUsuario', 'Administracion\UsersController@setEditarUsuario');
 //Route::get('/administracion/usuario/getListarEscuelas', 'Administracion\UsersController@getListarEscuelas');
 
 

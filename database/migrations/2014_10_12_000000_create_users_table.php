@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('nombres');
             $table->string('apellidos');
             $table->bigInteger('id_escuela')->unsigned()->nullable();
+            $table->bigInteger('id_files')->unsigned()->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -27,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->enum('state',['A','I'])->nullable()->default('A');
             $table->timestamps();
 
+            $table->foreign('id_files')->references('id')->on('files');
             $table->foreign('id_escuela')->references('id')->on('escuelas');
         });
     }

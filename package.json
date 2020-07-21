@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "element-ui": "^2.13.2",
+        "sweetalert2": "^9.17.0",
         "vue-router": "^3.3.4"
     }
 }

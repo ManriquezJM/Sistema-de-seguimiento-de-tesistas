@@ -47,20 +47,23 @@ class UsersController extends Controller
         $cCorreo = $request->cCorreo;
         $cContrasena = Hash::make($request->cContrasena);
         $cEscuela = $request->cEscuela;
+        $oFotografia = $request->oFotografia;
 
         $cNombre = ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
         $cApellido = ($cApellido == NULL) ? ($cApellido = '') : $cApellido;
         $cCorreo = ($cCorreo == NULL) ? ($cCorreo = '') : $cCorreo;
         $cContrasena = ($cContrasena == NULL) ? ($cContrasena = '') : $cContrasena;
         $cEscuela = ($cEscuela == NULL) ? ($cEscuela = '') : $cEscuela;
+        $oFotografia = ($oFotografia == NULL) ? ($oFotografia = NULL) : $oFotografia;
 
-        $rpta = DB::select('call sp_Usuario_setRegistrarUsuario (?, ?, ?, ?, ?)',
+        $rpta = DB::select('call sp_Usuario_setRegistrarUsuario (?, ?, ?, ?, ?, ?)',
                                                                 [
                                                                     $cNombre,
                                                                     $cApellido,
                                                                     $cCorreo,
                                                                     $cContrasena,
-                                                                    $cEscuela
+                                                                    $cEscuela,
+                                                                    $oFotografia
                                                                 ]);
     }
     //     EDITAR USUARIOS
@@ -76,6 +79,7 @@ class UsersController extends Controller
             $cContrasena = Hash::make($cContrasena);
         }
         $cEscuela = $request->cEscuela;
+        $oFotografia = $request->oFotografia;
 
         $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = '') : $nIdUsuario;
         $cNombre = ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
@@ -83,18 +87,32 @@ class UsersController extends Controller
         $cCorreo = ($cCorreo == NULL) ? ($cCorreo = '') : $cCorreo;
         $cContrasena = ($cContrasena == NULL) ? ($cContrasena = '') : $cContrasena;
         $cEscuela = ($cEscuela == NULL) ? ($cEscuela = '') : $cEscuela;
+        $oFotografia = ($oFotografia == 0) ? ($oFotografia = 0) : $oFotografia;
 
-        $rpta = DB::select('call sp_Usuario_setEditarUsuario (?, ?, ?, ?, ?, ?)',
+        $rpta = DB::select('call sp_Usuario_setEditarUsuario (?, ?, ?, ?, ?, ?, ?)',
                                                                 [
                                                                     $nIdUsuario,
                                                                     $cNombre,
                                                                     $cApellido,
                                                                     $cCorreo,
                                                                     $cContrasena,
-                                                                    $cEscuela
+                                                                    $cEscuela,
+                                                                    $oFotografia
                                                                 ]);
     }
+    public function setCambiarEstadoUsuario(Request $request){
+        if(!$request->ajax()) return redirect('/');
 
+        $nIdUsuario = $request->nIdUsuario;
+        $cEstado = $request->cEstado;
 
+        $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
+        $cEstado = ($cEstado == NULL) ? ($cEstado = 0) : $cEstado;
 
+        $rpta = DB::select('call sp_Usuario_setCambiarEstadoUsuario (?, ?)',
+                                                                [
+                                                                    $nIdUsuario,
+                                                                    $cEstado
+                                                                ]);
+    }
 }

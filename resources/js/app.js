@@ -10,7 +10,8 @@ window.Vue = require('vue');
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
+import Swal from 'sweetalert2';
+window.Swal = Swal;
 
 window.Vue.use(ElementUI);
 /**

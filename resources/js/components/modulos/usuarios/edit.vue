@@ -69,6 +69,14 @@
                         </div>
                       </div>
                     </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Fotografia</label>
+                        <div class="col-md-9">
+                            <input type="file" class="form-control"  @change="getFile">
+                        </div>
+                      </div>
+                    </div>
                     
                    
 
@@ -126,7 +134,9 @@ export default {
         cCorreo: '',
         cContrasena: '',
         cEscuela: '',
+        oFotografia: ''
       },
+      form: new FormData,
       modalShow: false,
       mostrarModal: {
         display: 'block',
@@ -137,16 +147,7 @@ export default {
       },
       error: 0,
       mensajeError:[]
-      /*
-      fillBsqEscuelas:{
-          cId: '',
-          cEscuela: '',
-      },
-      listEscuelas:[],
-      listNEscuelas:[
-        {value: this.fillBsqEscuelas.cId, label: this.fillBsqEscuelas.cEscuela}
-      ],
-      */
+
 
     }
   },
@@ -154,6 +155,14 @@ export default {
       this.getUsuarioById();
   },
   methods:{
+    limpiarCriterios(){
+      this.fillEditarUsuarios.cNombre = '';
+      this.fillEditarUsuarios.cApellido = '';
+      this.fillEditarUsuarios.cCorreo = '';
+      this.fillEditarUsuarios.cContrasena = '';
+      this.fillEditarUsuarios.cEscuela = '';
+      this.fillEditarUsuarios.oFotografia = '';
+    },
     getUsuarioById(){
 
         var url = '/administracion/usuario/getListarUsuarios'
@@ -163,30 +172,62 @@ export default {
         }
       }).then(response => {
           console.log(response.data);
-          this.fillEditarUsuarios.cNombre = response.data[0].nombres;
-          this.fillEditarUsuarios.cApellido = response.data[0].apellidos;
-          this.fillEditarUsuarios.cCorreo = response.data[0].email;
+          this.fillEditarUsuarios.cNombre     = response.data[0].nombres;
+          this.fillEditarUsuarios.cApellido   = response.data[0].apellidos;
+          this.fillEditarUsuarios.cCorreo     = response.data[0].email;
           this.fillEditarUsuarios.cContrasena = response.data[0].password;
-          this.fillEditarUsuarios.cEscuela = response.data[0].id_escuela;
+          this.fillEditarUsuarios.cEscuela    = response.data[0].id_escuela;
       })
     },
-    limpiarCriterios(){
-      this.fillEditarUsuarios.cNombre = '';
-      this.fillEditarUsuarios.cApellido = '';
-      this.fillEditarUsuarios.cCorreo = '';
-      this.fillEditarUsuarios.cContrasena = '';
-      this.fillEditarUsuarios.cEscuela = '';
-    },
+    
     abrirModal(){
       this.modalShow = !this.modalShow;
+    },
+    getFile(e){
+      this.fillEditarUsuarios.oFotografia = e.target.files[0];
     },
     setEditarUsuario(){
       if (this.validarRegistrarUsuario()){
           this.modalShow = true;
           return;
-      }else{
-      this.setGuardarUsuario();
       }
+      this.fullscreenLoading = true;
+      if(!this.fillEditarUsuarios.oFotografia || this.fillEditarUsuarios.oFotografia == undefined){
+        
+        this.setGuardarUsuario(0);
+      } else {
+        this.setRegistrarArchivo();
+      }
+    },
+    setRegistrarArchivo(){
+      this.form.append('file', this.fillEditarUsuarios.oFotografia)
+      const config = { headers: {'Content-Type': 'multipart/form-data'}}
+      var url = '/archivo/setRegistrarArchivo'
+      axios.post(url, this.form, config).then(response =>{
+        console.log(response)
+        var nIdFile = response.data[0].nIdFile;
+        this.setGuardarUsuario(nIdFile);
+      }) 
+    },
+    setGuardarUsuario(nIdFile){
+      var url = '/administracion/usuario/setEditarUsuario'
+      axios.post(url, {
+        'nIdUsuario' : this.fillEditarUsuarios.nIdUsuario, 
+        'cNombre'    : this.fillEditarUsuarios.cNombre,
+        'cApellido'  : this.fillEditarUsuarios.cApellido,
+        'cCorreo'    : this.fillEditarUsuarios.cCorreo,
+        'cContrasena': this.fillEditarUsuarios.cContrasena,
+        'cEscuela'   : this.fillEditarUsuarios.cEscuela,
+        'oFotografia': nIdFile
+      }).then(response => {
+        //console.log("registro de usuario exitoso");
+        Swal.fire({
+        icon: 'success',
+        title: 'Editado Correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      })
     },
     validarRegistrarUsuario(){
       this.error = 0;
@@ -207,32 +248,7 @@ export default {
         return this.error;
     },
 
-    setGuardarUsuario(){
-      var url = '/administracion/usuario/setEditarUsuario'
-      axios.post(url, {
-        'nIdUsuario': this.fillEditarUsuarios.nIdUsuario, 
-        'cNombre'   : this.fillEditarUsuarios.cNombre,
-        'cApellido' : this.fillEditarUsuarios.cApellido,
-        'cCorreo'   : this.fillEditarUsuarios.cCorreo,
-        'cContrasena': this.fillEditarUsuarios.cContrasena,
-        'cEscuela'  : this.fillEditarUsuarios.cEscuela
-      }).then(response => {
-        console.log("registro de usuario exitoso");
-      })
-    },
-
-    /*
-    getListarEscuelas(){
-      var url = '/administracion/usuario/getListarEscuelas'
-      axios.get(url, {
-        params: {
-          'cId' : this.fillBsqEscuelas.cId,
-          'cEscuela' : this.fillBsqEscuelas.cEscuela,
-        }
-      }).then(response => {
-          this.listEscuelas = response.data;
-      })
-    },*/
+    
   
   }// cierre methods
 }

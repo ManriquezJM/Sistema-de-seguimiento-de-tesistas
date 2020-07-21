@@ -69,6 +69,14 @@
                         </div>
                       </div>
                     </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Fotografia</label>
+                        <div class="col-md-9">
+                            <input type="file" class="form-control" @change="getFile">
+                        </div>
+                      </div>
+                    </div>
                     
                    
 
@@ -79,7 +87,8 @@
               <div class="card-footer">
                 <div class="row">
                   <div class="col-md-4 offset-4">
-                    <button class="btn btn-flat btn-info btnWidth" @click.prevent="setRegistrarUsuario">Registrar</button>
+                    <button class="btn btn-flat btn-info btnWidth" @click.prevent="setRegistrarUsuario" v-loading.fullscreen.lock="fullscreenLoading"
+                      >Registrar</button>
                     <button class="btn btn-flat btn-default btnWidth" @click.prevent="limpiarCriterios">Limpiar</button>
                   </div>
                 </div>
@@ -124,7 +133,10 @@ export default {
         cCorreo: '',
         cContrasena: '',
         cEscuela: '',
+        oFotografia: ''
       },
+      form : new FormData,
+      fullscreenLoading: false,
       modalShow: false,
       mostrarModal: {
         display: 'block',
@@ -143,12 +155,16 @@ export default {
   },
   
   methods:{
+    getFile(e){
+      this.fillCrearUsuarios.oFotografia = e.target.files[0];
+    },
     limpiarCriterios(){
       this.fillCrearUsuarios.cNombre = '';
       this.fillCrearUsuarios.cApellido = '';
       this.fillCrearUsuarios.cCorreo = '';
       this.fillCrearUsuarios.cContrasena = '';
       this.fillCrearUsuarios.cEscuela = '';
+      this.fillCrearUsuarios.oFotografia = '';
     },
     abrirModal(){
       this.modalShow = !this.modalShow;
@@ -157,9 +173,23 @@ export default {
       if (this.validarRegistrarUsuario()){
           this.modalShow = true;
           return;
-      }else{
-      this.setGuardarUsuario();
       }
+      if(!this.fillCrearUsuarios.oFotografia || this.fillCrearUsuarios.oFotografia == undefined){
+        this.fullscreenLoading = true;
+        this.setGuardarUsuario();
+      } else {
+        this.setRegistrarArchivo();
+      }
+    },
+    setRegistrarArchivo(){
+      this.form.append('file', this.fillCrearUsuarios.oFotografia)
+      const config = { headers: {'Content-Type': 'multipart/form-data'}}
+      var url = '/archivo/setRegistrarArchivo'
+      axios.post(url, this.form, config).then(response =>{
+        console.log(response)
+        var nIdFile = response.data[0].nIdFile;
+        this.setGuardarUsuario(nIdFile);
+      }) 
     },
 
     validarRegistrarUsuario(){
@@ -187,16 +217,19 @@ export default {
         return this.error;
     },
 
-    setGuardarUsuario(){
+    setGuardarUsuario(nIdFile){
       var url = '/administracion/usuario/setRegistrarUsuario'
       axios.post(url, {
-        'cNombre'   : this.fillCrearUsuarios.cNombre,
-        'cApellido' : this.fillCrearUsuarios.cApellido,
-        'cCorreo'   : this.fillCrearUsuarios.cCorreo,
+        'cNombre'    : this.fillCrearUsuarios.cNombre,
+        'cApellido'  : this.fillCrearUsuarios.cApellido,
+        'cCorreo'    : this.fillCrearUsuarios.cCorreo,
         'cContrasena': this.fillCrearUsuarios.cContrasena,
-        'cEscuela'  : this.fillCrearUsuarios.cEscuela
+        'cEscuela'   : this.fillCrearUsuarios.cEscuela,
+        'oFotografia': nIdFile
       }).then(response => {
         console.log("registro de usuario exitoso");
+        this.fullscreenLoading = false;
+        this.$router.push('/usuarios');
       })
     },
 

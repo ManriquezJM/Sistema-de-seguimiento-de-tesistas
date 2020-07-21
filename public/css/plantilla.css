@@ -37,3 +37,6 @@
 .el-select{
     width: 100% !important;
 }
+.user-block{
+    list-style: none;
+}

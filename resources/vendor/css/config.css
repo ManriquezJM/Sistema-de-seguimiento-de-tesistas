@@ -16,6 +16,9 @@
 .btnWidth{
     width: 49% !important;
 }
+.btnFull{
+    width: 100% !important;
+}
 
 .el-select{
     width: 100% !important;

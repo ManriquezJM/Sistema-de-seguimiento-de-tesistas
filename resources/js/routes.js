@@ -23,11 +23,12 @@ export default new Router({
             component: require('./components/modulos/usuarios/view').default,
             props: true
         },
-
-
-
-        { path: '/areatesis', component: require('./components/modulos/areatesis/Index').default },
+/*********    RUTAS MODULO DE ADMINISTRACION DE ROLES      **********/
         { path: '/roles', component: require('./components/modulos/roles/Index').default },
+        { path: '/roles/crear', component: require('./components/modulos/roles/create').default },
+
+/******** RUTAS MODULO DE ADMINISTRACION DE  ********/
+        { path: '/areatesis', component: require('./components/modulos/areatesis/Index').default },
         { path: '/permisos', component: require('./components/modulos/permisos/Index').default },
         { path: '/escuelas', component: require('./components/modulos/escuelas/Index').default },
         { path: '/documentos ', component: require('./components/modulos/documentos/Index').default }

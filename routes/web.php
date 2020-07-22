@@ -13,13 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+/*********      RUTAS MODULO ADMINISTRACION DE USUARIOS           *********/
 Route::get('/administracion/usuario/getListarUsuarios', 'Administracion\UsersController@getListarUsuarios');
+Route::post('/administracion/usuario/setRegistrarUsuario', 'Administracion\UsersController@setRegistrarUsuario');
+Route::post('/administracion/usuario/setEditarUsuario', 'Administracion\UsersController@setEditarUsuario');
+Route::post('/administracion/usuario/setCambiarEstadoUsuario', 'Administracion\UsersController@setCambiarEstadoUsuario');
+
+
+/*********    RUTAS MODULO DE ADMINISTRACION DE ROLES      **********/
+Route::get('/administracion/roles/getListarRoles', 'Administracion\RolesController@getListarRoles');
+Route::get('/administracion/roles/getListarPermisosByRol', 'Administracion\RolesController@getListarPermisosByRol');
+Route::post('/administracion/roles/setRegistrarRolPermisos', 'Administracion\RolesController@setRegistrarRolPermisos');
+
+
+/*********    RUTAS MODULO DE ADMINISTRACION DE ARCHIVOS     **********/
 Route::post('archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
-Route::post('administracion/usuario/setRegistrarUsuario', 'Administracion\UsersController@setRegistrarUsuario');
-Route::post('administracion/usuario/setEditarUsuario', 'Administracion\UsersController@setEditarUsuario');
-Route::post('administracion/usuario/setCambiarEstadoUsuario', 'Administracion\UsersController@setCambiarEstadoUsuario');
-//Route::get('/administracion/usuario/getListarEscuelas', 'Administracion\UsersController@getListarEscuelas');
+
 
 
 Route::get('/{optional?}', function () {

@@ -17,26 +17,20 @@
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle" src="/img/user4-128x128.jpg" alt="User profile picture">
+                  
+                  <template v-if="!fillVerUsuarios.cRutaArchivo">
+                              <img class="profile-user-img img-fluid img-circle img-max-heigth" src="/img/avatar.png" alt="User profile picture">  
+                          </template>
+                  <template v-else> 
+                              <img :src="fillVerUsuarios.cRutaArchivo" :alt="fillVerUsuarios.cNombre" class="profile-user-img img-fluid img-circle img-max-heigth"> 
+                  </template>
                 </div>
 
-                <h3 class="profile-username text-center">Nina Mcintire</h3>
+                <h3 class="profile-username text-center">{{fillVerUsuarios.cNombre + ' ' + fillEditarUsuarios.cApellido}}</h3>
 
-                <p class="text-muted text-center">Software Engineer</p>
+                <p class="text-muted text-center">Estudiante</p>
 
-                <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
-                    <b>Followers</b> <a class="float-right">1,322</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>Following</b> <a class="float-right">543</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>Friends</b> <a class="float-right">13,287</a>
-                  </li>
-                </ul>
-
-                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+      
               </div>
               <!-- /.card-body -->
             </div>
@@ -45,39 +39,17 @@
             <!-- About Me Box -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">About Me</h3>
+                <h3 class="card-title">Acerca de mi</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <strong><i class="fas fa-book mr-1"></i> Education</strong>
+                <strong><i class="fas fa-envelope-open-text"></i> Correo</strong>
 
-                <p class="text-muted">
-                  B.S. in Computer Science from the University of Tennessee at Knoxville
+                <p class="text-muted" v-text="fillVerUsuarios.cCorreo">
                 </p>
 
-                <hr>
-
-                <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-
-                <p class="text-muted">Malibu, California</p>
-
-                <hr>
-
-                <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
-
-                <p class="text-muted">
-                  <span class="tag tag-danger">UI Design</span>
-                  <span class="tag tag-success">Coding</span>
-                  <span class="tag tag-info">Javascript</span>
-                  <span class="tag tag-warning">PHP</span>
-                  <span class="tag tag-primary">Node.js</span>
-                </p>
-
-                <hr>
-
-                <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
-
-                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                
+                
               </div>
               <!-- /.card-body -->
             </div>
@@ -87,9 +59,10 @@
               <div class="col-md-8">
                 <div class="card">
                   <div class="card-header p-2">
-                    <ul class="nav nav-pills">
-
-                      <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a></li>
+                    <ul class="nav nav-pills position-reverse">
+                      <router-link class="nav-link active" :to="'/usuarios'">
+                        <i class="fas fa-arrow-left"></i>Regresar
+                      </router-link>
                     </ul>
                   </div><!-- /.card-header -->
                   <div class="card-body">
@@ -133,8 +106,8 @@
                         
                     
                           <div class="form-group row">
-                            <div class="offset-sm-2 col-sm-10">
-                              <button class="btn btn-flat btn-info btnWidth" @click.prevent="setEditarUsuario">Editar</button>
+                            <div class=" col-sm-12">
+                              <button class="btn btn-flat btn-info btnFull" @click.prevent="setEditarUsuario">Editar</button>
                             </div>
                           </div>
                         </form>
@@ -180,7 +153,8 @@ export default {
         cCorreo: '',
         cContrasena: '',
         cEscuela: '',
-        oFotografia: ''
+        oFotografia: '',
+        cRutaArchivo: ''
       },
       fillVerUsuarios:{
         nIdUsuario: this.$attrs.id_user,
@@ -213,33 +187,110 @@ export default {
     getFile(e){
       this.fillEditarUsuarios.oFotografia = e.target.files[0];
     },
-    getDataUsuario(){
-
-    },
+    
   getUsuarioById(){
-
+        this.fullscreenLoading = true;
         var url = '/administracion/usuario/getListarUsuarios'
         axios.get(url, {
         params: {
           'nIdUsuario' : this.fillEditarUsuarios.nIdUsuario
         }
       }).then(response => {
-          console.log(response.data);
-          this.fillEditarUsuarios.cNombre = response.data[0].nombres;
-          this.fillEditarUsuarios.cApellido = response.data[0].apellidos;
-          this.fillEditarUsuarios.cCorreo = response.data[0].email;
-          this.fillEditarUsuarios.cContrasena = response.data[0].password;
-          this.fillEditarUsuarios.cEscuela = response.data[0].id_escuela;
+          this.getUsuarioEditar(response.data[0])
+          this.getUsuarioVer(response.data[0])
 
+          this.fullscreenLoading = false;
       })
+    },
+    getUsuarioEditar(data){
+          this.fillEditarUsuarios.cNombre = data.nombres;
+          this.fillEditarUsuarios.cApellido = data.apellidos;
+          this.fillEditarUsuarios.cCorreo = data.email;
+          this.fillEditarUsuarios.cContrasena = data.password;
+          this.fillEditarUsuarios.cEscuela = data.id_escuela;
+    },
+    getUsuarioVer(data){
+          this.fillVerUsuarios.cNombre = data.nombres;
+          this.fillVerUsuarios.cApellido = data.apellidos;
+          this.fillVerUsuarios.cCorreo = data.email;
+          this.fillVerUsuarios.cContrasena = data.password;
+          this.fillVerUsuarios.cEscuela = data.id_escuela;
+          this.fillVerUsuarios.cRutaArchivo = data.profile_image;
     },
     abrirModal(){
       this.modalShow = !this.modalShow;
+    },
+    setEditarUsuario(){
+      if (this.validarRegistrarUsuario()){
+          this.modalShow = true;
+          return;
+      }
+      this.fullscreenLoading = true;
+      if(!this.fillEditarUsuarios.oFotografia || this.fillEditarUsuarios.oFotografia == undefined){
+        
+        this.setGuardarUsuario(0);
+      } else {
+        this.setRegistrarArchivo();
+      }
+    },
+    setRegistrarArchivo(){
+      this.form.append('file', this.fillEditarUsuarios.oFotografia)
+      const config = { headers: {'Content-Type': 'multipart/form-data'}}
+      var url = '/archivo/setRegistrarArchivo'
+      axios.post(url, this.form, config).then(response =>{
+        console.log(response)
+        var nIdFile = response.data[0].nIdFile;
+        this.setGuardarUsuario(nIdFile);
+      }) 
+    },
+    setGuardarUsuario(nIdFile){
+      var url = '/administracion/usuario/setEditarUsuario'
+      axios.post(url, {
+        'nIdUsuario' : this.fillEditarUsuarios.nIdUsuario, 
+        'cNombre'    : this.fillEditarUsuarios.cNombre,
+        'cApellido'  : this.fillEditarUsuarios.cApellido,
+        'cCorreo'    : this.fillEditarUsuarios.cCorreo,
+        'cContrasena': this.fillEditarUsuarios.cContrasena,
+        'cEscuela'   : this.fillEditarUsuarios.cEscuela,
+        'oFotografia': nIdFile
+      }).then(response => {
+        this.fullscreenLoading = false;
+        this.getUsuarioById();
+        Swal.fire({
+        icon: 'success',
+        title: 'Editado Correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      })
+    },
+    validarRegistrarUsuario(){
+      this.error = 0;
+      this.mensajeError = [];
+
+        if(!this.fillEditarUsuarios.cNombre){
+          this.mensajeError.push("el nombre es un campo obligatorio")
+        }
+        if(!this.fillEditarUsuarios.cApellido){
+          this.mensajeError.push("el apellido es un campo obligatorio")
+        }
+        if(!this.fillEditarUsuarios.cCorreo){
+          this.mensajeError.push("el correo es un campo obligatorio")
+        }
+        if(this.mensajeError.length){
+          this.error = 1;
+        }
+        return this.error;
     },
   }
 }
 </script>
 
 <style>
-
+  .position-reverse{
+    flex-direction: row-reverse !important;
+  }
+  .img-mac-height{
+    max-height: 100px !important;
+  }
 </style>

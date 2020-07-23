@@ -26,10 +26,30 @@ export default new Router({
 /*********    RUTAS MODULO DE ADMINISTRACION DE ROLES      **********/
         { path: '/roles', component: require('./components/modulos/roles/Index').default },
         { path: '/roles/crear', component: require('./components/modulos/roles/create').default },
+        { 
+            path: '/roles/editar/:id',
+            name: 'roles.editar',
+            component: require('./components/modulos/roles/edit').default,
+            props : true
+         },
 
-/******** RUTAS MODULO DE ADMINISTRACION DE  ********/
-        { path: '/areatesis', component: require('./components/modulos/areatesis/Index').default },
+/******** RUTAS MODULO DE ADMINISTRACION DE  PERMISOS ********/
         { path: '/permisos', component: require('./components/modulos/permisos/Index').default },
+        { path: '/permisos/crear', component: require('./components/modulos/permisos/create').default },
+        { 
+            path: '/permisos/editar/:id',
+            name: 'permisos.editar',
+            component: require('./components/modulos/permisos/edit').default,
+            props : true
+        },
+
+
+
+
+
+/******** RUTAS MODULO DE ADMINISTRACION DE  restantes ********/
+        { path: '/areatesis', component: require('./components/modulos/areatesis/Index').default },
+
         { path: '/escuelas', component: require('./components/modulos/escuelas/Index').default },
         { path: '/documentos ', component: require('./components/modulos/documentos/Index').default }
     ],

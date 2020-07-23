@@ -230,7 +230,9 @@ export default {
 
     }
   },
+
   methods:{
+
     limpiarCriteriosBsq(){
       this.fillBsqUsuarios.cNombre = '';
       this.fillBsqUsuarios.cApellido = '';

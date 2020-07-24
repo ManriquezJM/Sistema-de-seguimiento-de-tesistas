@@ -5,14 +5,15 @@
 
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
-  <App ruta="{{route('basepath')}}">   </App>
-  
+
+  @if(Auth::check())
+    <App ruta="{{route('basepath')}}">   </App>
+  @else
+    <Auth ruta="{{route('basepath')}}"> </Auth>
+  @endif
 
 </div>
 
-
 @include('sections.script')
-
-
 </body>
 </html>

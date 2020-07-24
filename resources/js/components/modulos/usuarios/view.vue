@@ -28,7 +28,7 @@
 
                 <h3 class="profile-username text-center">{{fillVerUsuarios.cNombre + ' ' + fillEditarUsuarios.cApellido}}</h3>
 
-                <p class="text-muted text-center">Estudiante</p>
+                <p class="text-muted text-center">{{fillVerUsuarios.cNombreRol}}</p>
 
       
               </div>
@@ -163,7 +163,9 @@ export default {
         cCorreo: '',
         cContrasena: '',
         cEscuela: '',
-        oFotografia: ''
+        oFotografia: '',
+        cRutaArchivo: '',
+        cNombreRol: ''
       },
       form: new FormData,
       modalShow: false,
@@ -182,12 +184,23 @@ export default {
   },
   mounted(){
       this.getUsuarioById();
+      this.getRolByUsuario();
   },
   methods:{
     getFile(e){
       this.fillEditarUsuarios.oFotografia = e.target.files[0];
     },
-    
+    getRolByUsuario(){
+      var url = '/administracion/usuario/getRolByUsuario'
+      axios.get(url, {
+        params:{
+          'nIdUsuario' : this.fillVerUsuarios.nIdUsuario
+        }
+      }).then(response => {
+          this.fillVerUsuarios.cNombreRol = (response.data.length == 0) ? '' : response.data[0].name;
+          this.fullscreenLoading = false;
+      })
+    },
   getUsuarioById(){
         this.fullscreenLoading = true;
         var url = '/administracion/usuario/getListarUsuarios'

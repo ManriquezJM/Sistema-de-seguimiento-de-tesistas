@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 
+/*********      RUTAS MODULO DE AUTENTICACION           *********/
+Route::post('/authenticate/login', 'Auth\LoginController@login');
+
 /*********      RUTAS MODULO ADMINISTRACION DE USUARIOS           *********/
 Route::get('/administracion/usuario/getListarUsuarios', 'Administracion\UsersController@getListarUsuarios');
 Route::post('/administracion/usuario/setRegistrarUsuario', 'Administracion\UsersController@setRegistrarUsuario');

@@ -23,6 +23,12 @@ export default new Router({
             component: require('./components/modulos/usuarios/view').default,
             props: true
         },
+        { 
+            path: '/usuarios/permisos/:id_user',
+            name: 'usuarios.permisos',
+            component: require('./components/modulos/usuarios/permission').default,
+            props: true
+        },
 /*********    RUTAS MODULO DE ADMINISTRACION DE ROLES      **********/
         { path: '/roles', component: require('./components/modulos/roles/Index').default },
         { path: '/roles/crear', component: require('./components/modulos/roles/create').default },

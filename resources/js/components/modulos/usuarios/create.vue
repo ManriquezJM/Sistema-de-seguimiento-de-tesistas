@@ -234,6 +234,9 @@ export default {
         if(!this.fillCrearUsuarios.cEscuela){
           this.mensajeError.push("la escuela es un campo obligatorio")
         }
+        if(!this.fillEditarUsuarios.nIdRol){
+          this.mensajeError.push("el Rol es un campo obligatorio")
+        }
         if(this.mensajeError.length){
           this.error = 1;
         }

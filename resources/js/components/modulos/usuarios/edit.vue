@@ -71,18 +71,31 @@
                     </div>
                     <div class="col-md-6">
                       <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Rol</label>
+                        <div class="col-md-9">
+                            <el-select v-model="fillEditarUsuarios.nIdRol" 
+                            placeholder="Asignar un Rol"
+                            clearable>
+                              <el-option
+                                v-for="item in listRoles"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
+                              </el-option>
+                            </el-select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
                         <label class="col-md-3 col-form-label">Fotografia</label>
                         <div class="col-md-9">
                             <input type="file" class="form-control"  @change="getFile">
                         </div>
                       </div>
                     </div>
-                    
-                   
-
                   </div>
-                </form>
-              
+                </form>     
               </div>
               <div class="card-footer">
                 <div class="row">
@@ -134,8 +147,10 @@ export default {
         cCorreo: '',
         cContrasena: '',
         cEscuela: '',
-        oFotografia: ''
+        oFotografia: '',
+        nIdRol: ''
       },
+      listRoles: [],
       form: new FormData,
       modalShow: false,
       mostrarModal: {
@@ -153,8 +168,32 @@ export default {
   },
   mounted(){
       this.getUsuarioById();
+      this.getListarRoles();
   },
   methods:{
+    getListarRoles(){
+      this.fullscreenLoading = true;
+      var url = '/administracion/roles/getListarRoles'
+      axios.get(url, {
+
+      }).then(response => {
+          //this.inicializarPaginacion();
+          this.listRoles = response.data;
+          this.fullscreenLoading = false;
+          this.getRolByUsuario();
+      })
+    },
+    getRolByUsuario(){
+      var url = '/administracion/usuario/getRolByUsuario'
+      axios.get(url, {
+        params:{
+          'nIdUsuario' : this.fillEditarUsuarios.nIdUsuario
+        }
+      }).then(response => {
+          this.fillEditarUsuarios.nIdRol = (response.data.length == 0) ? '' : response.data[0].nIdRol;
+          this.fullscreenLoading = false;
+      })
+    },
     limpiarCriterios(){
       this.fillEditarUsuarios.cNombre = '';
       this.fillEditarUsuarios.cApellido = '';
@@ -220,13 +259,24 @@ export default {
         'cEscuela'   : this.fillEditarUsuarios.cEscuela,
         'oFotografia': nIdFile
       }).then(response => {
-        //console.log("registro de usuario exitoso");
-        Swal.fire({
-        icon: 'success',
-        title: 'Editado Correctamente',
-        showConfirmButton: false,
-        timer: 1500
+        this.setEditarRolByUsuario();
       })
+    },
+    setEditarRolByUsuario(){
+        this.fullscreenLoading = false;
+        //this.$router.push('/usuarios');
+        var url = '/administracion/usuario/setEditarRolByUsuario'
+        axios.post(url, {
+        'nIdUsuario'    : this.fillEditarUsuarios.nIdUsuario,
+        'nIdRol'        : this.fillEditarUsuarios.nIdRol
+        }).then(response => {
+          this.fullscreenLoading = false;
+          Swal.fire({
+          icon: 'success',
+          title: 'Editado Correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
       })
     },
     validarRegistrarUsuario(){
@@ -242,12 +292,15 @@ export default {
         if(!this.fillEditarUsuarios.cCorreo){
           this.mensajeError.push("el correo es un campo obligatorio")
         }
+        if(!this.fillEditarUsuarios.nIdRol){
+          this.mensajeError.push("el Rol es un campo obligatorio")
+        }
         if(this.mensajeError.length){
           this.error = 1;
         }
         return this.error;
     },
-
+    
     
   
   }// cierre methods

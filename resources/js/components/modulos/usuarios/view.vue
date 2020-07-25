@@ -178,8 +178,6 @@ export default {
       },
       error: 0,
       mensajeError:[]
-
-
     }
   },
   mounted(){
@@ -267,6 +265,7 @@ export default {
         'cEscuela'   : this.fillEditarUsuarios.cEscuela,
         'oFotografia': nIdFile
       }).then(response => {
+        this.getRefrescarUsuarioAutenticado();
         this.fullscreenLoading = false;
         this.getUsuarioById();
         Swal.fire({
@@ -276,6 +275,21 @@ export default {
         timer: 1500
       })
       })
+    },
+    getRefrescarUsuarioAutenticado(){
+      var url = '/authenticate/getRefrescarUsuarioAutenticado'
+      axios.get(url).then(response => {
+        console.log(response.data);
+        EventBus.$emit('verifyAuthenticatedUser', response.data);
+        this. fullscreenLoading = false;
+        this.getUsuarioById();
+        Swal.fire({
+        icon: 'success',
+        title: 'Se actualizo correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      }) 
     },
     validarRegistrarUsuario(){
       this.error = 0;
@@ -295,6 +309,7 @@ export default {
         }
         return this.error;
     },
+    
   }
 }
 </script>

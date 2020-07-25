@@ -3568,11 +3568,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['ruta'],
+  props: ['ruta', 'usuario'],
   components: {
     Navbar: _plantilla_Navbar__WEBPACK_IMPORTED_MODULE_0__["default"],
     Sidebar: _plantilla_Sidebar__WEBPACK_IMPORTED_MODULE_1__["default"],
     Footer: _plantilla_Footer__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  data: function data() {
+    return {
+      authUser: this.usuario
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    EventBus.$on('verifyAuthenticatedUser', function (data) {
+      console.log('Evento ejecutado desde el componente App vue');
+      console.log(data);
+      _this.authUser = data;
+    });
   }
 });
 
@@ -3587,8 +3601,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -3710,12 +3722,19 @@ __webpack_require__.r(__webpack_exports__);
       this.fullscreenLoading = true;
       var url = '/authenticate/login';
       axios.post(url, {
-        params: {
-          'cEmail': this.fillLogin.cEmail,
-          'cContrasena': this.fillLogin.cContrasena
-        }
+        'cEmail': this.fillLogin.cEmail,
+        'cContrasena': this.fillLogin.cContrasena
       }).then(function (response) {
-        console.log(reponse.data);
+        console.log(response.data);
+
+        if (response.data.code == 401) {
+          _this.loginFailed();
+        }
+
+        if (response.data.code == 200) {
+          _this.loginSuccess();
+        }
+
         _this.fullscreenLoading = false;
       });
     },
@@ -3736,6 +3755,24 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return this.error;
+    },
+    loginFailed: function loginFailed() {
+      this.error = 0;
+      this.mensajeError = [];
+      this.mensajeError.push('Estas credenciales no coinciden con nuestros registros');
+      this.fillLogin.cContrasena = '';
+
+      if (this.mensajeError.length) {
+        this.error = 1;
+      }
+
+      return this.error;
+    },
+    loginSuccess: function loginSuccess() {
+      this.$router.push({
+        name: 'dashboard.index'
+      });
+      location.reload();
     }
   }
 });
@@ -6917,6 +6954,8 @@ __webpack_require__.r(__webpack_exports__);
         'cEscuela': this.fillEditarUsuarios.cEscuela,
         'oFotografia': nIdFile
       }).then(function (response) {
+        _this4.getRefrescarUsuarioAutenticado();
+
         _this4.fullscreenLoading = false;
 
         _this4.getUsuarioById();
@@ -6924,6 +6963,25 @@ __webpack_require__.r(__webpack_exports__);
         Swal.fire({
           icon: 'success',
           title: 'Editado Correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      });
+    },
+    getRefrescarUsuarioAutenticado: function getRefrescarUsuarioAutenticado() {
+      var _this5 = this;
+
+      var url = '/authenticate/getRefrescarUsuarioAutenticado';
+      axios.get(url).then(function (response) {
+        console.log(response.data);
+        EventBus.$emit('verifyAuthenticatedUser', response.data);
+        _this5.fullscreenLoading = false;
+
+        _this5.getUsuarioById();
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Se actualizo correctamente',
           showConfirmButton: false,
           timer: 1500
         });
@@ -7265,8 +7323,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['ruta']
+  props: ['ruta', 'usuario'],
+  data: function data() {
+    return {
+      fullscreenLoading: false
+    };
+  },
+  methods: {
+    logout: function logout() {
+      var _this = this;
+
+      this.fullscreenLoading = true;
+      var url = '/authenticate/logout';
+      axios.post(url).then(function (response) {
+        if (response.data.code == 204) {
+          _this.$router.push({
+            name: 'login'
+          });
+
+          location.reload();
+          _this.fullscreenLoading = false;
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -107020,7 +107112,7 @@ var render = function() {
     [
       _c("Navbar", { attrs: { ruta: _vm.ruta } }),
       _vm._v(" "),
-      _c("Sidebar", { attrs: { ruta: _vm.ruta } }),
+      _c("Sidebar", { attrs: { ruta: _vm.ruta, usuario: _vm.authUser } }),
       _vm._v(" "),
       _c(
         "div",
@@ -107028,7 +107120,7 @@ var render = function() {
         [
           _c(
             "transition",
-            { attrs: { name: "slide", mode: "in-out" } },
+            { attrs: { name: "slide-fade", mode: "out-in" } },
             [_c("router-view")],
             1
           )
@@ -107071,7 +107163,7 @@ var render = function() {
     [
       _c(
         "transition",
-        { attrs: { name: "slide", mode: "in-out" } },
+        { attrs: { name: "slide-fade", mode: "out-in" } },
         [_c("router-view")],
         1
       )
@@ -107175,6 +107267,15 @@ var render = function() {
               attrs: { type: "email", placeholder: "Email" },
               domProps: { value: _vm.fillLogin.cEmail },
               on: {
+                keyup: function($event) {
+                  if (
+                    !$event.type.indexOf("key") &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
+                  }
+                  return _vm.login($event)
+                },
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -107198,9 +107299,18 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "password", placeholder: "Password" },
+              attrs: { type: "password", placeholder: "Contraseña" },
               domProps: { value: _vm.fillLogin.cContrasena },
               on: {
+                keyup: function($event) {
+                  if (
+                    !$event.type.indexOf("key") &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
+                  }
+                  return _vm.login($event)
+                },
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -112863,32 +112973,105 @@ var render = function() {
     "aside",
     { staticClass: "main-sidebar sidebar-dark-primary elevation-4" },
     [
-      _c(
-        "a",
-        { staticClass: "brand-link", attrs: { href: "../../index3.html" } },
-        [
-          _c("img", {
-            staticClass: "brand-image img-circle elevation-3",
-            staticStyle: { opacity: ".8" },
-            attrs: { src: _vm.ruta + "/img/ucm1.jpg", alt: "AdminLTE Logo" }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "brand-text font-weight-light" }, [
-            _vm._v("Sistema de Tesis UCM")
-          ])
-        ]
-      ),
+      _c("a", { staticClass: "brand-link", attrs: { href: "#" } }, [
+        _c("img", {
+          staticClass: "brand-image img-circle elevation-3",
+          staticStyle: { opacity: ".8" },
+          attrs: { src: _vm.ruta + "/img/ucm1.jpg", alt: "AdminLTE Logo" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "brand-text font-weight-light" }, [
+          _vm._v("Sistema de Tesis UCM")
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "sidebar" }, [
         _c("div", { staticClass: "user-panel mt-3 pb-3 mb-3 d-flex" }, [
-          _c("div", { staticClass: "image" }, [
-            _c("img", {
-              staticClass: "img-circle elevation-2",
-              attrs: { src: _vm.ruta + "/img/avatar.png", alt: "User Image" }
-            })
-          ]),
+          _c(
+            "div",
+            { staticClass: "image" },
+            [
+              !_vm.usuario.id_files
+                ? [
+                    _c("img", {
+                      staticClass: "img-circle elevation-2",
+                      attrs: {
+                        src: _vm.ruta + "/img/avatar.png",
+                        alt: _vm.usuario.fullname
+                      }
+                    })
+                  ]
+                : [
+                    _c("img", {
+                      staticClass: "img-circle elevation-2",
+                      staticStyle: { height: "34px !important" },
+                      attrs: {
+                        src: _vm.usuario.file.path,
+                        alt: _vm.usuario.fullname
+                      }
+                    })
+                  ]
+            ],
+            2
+          ),
           _vm._v(" "),
-          _vm._m(0)
+          _c(
+            "div",
+            { staticClass: "info" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "d-block",
+                  attrs: {
+                    to: {
+                      name: "usuarios.ver",
+                      params: { id_user: _vm.usuario.id_user }
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.usuario.nombres) +
+                      "\n        "
+                  )
+                ]
+              )
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "user-panel mt-3 pb-3 mb-3 d-flex" }, [
+          _c("div", { staticClass: "info" }, [
+            _c(
+              "a",
+              {
+                directives: [
+                  {
+                    name: "loading",
+                    rawName: "v-loading.fullscreen.lock",
+                    value: _vm.fullscreenLoading,
+                    expression: "fullscreenLoading",
+                    modifiers: { fullscreen: true, lock: true }
+                  }
+                ],
+                staticClass: "d-block",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.logout($event)
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "fas fa-sing-out-alt" }),
+                _vm._v("Cerrar Sesión\n        ")
+              ]
+            )
+          ])
         ]),
         _vm._v(" "),
         _c("nav", { staticClass: "mt-2" }, [
@@ -113056,18 +113239,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "info" }, [
-      _c("a", { staticClass: "d-block", attrs: { href: "#" } }, [
-        _vm._v("Jose Manriquez")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -128269,11 +128441,12 @@ module.exports = function(module) {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no exports provided */
+/*! exports provided: EventBus */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventBus", function() { return EventBus; });
 /* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! element-ui */ "./node_modules/element-ui/lib/element-ui.common.js");
 /* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(element_ui__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! element-ui/lib/theme-chalk/index.css */ "./node_modules/element-ui/lib/theme-chalk/index.css");
@@ -128291,17 +128464,13 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 
+window.Vue.use(element_ui__WEBPACK_IMPORTED_MODULE_0___default.a);
 
 window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a;
-window.Vue.use(element_ui__WEBPACK_IMPORTED_MODULE_0___default.a);
+var EventBus = new Vue();
+window.EventBus = EventBus;
 Vue.component('App', __webpack_require__(/*! ./components/App.vue */ "./resources/js/components/App.vue")["default"]);
 Vue.component('Auth', __webpack_require__(/*! ./components/Auth.vue */ "./resources/js/components/Auth.vue")["default"]);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
 
 var app = new Vue({
   el: '#app',
@@ -129880,14 +130049,17 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     component: __webpack_require__(/*! ./components/modulos/authenticate/login */ "./resources/js/components/modulos/authenticate/login.vue")["default"]
   }, {
     path: '/',
+    name: 'dashboard.index',
     component: __webpack_require__(/*! ./components/modulos/dashboard/Index */ "./resources/js/components/modulos/dashboard/Index.vue")["default"]
   },
   /*********      RUTAS MODULO ADMINISTRACION DE USUARIOS           *********/
   {
     path: '/usuarios',
+    name: 'usuarios.index',
     component: __webpack_require__(/*! ./components/modulos/usuarios/Index */ "./resources/js/components/modulos/usuarios/Index.vue")["default"]
   }, {
     path: '/usuarios/crear',
+    name: 'usuarios.crear',
     component: __webpack_require__(/*! ./components/modulos/usuarios/create */ "./resources/js/components/modulos/usuarios/create.vue")["default"]
   }, {
     path: '/usuarios/editar/:id_user',
@@ -129908,9 +130080,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   /*********    RUTAS MODULO DE ADMINISTRACION DE ROLES      **********/
   {
     path: '/roles',
+    name: 'roles.index',
     component: __webpack_require__(/*! ./components/modulos/roles/Index */ "./resources/js/components/modulos/roles/Index.vue")["default"]
   }, {
     path: '/roles/crear',
+    name: 'roles.crear',
     component: __webpack_require__(/*! ./components/modulos/roles/create */ "./resources/js/components/modulos/roles/create.vue")["default"]
   }, {
     path: '/roles/editar/:id',
@@ -129921,9 +130095,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   /******** RUTAS MODULO DE ADMINISTRACION DE  PERMISOS ********/
   {
     path: '/permisos',
+    name: 'permisos.index',
     component: __webpack_require__(/*! ./components/modulos/permisos/Index */ "./resources/js/components/modulos/permisos/Index.vue")["default"]
   }, {
     path: '/permisos/crear',
+    name: 'permisos.crear',
     component: __webpack_require__(/*! ./components/modulos/permisos/create */ "./resources/js/components/modulos/permisos/create.vue")["default"]
   }, {
     path: '/permisos/editar/:id',
@@ -129934,12 +130110,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   /******** RUTAS MODULO DE ADMINISTRACION DE  restantes ********/
   {
     path: '/areatesis',
+    name: 'areatesis.index',
     component: __webpack_require__(/*! ./components/modulos/areatesis/Index */ "./resources/js/components/modulos/areatesis/Index.vue")["default"]
-  }, {
+  },
+  /******** RUTAS MODULO DE ADMINISTRACION DE ESCUELAS ********/
+  {
     path: '/escuelas',
+    name: 'escuelas.index',
     component: __webpack_require__(/*! ./components/modulos/escuelas/Index */ "./resources/js/components/modulos/escuelas/Index.vue")["default"]
-  }, {
+  },
+  /******** RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS *********/
+  {
     path: '/documentos ',
+    name: 'documentos.index',
     component: __webpack_require__(/*! ./components/modulos/documentos/Index */ "./resources/js/components/modulos/documentos/Index.vue")["default"]
   }],
   mode: 'history',

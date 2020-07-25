@@ -12,7 +12,7 @@
 
                 <form method="post">
                     <div class="input-group mb-3">
-                    <input type="email" v-model="fillLogin.cEmail" class="form-control" placeholder="Email">
+                    <input type="email" @keyup.enter="login" v-model="fillLogin.cEmail" class="form-control" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" v-model="fillLogin.cContrasena" class="form-control" placeholder="Password">
+                        <input type="password" @keyup.enter="login" v-model="fillLogin.cContrasena" class="form-control" placeholder="Contraseña">
                         <div class="input-group-append">
                             <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -69,12 +69,17 @@ export default {
             this.fullscreenLoading = true;
             var url = '/authenticate/login'
             axios.post(url, {
-                params: {
                     'cEmail' : this.fillLogin.cEmail,
                     'cContrasena' : this.fillLogin.cContrasena
-                }
             }).then(response => {
-                console.log(reponse.data)
+                console.log(response.data)
+                if(response.data.code == 401){
+                    this.loginFailed();
+                }
+                if(response.data.code == 200){
+                    
+                    this.loginSuccess();
+                }
                 this.fullscreenLoading = false;
             })
         },
@@ -93,7 +98,21 @@ export default {
             }
             return this.error;
         },
-    }
+        loginFailed(){
+            this.error = 0;
+            this.mensajeError = [];
+            this.mensajeError.push('Estas credenciales no coinciden con nuestros registros');
+            this.fillLogin.cContrasena = '';
+            if(this.mensajeError.length){
+                this.error = 1;
+            }
+            return this.error;
+        },
+        loginSuccess(){
+            this.$router.push({name: 'dashboard.index'})
+                location.reload();
+        }
+    },
 
 }
 </script>

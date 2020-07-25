@@ -1,9 +1,8 @@
 <template>
   
-
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../../index3.html" class="brand-link">
+    <a href="#" class="brand-link">
       <img :src="ruta + '/img/ucm1.jpg'"
            alt="AdminLTE Logo"
            class="brand-image img-circle elevation-3"
@@ -16,10 +15,28 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img :src="ruta + '/img/avatar.png'" class="img-circle elevation-2" alt="User Image">
+          <template v-if="!usuario.id_files">
+            <img :src="ruta + '/img/avatar.png'" class="img-circle elevation-2" :alt="usuario.fullname">
+          </template>
+          
+          <template v-else>
+            <img :src="usuario.file.path" class="img-circle elevation-2" :alt="usuario.fullname" style="height:34px !important;">
+          </template>
+          
         </div>
         <div class="info">
-          <a href="#" class="d-block">Jose Manriquez</a>
+          <router-link class="d-block" :to="{name: 'usuarios.ver', params:{id_user: usuario.id_user}}">
+              {{usuario.nombres}}
+          </router-link>
+         
+        </div>
+      </div>
+
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="info">
+          <a href="#" class="d-block" @click.prevent="logout" v-loading.fullscreen.lock="fullscreenLoading">
+            <i class="fas fa-sing-out-alt"></i>Cerrar Sesión
+          </a>
         </div>
       </div>
 
@@ -36,8 +53,6 @@
               </p>
             </router-link>
           </li>
-
-
           <li class="nav-header">CONTROL DE USUARIOS</li>
           <li class="nav-item">
             <router-link class="nav-link" :to="'/usuarios'">
@@ -47,7 +62,6 @@
               </p>
             </router-link>
           </li>
-
           <li class="nav-item">
             <router-link class="nav-link" :to="'/roles'">
               <i class="nav-icon far fa-image"></i>
@@ -128,13 +142,29 @@
     </div>
     <!-- /.sidebar -->
   </aside>
-
-
 </template>
-
 <script>
 export default {
-  props: ['ruta']
+  props: ['ruta', 'usuario'],
+  data(){
+    return{
+      fullscreenLoading: false
+    }
+  },
+  methods:{
+    logout(){
+      this.fullscreenLoading = true;
+      var url='/authenticate/logout'
+      axios.post(url).then(response => {
+        if(response.data.code == 204){
+          this.$router.push({name: 'login'})
+          location.reload();
+          this.fullscreenLoading = false;
+        }
+        
+      })
+    }
+  },
 }
 </script>
 

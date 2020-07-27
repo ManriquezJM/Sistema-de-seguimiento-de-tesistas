@@ -56,6 +56,8 @@ export default {
                 cEmail: '',
                 cContrasena: ''
             },
+            listRolPermisosByUsuario:[],
+            listRolPermisosByUsuarioFilter: [],
             fullscreenLoading: false,
             error : 0,
             mensajeError:[]
@@ -77,8 +79,8 @@ export default {
                     this.loginFailed();
                 }
                 if(response.data.code == 200){
-                    
-                    this.loginSuccess();
+                    this.getListarRolPermisosByUsuario(response.data.authUser);
+                    //this.loginSuccess();
                 }
                 this.fullscreenLoading = false;
             })
@@ -111,7 +113,27 @@ export default {
         loginSuccess(){
             this.$router.push({name: 'dashboard.index'})
                 location.reload();
-        }
+        }, 
+        getListarRolPermisosByUsuario(authUser){
+            var ruta = '/administracion/usuario/getListarRolPermisosByUsuario'
+            axios.get(ruta, {
+                params: {
+                    'nIdUsuario' : authUser.id_user
+                } 
+            }).then( response => {
+                this.listRolPermisosByUsuario = response.data;
+                this.filterListarRolPermisosByUsuario(authUser);
+            })
+        },
+        filterListarRolPermisosByUsuario(authUser){
+            let me = this;
+            me.listRolPermisosByUsuario.map(function(x,y){
+                me.listRolPermisosByUsuarioFilter.push(x.slug)
+            })
+            localStorage.setItem('listRolPermisosByUsuario', JSON.stringify(me.listRolPermisosByUsuarioFilter));
+            localStorage.setItem('authUser', JSON.stringify(authUser));
+            this.loginSuccess();
+        },
     },
 
 }

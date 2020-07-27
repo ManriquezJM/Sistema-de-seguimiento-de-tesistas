@@ -46,70 +46,85 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview">
-            <router-link class="nav-link" :to="'/'">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-              </p>
-            </router-link>
+            <template v-if="listPermisos.includes('dashboard.index')">
+              <router-link class="nav-link" :to="'/'">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                </p>
+              </router-link>
+            </template>
           </li>
-          <li class="nav-header">CONTROL DE USUARIOS</li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="'/usuarios'">
-              <i class="nav-icon far fa-calendar-alt"></i>
-              <p>
-                Usuarios
-              </p>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="'/roles'">
-              <i class="nav-icon far fa-image"></i>
-              <p>
-                Roles
-              </p>
-            </router-link>
-          </li>
-
-          <li class="nav-item">
-            <router-link class="nav-link" :to="'/permisos'">
-              <i class="nav-icon far fa-envelope"></i>
-              <p>
-                Permisos
-              </p>
-            </router-link>  
-          </li>
-          <li class="nav-header">CONTROL DE ESCUELAS</li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="'/escuelas'">
-              <i class="nav-icon far fa-envelope"></i>
-              <p>
-                Escuelas
-              </p>
-            </router-link>  
-          </li>
-
-          <li class="nav-item">
-            <router-link class="nav-link" :to="'/areatesis'">
-              <i class="nav-icon far fa-envelope"></i>
-              <p>
-                Areas de tesis
-              </p>
-            </router-link>  
-          </li>
-
-          <li class="nav-header">CONTROL DE DOCUMENTOS</li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="'/documentos'">
-              <i class="nav-icon far fa-envelope"></i>
-              <p>
-                configurar documentos
-              </p>
-            </router-link>  
-          </li>
+          <template  v-if="listPermisos.includes('usuarios.index', 'roles.index', 'permisos.index')">
+            <li class="nav-header">CONTROL DE USUARIOS</li>
+              <template v-if="listPermisos.includes('usuarios.index')">
+                <li class="nav-item">
+                  <router-link class="nav-link" :to="'/usuarios'">
+                    <i class="nav-icon far fa-calendar-alt"></i>
+                    <p>
+                      Usuarios
+                    </p>
+                  </router-link>
+                </li>
+              </template>
+            <li class="nav-item">
+              <template v-if="listPermisos.includes('roles.index')">
+                <router-link class="nav-link" :to="'/roles'">
+                  <i class="nav-icon far fa-image"></i>
+                  <p>
+                    Roles
+                  </p>
+                </router-link>
+              </template>
+            </li>
+            <li class="nav-item">
+              <template v-if="listPermisos.includes('permisos.index')">
+                <router-link class="nav-link" :to="'/permisos'">
+                  <i class="nav-icon far fa-envelope"></i>
+                  <p>
+                    Permisos
+                  </p>
+                </router-link>  
+              </template>
+            </li>
+          </template>
+          <template  v-if="listPermisos.includes('escuelas.index', 'areatesis.index')">
+            <li class="nav-header">CONTROL DE ESCUELAS</li>
+            <li class="nav-item">
+              <template v-if="listPermisos.includes('escuelas.index')">
+                <router-link class="nav-link" :to="'/escuelas'">
+                  <i class="nav-icon far fa-envelope"></i>
+                  <p>
+                    Escuelas
+                  </p>
+                </router-link>  
+              </template>
+            </li>
+            <li class="nav-item">
+              <template v-if="listPermisos.includes('areatesis.index')">
+                <router-link class="nav-link" :to="'/areatesis'">
+                  <i class="nav-icon far fa-envelope"></i>
+                  <p>
+                    Areas de tesis
+                  </p>
+                </router-link>
+              </template>    
+            </li>
+          </template>
+          <template  v-if="listPermisos.includes('documentos.index')">
+            <li class="nav-header">CONTROL DE DOCUMENTOS</li>
+            <li class="nav-item">
+              <template v-if="listPermisos.includes('documentos.index')">
+                <router-link class="nav-link" :to="'/documentos'">
+                  <i class="nav-icon far fa-envelope"></i>
+                  <p>
+                    configurar documentos
+                  </p>
+                </router-link>  
+              </template>
+            </li>
+          </template>
           
-          
-
           <!-- sitios de interes 
           <li class="nav-header">Sitios de interes</li>
           <li class="nav-item">
@@ -132,10 +147,6 @@
           </li>
 
           -->
-         
-
-
-
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -145,7 +156,7 @@
 </template>
 <script>
 export default {
-  props: ['ruta', 'usuario'],
+  props: ['ruta', 'usuario', 'listPermisos'],
   data(){
     return{
       fullscreenLoading: false
@@ -159,6 +170,7 @@ export default {
         if(response.data.code == 204){
           this.$router.push({name: 'login'})
           location.reload();
+          localStorage.clear();
           this.fullscreenLoading = false;
         }
         

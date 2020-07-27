@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 
 /*********      RUTAS MODULO DE AUTENTICACION           *********/
 Route::post('/authenticate/login', 'Auth\LoginController@login');
+
+Route::group(['middleware' => ['auth']], function () {
+  
 Route::post('/authenticate/logout', 'Auth\LoginController@logout');
 Route::get('/authenticate/getRefrescarUsuarioAutenticado', function () {
   return Auth::user()->load('file');
@@ -22,12 +25,13 @@ Route::get('/administracion/usuario/getRolByUsuario', 'Administracion\UsersContr
 Route::get('/administracion/usuario/getListarPermisosByRolAsignado', 'Administracion\UsersController@getListarPermisosByRolAsignado');
 Route::get('/administracion/usuario/getListarPermisosByUsuario', 'Administracion\UsersController@getListarPermisosByUsuario');
 Route::post('/administracion/usuario/setRegistrarPermisosByUsuario', 'Administracion\UsersController@setRegistrarPermisosByUsuario');
+Route::get('/administracion/usuario/getListarRolPermisosByUsuario', 'Administracion\UsersController@getListarRolPermisosByUsuario');
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE ROLES      **********/
 Route::get('/administracion/roles/getListarRoles', 'Administracion\RolesController@getListarRoles');
 Route::get('/administracion/roles/getListarPermisosByRol', 'Administracion\RolesController@getListarPermisosByRol');
 Route::post('/administracion/roles/setRegistrarRolPermisos', 'Administracion\RolesController@setRegistrarRolPermisos');
-Route::post('/administracion/roles/se tEditarRolPermisos', 'Administracion\RolesController@setEditarRolPermisos');
+Route::post('/administracion/roles/setEditarRolPermisos', 'Administracion\RolesController@setEditarRolPermisos');
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE PERMISOS     **********/
 Route::get('/administracion/permisos/getListarPermisos', 'Administracion\PermissionController@getListarPermisos');
@@ -36,6 +40,9 @@ Route::post('/administracion/permisos/setEditarPermisos', 'Administracion\Permis
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE ARCHIVOS     **********/
 Route::post('archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
+
+
+});
 
 
 

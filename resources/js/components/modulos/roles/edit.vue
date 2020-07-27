@@ -136,6 +136,8 @@ export default {
       },
       listPermisos: [],
       listPermisosFilter:[],
+      listRolPermisosByUsuario: [],
+      listRolPermisosByUsuarioFilter: [],
       fullscreenLoading: false,
       modalShow: false,
       mostrarModal: {
@@ -226,14 +228,7 @@ export default {
         'cSlug'              : this.fillEditarRol.cSlug,
         'listPermisosFilter' : this.listPermisosFilter
       }).then(response => {
-        this.fullscreenLoading = false;
-        //this.$router.push('/roles');
-        Swal.fire({
-        icon: 'success',
-        title: 'Rol Editado Correctamente',
-        showConfirmButton: false,
-        timer: 1500
-      })
+        this.getListarRolPermisosByUsuario();
       })
     },
     nextPage(){
@@ -261,6 +256,29 @@ export default {
     },
     marcarFila(index){
       this.listPermisosFilter[index].checked = !this.listPermisosFilter[index].checked;
+    },
+    getListarRolPermisosByUsuario(){
+      var ruta = '/administracion/usuario/getListarRolPermisosByUsuario'
+      axios.get(ruta).then( response => {
+          this.listRolPermisosByUsuario = response.data;
+          this.filterListarRolPermisosByUsuario();
+      })
+    },
+    filterListarRolPermisosByUsuario(){
+      let me = this;
+      me.listRolPermisosByUsuarioFilter = [];
+      me.listRolPermisosByUsuario.map(function(x,y){
+          me.listRolPermisosByUsuarioFilter.push(x.slug)
+      })
+      localStorage.setItem('listRolPermisosByUsuario', JSON.stringify(me.listRolPermisosByUsuarioFilter));
+      EventBus.$emit('notifyRolPermisosByUsuario', me.listRolPermisosByUsuarioFilter);
+      this.fullscreenLoading = false;
+        Swal.fire({
+        icon: 'success',
+        title: 'Rol Editado Correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      })
     },
   
   }// cierre methods

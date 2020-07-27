@@ -13,6 +13,10 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         DB::table('permissions')->insert([
+            'name' => 'Dashboard',
+            'slug' => 'dashboard.index'
+        ]);
+        DB::table('permissions')->insert([
             'name' => 'Navegar Usuarios',
             'slug' => 'usuarios.index'
         ]);
@@ -29,16 +33,60 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'usuarios.ver'
         ]);
         DB::table('permissions')->insert([
-            'name' => 'activar Usuarios',
-            'slug' => 'usuarios.activar'
+            'name' => 'Permisos Usuarios',
+            'slug' => 'usuarios.permisos'
         ]);
-        DB::table('permissions')->insert([
-            'name' => 'Desactivar Usuarios',
-            'slug' => 'usuarios.desactivar'
-        ]);
+        //Semillas modulo administracion de roles
         DB::table('permissions')->insert([
             'name' => 'Navegar Roles',
-            'slug' => 'roll.index'
+            'slug' => 'roles.index'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Crear Roles',
+            'slug' => 'roles.crear'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Editar Roles',
+            'slug' => 'roles.editar'
+        ]);
+        //semillas modulo administracion de permisos
+        DB::table('permissions')->insert([
+            'name' => 'Navegar Permisos',
+            'slug' => 'permisos.index'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Crear Permisos',
+            'slug' => 'permisos.crear'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Editar Permisos',
+            'slug' => 'permisos.editar'
+        ]);
+       //semillas modulo administracion de Escuelas
+        DB::table('permissions')->insert([
+        'name' => 'Navegar Escuelas',
+        'slug' => 'escuelas.index'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Crear Escuelas',
+            'slug' => 'escuelas.crear'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Editar Permisos',
+            'slug' => 'escuelas.editar'
+        ]);
+        //semillas modulo administracion de Areas de tesis
+        DB::table('permissions')->insert([
+        'name' => 'Navegar Temas de tesis',
+        'slug' => 'areatesis.index'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Crear Temas de tesis',
+            'slug' => 'areatesis.crear'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Editar Temas de tesis',
+            'slug' => 'areatesis.editar'
         ]);
     }
 }

@@ -4,7 +4,7 @@
     <!-- navbar -->
     <Navbar :ruta="ruta"> </Navbar>  
     <!-- Main Sidebar Container -->
-      <Sidebar :ruta="ruta" :usuario="authUser" > </Sidebar> 
+      <Sidebar :ruta="ruta" :usuario="authUser" :listPermisos="listRolPermisosByUsuario" > </Sidebar> 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <transition name="slide-fade" mode="out-in">
@@ -20,7 +20,6 @@
     <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
-
 </template>
 
 <script>
@@ -32,14 +31,20 @@ export default {
     components:{Navbar, Sidebar, Footer},
     data(){
       return{
-        authUser: this.usuario
+        authUser: this.usuario,
+        listRolPermisosByUsuario: []
       }
     },
     mounted(){
+      //console.log(JSON.parse(localStorage.getItem('listRolPermisosByUsuario')))
+      
+      this.listRolPermisosByUsuario = JSON.parse(localStorage.getItem('listRolPermisosByUsuario'))
       EventBus.$on('verifyAuthenticatedUser', data => {
-        console.log('Evento ejecutado desde el componente App vue')
-        console.log(data);
+        //console.log(data);
         this.authUser = data;
+      })
+      EventBus.$on('notifyRolPermisosByUsuario', data => {
+        this.listRolPermisosByUsuario = data;
       })
     },
 }

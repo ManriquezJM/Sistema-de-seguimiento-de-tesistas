@@ -14,9 +14,11 @@
       <div class="card">
         <div class="card-header">
           <div class="card-tools">
-            <router-link class="btn btn-info bnt-sm" :to="'/usuarios/crear'">
-              <i class="fas fa-plus-square"></i> Nuevo Usuario
-            </router-link>
+            <template v-if="listRolPermisosByUsuario.includes('usuarios.crear')">
+               <router-link class="btn btn-info bnt-sm" :to="{name: 'usuarios.crear'}">
+                  <i class="fas fa-plus-square"></i> Nuevo Usuario
+              </router-link>
+            </template>
           </div>
         </div>
         <div class="card-body">
@@ -199,6 +201,7 @@ export default {
         {value: 'A', label: 'Activo'},
         {value: 'I', label: 'Inactivo'}
       ],
+      listRolPermisosByUsuario: JSON.parse(localStorage.getItem('listRolPermisosByUsuario')),
       pageNumber: 0,
       perPage: 5
     }

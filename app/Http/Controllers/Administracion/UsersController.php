@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -207,5 +208,23 @@ class UsersController extends Controller
         }catch(Exception $e){
             DB::rollBack();
         }
+    }
+    public function getListarRolPermisosByUsuario(Request $request){
+       
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdUsuario = $request->nIdUsuario;
+
+        if(!$nIdUsuario){
+            $nIdUsuario = Auth::id();
+        }
+       
+        $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
+       
+        $rpta = DB::select('call sp_Usuario_getListarRolPermisosByUsuario (?)',
+                                                                [
+                                                                    $nIdUsuario
+                                                                ]);
+        return $rpta;
     }
 }

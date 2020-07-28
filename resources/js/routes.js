@@ -147,6 +147,23 @@ export const rutas = [
             verificarAcceso(to, from, next);
         } 
     },
+    { 
+        path: '/escuelas/crear',
+        name: 'escuelas.crear',
+        component: require('./components/modulos/escuelas/create').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from, next);
+        } 
+    },
+    { 
+        path: '/escuelas/editar/:id',
+        name: 'escuelas.editar',
+        component: require('./components/modulos/escuelas/edit').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from, next);
+        },
+        props : true
+    },
 /******** RUTAS MODULO DE ADMINISTRACION DE  restantes ********/
     { 
         path: '/areatesis',

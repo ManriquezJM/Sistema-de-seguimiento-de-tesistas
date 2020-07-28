@@ -38,6 +38,10 @@ Route::get('/administracion/permisos/getListarPermisos', 'Administracion\Permiss
 Route::post('/administracion/permisos/setRegistrarPermisos', 'Administracion\PermissionController@setRegistrarPermisos');
 Route::post('/administracion/permisos/setEditarPermisos', 'Administracion\PermissionController@setEditarPermisos');
 
+/*********    RUTAS MODULO DE ADMINISTRACION DE ESCUELAS     **********/
+Route::get('/administracion/escuelas/getListarEscuelas', 'Administracion\EscuelasController@getListarEscuelas');
+Route::post('/administracion/escuelas/setRegistrarEscuelas', 'Administracion\EscuelasController@setRegistrarEscuelas');
+Route::post('/administracion/escuelas/setEditarEscuelas', 'Administracion\EscuelasController@setEditarEscuelas');
 /*********    RUTAS MODULO DE ADMINISTRACION DE ARCHIVOS     **********/
 Route::post('archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
 

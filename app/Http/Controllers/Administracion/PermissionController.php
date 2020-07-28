@@ -20,7 +20,7 @@ class PermissionController extends Controller
         $cNombre = ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
         $cSlug    = ($cSlug == NULL) ? ($cSlug = '') : $cSlug;
 
-        $rpta = DB::select('call sp_Permiso_getListarRoles (?, ?, ?)',
+        $rpta = DB::select('call sp_Permiso_getListarPermisos (?, ?, ?)',
                                                                 [
                                                                     $nIdPermiso,
                                                                     $cNombre,

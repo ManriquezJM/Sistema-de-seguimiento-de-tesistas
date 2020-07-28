@@ -39,10 +39,10 @@
                                         </div>
                                         <div class="col-md-12">
                                         <div class="form-group row">
-                                          <label class="col-md-3 col-form-label">Rol</label>
+                                          <label class="col-md-3 col-form-label">Escuela</label>
                                           <div class="col-md-9">
                                               <el-select v-model="fillCrearAreaTesis.nIdEscuela" 
-                                              placeholder="Asignar un Rol"
+                                              placeholder="Asignar Escuela"
                                               clearable>
                                                 <el-option
                                                   v-for="item in listEscuelas"

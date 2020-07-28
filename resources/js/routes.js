@@ -30,6 +30,11 @@ function verificarAcceso(to, from, next) {
 //concentracion de rutas
 export const rutas = [
     {
+        path: '/registro',
+        name: 'registro',
+        component: require('./components/modulos/authenticate/registro').default
+    },
+    {
         path: '/login',
         name: 'login',
         component: require('./components/modulos/authenticate/login').default

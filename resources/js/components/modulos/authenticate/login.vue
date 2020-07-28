@@ -41,6 +41,11 @@
                      Iniciar sesion
                     </button>
                 </div>
+                <p class="mb-0">
+                    <router-link :to="{name:'registro'}">
+                        <b>Registrarme como alumno</b>
+                    </router-link>
+                </p>
                 <!-- /.social-auth-links -->
             </div>
             <!-- /.login-card-body -->

@@ -5,9 +5,13 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-/*********      RUTAS MODULO DE AUTENTICACION           *********/
+/*********      RUTAS MODULO DE AUTENTICACION Y REGISTRO          *********/
 Route::post('/authenticate/login', 'Auth\LoginController@login');
+Route::get('/administracion/escuelas/getListarEscuelas', 'Administracion\EscuelasController@getListarEscuelas');
+Route::post('/authenticate/registro/setRegistrarAlumno', 'AlumnoController@setRegistrarAlumno');
+Route::post('/authenticate/registro/setEditarRolAlumno', 'AlumnoController@setEditarRolAlumno');
 
+/*********      RUTAS QUE REQUIEREN AUTENTICACION        *********/
 Route::group(['middleware' => ['auth']], function () {
   
 Route::post('/authenticate/logout', 'Auth\LoginController@logout');
@@ -39,7 +43,7 @@ Route::post('/administracion/permisos/setRegistrarPermisos', 'Administracion\Per
 Route::post('/administracion/permisos/setEditarPermisos', 'Administracion\PermissionController@setEditarPermisos');
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE ESCUELAS     **********/
-Route::get('/administracion/escuelas/getListarEscuelas', 'Administracion\EscuelasController@getListarEscuelas');
+
 Route::post('/administracion/escuelas/setRegistrarEscuelas', 'Administracion\EscuelasController@setRegistrarEscuelas');
 Route::post('/administracion/escuelas/setEditarEscuelas', 'Administracion\EscuelasController@setEditarEscuelas');
 /*********    RUTAS MODULO DE ADMINISTRACION DE AREAS DE TESIS     **********/

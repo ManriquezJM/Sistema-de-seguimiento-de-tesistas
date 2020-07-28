@@ -164,7 +164,7 @@ export const rutas = [
         },
         props : true
     },
-/******** RUTAS MODULO DE ADMINISTRACION DE  restantes ********/
+/******** RUTAS MODULO DE ADMINISTRACION DE  AREAS DE TESIS ********/
     { 
         path: '/areatesis',
         name: 'areatesis.index',
@@ -173,7 +173,14 @@ export const rutas = [
             verificarAcceso(to, from, next);
         } 
     },
-
+    { 
+        path: '/areatesis/crear',
+        name: 'areatesis.crear',
+        component: require('./components/modulos/areatesis/create').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from, next);
+        } 
+    },
 /******** RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS *********/
     { 
         path: '/documentos ',

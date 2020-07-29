@@ -36,7 +36,6 @@ class AlumnoController extends Controller
                                                                     $oFotografia
                                                                 ]);
         return $rpta[0]->nIdUsuario;
-
     }
     public function setEditarRolAlumno(Request $request){
         if(!$request->ajax()) return redirect('/');

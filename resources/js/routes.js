@@ -186,6 +186,58 @@ export const rutas = [
             verificarAcceso(to, from, next);
         } 
     },
+/******** RUTAS MODULO DE ADMINISTRACION DESARROLLO DE TESIS ********/
+{ 
+    path: '/tesis', 
+    name: 'tesis.fit',
+    component: require('./components/modulos/tesis/fit').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},/*
+{ 
+    path: '/tesis/crear',
+    name: 'tesis.crear',
+    component: require('./components/modulos/tesis/create').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},
+{ 
+    path: '/tesis/editar/:id',
+    name: 'tesis.editar',
+    component: require('./components/modulos/tesis/edit').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    },
+    props : true
+},*/
+/******** RUTAS MODULO DE ADMINISTRACION DESARROLLO DE TESIS ********/
+{ 
+    path: '/vinculacion', 
+    name: 'vinculacion.index',
+    component: require('./components/modulos/vinculacion/index').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},
+{ 
+    path: '/vinculacion/crear',
+    name: 'vinculacion.crear',
+    component: require('./components/modulos/vinculacion/create').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},
+{ 
+    path: '/vinculacion/editar/:id',
+    name: 'vinculacion.editar',
+    component: require('./components/modulos/vinculacion/edit').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    },
+    props : true
+},
 /******** RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS *********/
     { 
         path: '/documentos ',

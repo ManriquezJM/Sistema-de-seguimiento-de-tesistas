@@ -43,12 +43,17 @@ Route::post('/administracion/permisos/setRegistrarPermisos', 'Administracion\Per
 Route::post('/administracion/permisos/setEditarPermisos', 'Administracion\PermissionController@setEditarPermisos');
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE ESCUELAS     **********/
-
 Route::post('/administracion/escuelas/setRegistrarEscuelas', 'Administracion\EscuelasController@setRegistrarEscuelas');
 Route::post('/administracion/escuelas/setEditarEscuelas', 'Administracion\EscuelasController@setEditarEscuelas');
+
 /*********    RUTAS MODULO DE ADMINISTRACION DE AREAS DE TESIS     **********/
 Route::get('/administracion/areatesis/getListarAreaTesis', 'Administracion\AreaTesisController@getListarAreaTesis');
 Route::post('/administracion/areatesis/setRegistrarAreaTesis', 'Administracion\AreaTesisController@setRegistrarAreaTesis');
+
+/*********    RUTAS MODULO DE ADMINISTRACION DE VINCULACIONES     **********/
+Route::get('/administracion/vinculacion/getListarVinculacion', 'Administracion\VinculacionController@getListarVinculacion');
+Route::post('/administracion/vinculacion/setRegistrarVinculacion', 'Administracion\VinculacionController@setRegistrarVinculacion');
+Route::post('/administracion/vinculacion/setEditarVinculacion', 'Administracion\VinculacionController@setEditarVinculacion');
 /*********    RUTAS MODULO DE ADMINISTRACION DE ARCHIVOS     **********/
 Route::post('archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
 

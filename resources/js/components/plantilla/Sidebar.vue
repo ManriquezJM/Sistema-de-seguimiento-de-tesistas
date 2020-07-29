@@ -43,8 +43,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+          <!-- PESTAÑAS ADMINISTRACION -->
           <li class="nav-item has-treeview">
             <template v-if="listPermisos.includes('dashboard.index')">
               <router-link class="nav-link" :to="'/'">
@@ -60,7 +59,7 @@
               <template v-if="listPermisos.includes('usuarios.index')">
                 <li class="nav-item">
                   <router-link class="nav-link" :to="'/usuarios'">
-                    <i class="nav-icon far fa-calendar-alt"></i>
+                    <i class="nav-icon fas fa-users"></i>
                     <p>
                       Usuarios
                     </p>
@@ -70,7 +69,7 @@
             <li class="nav-item">
               <template v-if="listPermisos.includes('roles.index')">
                 <router-link class="nav-link" :to="'/roles'">
-                  <i class="nav-icon far fa-image"></i>
+                  <i class="nav-icon fas fa-user-tag"></i>
                   <p>
                     Roles
                   </p>
@@ -80,7 +79,7 @@
             <li class="nav-item">
               <template v-if="listPermisos.includes('permisos.index')">
                 <router-link class="nav-link" :to="'/permisos'">
-                  <i class="nav-icon far fa-envelope"></i>
+                  <i class="nav-icon fas fa-key"></i>
                   <p>
                     Permisos
                   </p>
@@ -93,7 +92,7 @@
             <li class="nav-item">
               <template v-if="listPermisos.includes('escuelas.index')">
                 <router-link class="nav-link" :to="'/escuelas'">
-                  <i class="nav-icon far fa-envelope"></i>
+                  <i class="nav-icon fas fa-school"></i>
                   <p>
                     Escuelas
                   </p>
@@ -103,14 +102,25 @@
             <li class="nav-item">
               <template v-if="listPermisos.includes('areatesis.index')">
                 <router-link class="nav-link" :to="'/areatesis'">
-                  <i class="nav-icon far fa-envelope"></i>
+                  <i class="nav-icon fas fa-microscope"></i>
                   <p>
                     Areas de tesis
                   </p>
                 </router-link>
               </template>    
             </li>
+            <li class="nav-item">
+              <template v-if="listPermisos.includes('vinculacion.index')">
+                <router-link class="nav-link" :to="'/vinculacion'">
+                  <i class="nav-icon fas fa-hands-helping"></i>
+                  <p>
+                    Vinculaciones
+                  </p>
+                </router-link>
+              </template>    
+            </li>
           </template>
+          <!-- VISTA PARA ADMINISTRACION DE DOCUMENTOS -->
           <template  v-if="listPermisos.includes('documentos.index')">
             <li class="nav-header">CONTROL DE DOCUMENTOS</li>
             <li class="nav-item">
@@ -124,29 +134,77 @@
               </template>
             </li>
           </template>
-          
-          <!-- sitios de interes 
-          <li class="nav-header">Sitios de interes</li>
-          <li class="nav-item">
-            <a href="http://www.sibib.ucm.cl/" class="nav-link">
-              <i class="nav-icon fas fa-book-reader"></i>
-              <p>Sibib UCM</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="https://scholar.google.com//" class="nav-link">
-              <i class="nav-icon fas fa-book-reader"></i>
-              <p>Google Scholar</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="https://sci-hub.tw/" class="nav-link">
-              <i class="nav-icon fas fa-book-reader"></i>
-              <p>Sci-Hub</p>
-            </a>
-          </li>
+          <!-- PESTAÑAS PARA EL ALUMNO -->
+          <template  v-if="listPermisos.includes('sitios.interes')">
+            <li class="nav-header">SEGUIMIENTO TESIS</li>
+              <li class="nav-item">
+                <template v-if="listPermisos.includes('sitios.interes')">
+                  <router-link class="nav-link" :to="'/documentos'">
+                    <i class="nav-icon far fa-edit"></i>
+                    <p>
+                      Inscribir Tesis
+                    </p>
+                  </router-link>  
+                </template>
+              </li>
+              <li class="nav-item">
+                <template v-if="listPermisos.includes('sitios.interes')">
+                  <router-link class="nav-link" :to="'/documentos'">
+                    <i class="nav-icon fas fa-file-upload"></i>
+                    <p>
+                      Subir avances
+                    </p>
+                  </router-link>  
+                </template>
+              </li>
+          </template>
 
-          -->
+          <template  v-if="listPermisos.includes('sitios.interes')">
+            <li class="nav-header">SOLICITUDES DARA</li>
+              <li class="nav-item">
+                <template v-if="listPermisos.includes('sitios.interes')">
+                  <router-link class="nav-link" :to="'/documentos'">
+                    <i class="nav-icon far fa-envelope"></i>
+                    <p>
+                      Solicitar nota pendiente
+                    </p>
+                  </router-link>  
+                </template>
+              </li>
+          </template>
+
+          <template  v-if="listPermisos.includes('sitios.interes')">
+            <li class="nav-header">SITIOS DE INTERES</li>
+            <li class="nav-item">
+              <a href="http://www.sibib.ucm.cl/" target="_blank" class="nav-link">
+                <i class="nav-icon fas fa-book-reader"></i>
+                <p>Sibib UCM</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://scholar.google.com//" target="_blank" class="nav-link">
+                <i class="nav-icon fas fa-book-reader"></i>
+                <p>Google Scholar</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://sci-hub.tw/" target="_blank" class="nav-link">
+                <i class="nav-icon fas fa-book-reader"></i>
+                <p>Sci-Hub</p>
+              </a>
+            </li>
+          </template>
+          
+
+
+
+
+
+
+
+
+
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

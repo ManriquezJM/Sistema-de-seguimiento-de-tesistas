@@ -186,6 +186,15 @@ export const rutas = [
             verificarAcceso(to, from, next);
         } 
     },
+    { 
+        path: '/areatesis/editar/:id',
+        name: 'areatesis.editar',
+        component: require('./components/modulos/areatesis/edit').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from, next);
+        },
+        props : true
+    },
 /******** RUTAS MODULO DE ADMINISTRACION DESARROLLO DE TESIS ********/
 { 
     path: '/tesis', 
@@ -194,7 +203,7 @@ export const rutas = [
     beforeEnter: (to, from, next) => {
         verificarAcceso(to, from, next);
     } 
-},/*
+},
 { 
     path: '/tesis/crear',
     name: 'tesis.crear',
@@ -204,15 +213,51 @@ export const rutas = [
     } 
 },
 { 
+    path: '/tesis/ver/:id',
+    name: 'tesis.ver',
+    component: require('./components/modulos/tesis/view').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    },
+    props: true
+},
+{ 
     path: '/tesis/editar/:id',
     name: 'tesis.editar',
     component: require('./components/modulos/tesis/edit').default,
     beforeEnter: (to, from, next) => {
         verificarAcceso(to, from, next);
     },
-    props : true
-},*/
-/******** RUTAS MODULO DE ADMINISTRACION DESARROLLO DE TESIS ********/
+    props: true
+},
+/********** RUTAS MODULO DE AVANCES DE TESIS *********/
+{ 
+    path: '/avances',
+    name: 'avances.index',
+    component: require('./components/modulos/avances/index').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},
+{ 
+    path: '/avances/crear',
+    name: 'avances.crear',
+    component: require('./components/modulos/avances/create').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},
+{ 
+    path: '/avances/editar/:id',
+    name: 'avances.editar',
+    component: require('./components/modulos/avances/edit').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    },
+    props: true
+},
+/******** RUTAS MODULO DE ADMINISTRACION NOTAS PENDIENTES********/
+/******** RUTAS MODULO DE ADMINISTRACION VINCULACiONES DE TESIS ********/
 { 
     path: '/vinculacion', 
     name: 'vinculacion.index',
@@ -237,6 +282,15 @@ export const rutas = [
         verificarAcceso(to, from, next);
     },
     props : true
+},
+/******** RUTAS MODULO DE ADMINISTRACION DE REPORTES *********/
+{ 
+    path: '/reportes',
+    name: 'reportes.reportefit',
+    component: require('./components/modulos/reportes/reportefit').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    }
 },
 /******** RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS *********/
     { 

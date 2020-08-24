@@ -45,9 +45,9 @@
                             clearable>
                               <el-option
                                 v-for="item in listEscuelas"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                                :key="item.id"
+                                :label="item.nombre"
+                                :value="item.id">
                               </el-option>
                             </el-select>
                         </div>
@@ -138,20 +138,24 @@ export default {
         nIdEscuela: ''
       },
       listAreaTesis:[],
-      listEscuelas: [
+      /*listEscuelas: [
         {value: 1, label: 'Ing. Civil Informatica'},
-        {value: 2, label: 'Arquietectura'},
+        {value: 2, label: 'Arquitectura'},
         {value: 3, label: 'Ing. Civil'},
         {value: 4, label: 'Contruccion Civil'},
         {value: 5, label: 'Ing. Civil Industrial'},
         {value: 6, label: 'Ing. civil Electronica'},
         {value: 7, label: 'Ing. en Contruccion'}
-      ],
+      ],*/
+      listEscuelas:[],
       fullscreenLoading: false,
       pageNumber: 0,
       perPage: 5,
 
     }
+  },
+  mounted(){
+    this.getListarEscuelas();
   },
   computed: {
     
@@ -181,7 +185,16 @@ export default {
     }
   },
   methods:{
-    
+    getListarEscuelas(){
+      this.fullscreenLoading = true;
+      var url = '/administracion/escuelas/getListarEscuelas'
+      axios.get(url, {
+
+      }).then(response => {
+          this.listEscuelas = response.data;
+          this.fullscreenLoading = false;
+      })
+    },
     limpiarCriteriosBsq(){
       this.fillBsqAreaTesis.cNombre = '';
       this.fillBsqAreaTesis.nIdEscuela = '';
@@ -196,7 +209,6 @@ export default {
         params: {
           'cNombre' : this.fillBsqAreaTesis.cNombre,
           'nIdEscuela' : this.fillBsqAreaTesis.nIdEscuela,
-
         }
       }).then(response => {
           this.inicializarPaginacion();
@@ -216,44 +228,7 @@ export default {
     inicializarPaginacion(){
       this.pageNumber = 0;
     },
-    getListarAreaTesisByEscuela(id){
-        var ruta = '/administracion/areatesis/getListarAreaTesisByEscuela'
-        axios.get(ruta, {
-            params: {
-                'nIdRol' : id
-            }
-        }).then( response => {
-            this.listAreaTesis = response.data;
-            this.modalShow = true;
-            this.modalOption = 2;
-        })
-    },
-    abrirModalByOption(modulo, accion, data){
-    switch (modulo) {
-      case "roles":
-        {
-          switch (accion) {
-            case "ver":
-              {
-                this.fillVerRol.cNombre = data.name;
-                this.fillVerRol.nIdEscuela = data.slug;
-                //obtener los permisos por el rol seleccionado
-                this.getListarAreaTesisByEscuela(data.id);
-              }
-              break;
-            default:
-              break;
-          }
-        }
-        
-        break;
     
-      default:
-        break;
-    }
-  },
-   
-
   }//cierre de methods
 }
 </script>

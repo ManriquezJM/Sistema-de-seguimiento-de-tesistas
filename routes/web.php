@@ -49,19 +49,37 @@ Route::post('/administracion/escuelas/setEditarEscuelas', 'Administracion\Escuel
 /*********    RUTAS MODULO DE ADMINISTRACION DE AREAS DE TESIS     **********/
 Route::get('/administracion/areatesis/getListarAreaTesis', 'Administracion\AreaTesisController@getListarAreaTesis');
 Route::post('/administracion/areatesis/setRegistrarAreaTesis', 'Administracion\AreaTesisController@setRegistrarAreaTesis');
+Route::post('/administracion/areatesis/setEditarAreaTesis', 'Administracion\AreaTesisController@setEditarAreaTesis');
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE VINCULACIONES     **********/
 Route::get('/administracion/vinculacion/getListarVinculacion', 'Administracion\VinculacionController@getListarVinculacion');
 Route::post('/administracion/vinculacion/setRegistrarVinculacion', 'Administracion\VinculacionController@setRegistrarVinculacion');
 Route::post('/administracion/vinculacion/setEditarVinculacion', 'Administracion\VinculacionController@setEditarVinculacion');
-/*********    RUTAS MODULO DE ADMINISTRACION DE ARCHIVOS     **********/
-Route::post('archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
+
+/*********    RUTAS MODULO DE ADMINISTRACION DE TESIS     **********/
+Route::get('/alumno/getListarTesis', 'AlumnoController@getListarTesis');
+Route::post('/alumno/setRegistrarTesis', 'AlumnoController@setRegistrarTesis');
+Route::post('/alumno/setCambiarEstadoFIT', 'AlumnoController@setCambiarEstadoFIT');
+Route::Post('/alumno/setEditarTesis', 'AlumnoController@setEditarTesis');
+Route::get('/alumno/getListarProfesores', 'AlumnoController@getListarProfesores');
+/*********    RUTAS MODULO DE ADMINISTRACION DE AVANCES    **********/
+Route::get('/avances/getListarAvances', 'AvancesController@getListarAvances');
+Route::get('/avances/getSeleccionarAvance', 'AvancesController@getSeleccionarAvance');
+Route::post('/avances/setRegistrarAvance', 'AvancesController@setRegistrarAvance');
+Route::post('/avances/setEditarAvance', 'AvancesController@setEditarAvance');
+Route::get('/avances/getListarAvancesByAlumno', 'AvancesController@getListarAvancesByAlumno');
+Route::get('/avances/getListarAlumnosByprofesor', 'AvancesController@getListarAlumnosByprofesor');
+/*********    RUTAS MODULO DE ADMINISTRACION DE Documentos     **********/
+
+Route::Post('/administracion/tesis/setGenerarDocumento', 'AlumnoController@setGenerarDocumento');
+Route::get('/administracion/reportes/getListarTesisReporte', 'Administracion\ReportesController@getListarTesisReporte');
+Route::get('/administracion/reportes/export', 'Administracion\ReportesController@export');
+Route::post('/archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
+Route::post('/archivo/setRegistrarArchivoPDF', 'FilesController@setRegistrarArchivoPDF');
+
 
 
 });
-
-
-
 Route::get('/{optional?}', function () {
     return view('app');
 })->name('basepath')

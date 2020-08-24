@@ -62,6 +62,5 @@ class PermissionController extends Controller
                                                                     $cNombre,
                                                                     $cSlug
                                                                 ]);
-
     }
 }

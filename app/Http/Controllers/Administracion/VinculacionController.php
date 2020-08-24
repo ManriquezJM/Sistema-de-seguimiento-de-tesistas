@@ -14,19 +14,19 @@ class VinculacionController extends Controller
 
         $nIdVinculacion     =   $request->nIdVinculacion;
         $cNombre            =   $request->cNombre;
-        $cTipos             =   $request->cTipos;
+        $cTipo             =   $request->cTipo;
         $cDescripcion       =   $request->cDescripcion;
         
         $nIdVinculacion     = ($nIdVinculacion == NULL) ? ($nIdVinculacion = 0) : $nIdVinculacion;
         $cNombre            = ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
-        $cTipos             = ($cTipos == NULL) ? ($cTipos = '') : $cTipos;
+        $cTipo             = ($cTipo == NULL) ? ($cTipo = '') : $cTipo;
         $cDescripcion       = ($cDescripcion == NULL) ? ($cDescripcion = '') : $cDescripcion;
 
         $rpta = DB::select('call sp_Vinculacion_getListarVinculacion (?, ?, ?, ?)',
                                                                 [
                                                                     $nIdVinculacion,
                                                                     $cNombre,
-                                                                    $cTipos,
+                                                                    $cTipo,
                                                                     $cDescripcion
                                                                 ]);
         return $rpta;

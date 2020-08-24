@@ -81,7 +81,7 @@
               <div class="card-header">
                 <h3 class="card-title">Bandeja de resultados</h3>
               </div>
-              <div class="card-body table-resposive">
+              <div class="card-body table table-responsive">
                 <template v-if="listarVinculacionPaginated.length">
                   
                   <table class ="table table-hover table-head-fixed text-nowrap projects">
@@ -221,18 +221,6 @@ export default {
     },
     inicializarPaginacion(){
       this.pageNumber = 0;
-    },
-    getListarVinculacionByRol(id){
-        var ruta = '/administracion/vinculacion/getListarVinculacionByRol'
-        axios.get(ruta, {
-            params: {
-                'nIdRol' : id
-            }
-        }).then( response => {
-            this.listVinculacion = response.data;
-            this.modalShow = true;
-            this.modalOption = 2;
-        })
     },
     abrirModalByOption(modulo, accion, data){
     switch (modulo) {

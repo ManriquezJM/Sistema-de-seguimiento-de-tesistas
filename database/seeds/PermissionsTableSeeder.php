@@ -88,5 +88,68 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Editar Temas de tesis',
             'slug' => 'areatesis.editar'
         ]);
+        //semillas modulo administracion de alumno
+        DB::table('permissions')->insert([
+        'name' => 'Sitios de interes',
+        'slug' => 'sitios.interes'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Navegar Vinculaciones',
+            'slug' => 'vinculacion.index'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Crear Vinculacion',
+            'slug' => 'vinculacion.crear'
+        ]);
+        DB::table('permissions')->insert([
+        'name' => 'Editar Vinculacion',
+        'slug' => 'vinculacion.editar'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Formulario de inscripcion',
+            'slug' => 'tesis.fit'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'crear tesis',
+            'slug' => 'tesis.crear'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Ver FIT',
+            'slug' => 'tesis.ver'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Editar FIT',
+            'slug' => 'tesis.editar'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Crear reporte FIT',
+            'slug' => 'reportes.reportefit'
+        ]);
+        /******permisos avances de tesis */
+        DB::table('permissions')->insert([
+            'name' => 'Navegar Avances',
+            'slug' => 'avances.index'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Crear Avances',
+            'slug' => 'avances.crear'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Editar Avances',
+            'slug' => 'avances.editar'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Aprobar Fit',
+            'slug' => 'tesis.aprobar'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Avances por usuario',
+            'slug' => 'avances.listaralumnos'
+        ]);  
+        DB::table('permissions')->insert([
+            'name' => 'Navegar notas pendientes',
+            'slug' => 'notaspendientes.index'
+        ]);  
     }
 }
+

@@ -24,7 +24,7 @@ class CreateComisionesTable extends Migration
             $table->string('correo_p_externo')->nullable();
             $table->string('institucion_p_externo')->nullable();
 
-            $table->foreign('id_tesis')->references('id')->on('tesis');
+            $table->foreign('id_tesis')->references('id')->on('fit');
             $table->timestamps();
         });
     }

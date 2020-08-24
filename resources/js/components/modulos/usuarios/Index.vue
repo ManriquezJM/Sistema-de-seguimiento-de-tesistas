@@ -90,7 +90,7 @@
               <div class="card-header">
                 <h3 class="card-title">Bandeja de resultados</h3>
               </div>
-              <div class="card-body table-resposive">
+              <div class="card-body table table-responsive">
                 <template v-if="listarUsuariosPaginated.length">
                   
                   <table class ="table table-hover table-head-fixed text-nowrap projects">
@@ -276,12 +276,12 @@ export default {
     },
     setCambiarEstadoUsuario(op, id_user){
       Swal.fire({
-      title: 'Estas seguro?' + ((op == 1) ? 'desactivar' : 'activar') + ' el usuario',
+      title: 'Estas seguro? ' + ((op == 1) ? 'desactivar ' : 'activar ') + ' el usuario',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: ((op == 1) ? 'Si, desactivar' : 'Si, activar')
+      confirmButtonText: ((op == 1) ? 'Si, desactivar ' : 'Si, activar ')
     }).then((result) => {
       if (result.value) {
         this.fullscreenLoading = true;
@@ -292,7 +292,7 @@ export default {
         }).then(response => {
             Swal.fire({
             icon: 'success',
-            title: 'Se' + ((op == 1) ? 'desactivo' : 'activo') +'el usuario',
+            title: 'Se ' + ((op == 1) ? 'desactivo ' : 'activo ') +'el usuario',
             showConfirmButton: false,
             timer: 1500
             })

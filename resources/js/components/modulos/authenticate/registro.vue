@@ -59,10 +59,9 @@
                 </form>
                    <div class="social-auth-links text-center mb-3">
                         <button class="btn btn-flat btn-block btn-danger" @click.prevent="setRegistrarAlumno" v-loading.fullscreen.lock="fullscreenLoading">
-                        Iniciar sesion
+                        Registrarme
                         </button>
                     </div>
-                
                 <Router-link :to="{name:'login'}"> 
                     <b>Ya tengo una cuenta</b>
                 </Router-link>
@@ -133,7 +132,6 @@ export default {
       })
     },
     setRegistrarAlumno(){
-        console.log('holapepee')
       if (this.validarRegistrarAlumno()){
           this.modalShow = true;
           return;
@@ -194,7 +192,7 @@ export default {
       }).then(response => {
         //console.log("Registro Usuario exitosamente");
         this.fullscreenLoading = false;
-        this.$router.push('/');
+        this.$router.push('/login');
       })
     },
   

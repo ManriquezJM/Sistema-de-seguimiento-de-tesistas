@@ -20,7 +20,7 @@ class CreateBitacorasTable extends Migration
             $table->string('acuerdo');
             $table->dateTime('fecha');
 
-            $table->foreign('id_tesis')->references('id')->on('tesis');
+            $table->foreign('id_tesis')->references('id')->on('fit');
             $table->timestamps();
         });
     }

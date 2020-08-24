@@ -28,7 +28,6 @@
           <router-link class="d-block" :to="{name: 'usuarios.ver', params:{id_user: usuario.id_user}}">
               {{usuario.nombres}}
           </router-link>
-         
         </div>
       </div>
 
@@ -120,6 +119,20 @@
               </template>    
             </li>
           </template>
+          <!-- VISTA PARA ADMINISTRACION DE REPORTES -->
+          <template  v-if="listPermisos.includes('reportes.reportefit')">
+            <li class="nav-header">REPORTES</li>
+            <li class="nav-item">
+              <template v-if="listPermisos.includes('reportes.reportefit')">
+                <router-link class="nav-link" :to="'/reportes'">
+                  <i class="nav-icon fas fa-database"></i>
+                  <p>
+                    Reportes Tesis
+                  </p>
+                </router-link>  
+              </template>
+            </li>
+          </template>
           <!-- VISTA PARA ADMINISTRACION DE DOCUMENTOS -->
           <template  v-if="listPermisos.includes('documentos.index')">
             <li class="nav-header">CONTROL DE DOCUMENTOS</li>
@@ -135,35 +148,43 @@
             </li>
           </template>
           <!-- PESTAÑAS PARA EL ALUMNO -->
-          <template  v-if="listPermisos.includes('sitios.interes')">
+          <template  v-if="listPermisos.includes('tesis.fit')">
             <li class="nav-header">SEGUIMIENTO TESIS</li>
               <li class="nav-item">
-                <template v-if="listPermisos.includes('sitios.interes')">
-                  <router-link class="nav-link" :to="'/documentos'">
+                <template v-if="listPermisos.includes('tesis.fit')">
+                  <router-link class="nav-link" :to="'/tesis'">
                     <i class="nav-icon far fa-edit"></i>
                     <p>
-                      Inscribir Tesis
+                      Inscribir/Revisa FIT
                     </p>
                   </router-link>  
                 </template>
               </li>
               <li class="nav-item">
-                <template v-if="listPermisos.includes('sitios.interes')">
-                  <router-link class="nav-link" :to="'/documentos'">
+                <template v-if="listPermisos.includes('avances.index')">
+                  <router-link class="nav-link" :to="'/avances'">
                     <i class="nav-icon fas fa-file-upload"></i>
                     <p>
-                      Subir avances
+                      Avances de tesis
                     </p>
                   </router-link>  
                 </template>
               </li>
+              <template v-if="listPermisos.includes('vinculacion.index')">
+                <router-link class="nav-link" :to="'/vinculacion'">
+                  <i class="nav-icon fas fa-hands-helping"></i>
+                  <p>
+                    Vinculaciones
+                  </p>
+                </router-link>
+              </template>  
           </template>
 
-          <template  v-if="listPermisos.includes('sitios.interes')">
+          <template  v-if="listPermisos.includes('notaspendientes.index')">
             <li class="nav-header">SOLICITUDES DARA</li>
               <li class="nav-item">
-                <template v-if="listPermisos.includes('sitios.interes')">
-                  <router-link class="nav-link" :to="'/documentos'">
+                <template v-if="listPermisos.includes('notaspendientes.index')">
+                  <router-link class="nav-link" :to="'/notaspendientes'">
                     <i class="nav-icon far fa-envelope"></i>
                     <p>
                       Solicitar nota pendiente
@@ -185,12 +206,6 @@
               <a href="https://scholar.google.com//" target="_blank" class="nav-link">
                 <i class="nav-icon fas fa-book-reader"></i>
                 <p>Google Scholar</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="https://sci-hub.tw/" target="_blank" class="nav-link">
-                <i class="nav-icon fas fa-book-reader"></i>
-                <p>Sci-Hub</p>
               </a>
             </li>
           </template>

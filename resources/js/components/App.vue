@@ -6,9 +6,9 @@
     <!-- Main Sidebar Container -->
       <Sidebar :ruta="ruta" :usuario="authUser" :listPermisos="listRolPermisosByUsuario" > </Sidebar> 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <transition name="slide-fade" mode="out-in">
-        <router-view></router-view>
+    <div class="content-wrapper" >
+      <transition name="slide-fade" mode="out-in" >
+        <router-view :usuario="authUser"></router-view>
       </transition>
     </div>
     <!-- /.content-wrapper -->

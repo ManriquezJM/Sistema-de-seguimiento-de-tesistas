@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -10,7 +9,6 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
-
     <div class="container container-fluid">
       <div class="card">
         <div class="card-header">
@@ -106,10 +104,6 @@
                 </div>
               </div>
             </div>
-
-            <div class="card card-info">
-             
-            </div>
           </div>
         </div>
       </div>
@@ -134,7 +128,6 @@
 
   </div>
 </template>
-
 
 <script>
 export default {
@@ -162,8 +155,6 @@ export default {
       },
       error: 0,
       mensajeError:[]
-
-
     }
   },
   mounted(){
@@ -203,7 +194,6 @@ export default {
       this.fillEditarUsuarios.oFotografia = '';
     },
     getUsuarioById(){
-
         var url = '/administracion/usuario/getListarUsuarios'
         axios.get(url, {
         params: {

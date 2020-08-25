@@ -3,7 +3,6 @@ import Router from 'vue-router'
 
 vue.use(Router)
 
-
 function verificarAcceso(to, from, next) {
     let authUser = JSON.parse(localStorage.getItem('authUser'));
     if (authUser) {
@@ -257,6 +256,40 @@ export const rutas = [
     props: true
 },
 /******** RUTAS MODULO DE ADMINISTRACION NOTAS PENDIENTES********/
+{ 
+    path: '/notaspendientes',
+    name: 'notaspendientes.index',
+    component: require('./components/modulos/notaspendientes/index').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},
+{ 
+    path: '/notaspendientes/crear',
+    name: 'notaspendientes.crear',
+    component: require('./components/modulos/notaspendientes/create').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},
+{ 
+    path: '/notaspendientes/editar/:id',
+    name: 'notaspendientes.editar',
+    component: require('./components/modulos/notaspendientes/edit').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    },
+    props: true
+},
+{ 
+    path: '/notaspendientes/prorroga/:id',
+    name: 'notaspendientes.prorroga',
+    component: require('./components/modulos/notaspendientes/prorroga').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    },
+    props: true
+},
 /******** RUTAS MODULO DE ADMINISTRACION VINCULACiONES DE TESIS ********/
 { 
     path: '/vinculacion', 
@@ -278,6 +311,32 @@ export const rutas = [
     path: '/vinculacion/editar/:id',
     name: 'vinculacion.editar',
     component: require('./components/modulos/vinculacion/edit').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    },
+    props : true
+},
+/******** RUTAS MODULO DE BITACORAS ********/
+{ 
+    path: '/bitacoras', 
+    name: 'bitacoras.index',
+    component: require('./components/modulos/bitacoras/index').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},
+{ 
+    path: '/bitacoras/crear',
+    name: 'bitacoras.crear',
+    component: require('./components/modulos/bitacoras/create').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},
+{ 
+    path: '/bitacoras/editar/:id',
+    name: 'bitacoras.editar',
+    component: require('./components/modulos/bitacoras/edit').default,
     beforeEnter: (to, from, next) => {
         verificarAcceso(to, from, next);
     },
@@ -305,8 +364,7 @@ export const rutas = [
         path: '*',
         component: require('./components/plantilla/404').default,
     }
-
-]
+]//cierre concentracion de rutas
 
 export default new Router({
     routes: rutas,

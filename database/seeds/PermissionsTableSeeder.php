@@ -16,6 +16,7 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Dashboard',
             'slug' => 'dashboard.index'
         ]);
+        //Semillas modulo administracion de usuarios
         DB::table('permissions')->insert([
             'name' => 'Navegar Usuarios',
             'slug' => 'usuarios.index'
@@ -32,11 +33,11 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Ver Usuarios',
             'slug' => 'usuarios.ver'
         ]);
+        //Semillas modulo administracion de roles y permisos
         DB::table('permissions')->insert([
             'name' => 'Permisos Usuarios',
             'slug' => 'usuarios.permisos'
         ]);
-        //Semillas modulo administracion de roles
         DB::table('permissions')->insert([
             'name' => 'Navegar Roles',
             'slug' => 'roles.index'
@@ -49,7 +50,6 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Editar Roles',
             'slug' => 'roles.editar'
         ]);
-        //semillas modulo administracion de permisos
         DB::table('permissions')->insert([
             'name' => 'Navegar Permisos',
             'slug' => 'permisos.index'
@@ -88,11 +88,7 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Editar Temas de tesis',
             'slug' => 'areatesis.editar'
         ]);
-        //semillas modulo administracion de alumno
-        DB::table('permissions')->insert([
-        'name' => 'Sitios de interes',
-        'slug' => 'sitios.interes'
-        ]);
+         //semillas modulo administracion de Vinculaciones
         DB::table('permissions')->insert([
             'name' => 'Navegar Vinculaciones',
             'slug' => 'vinculacion.index'
@@ -104,6 +100,11 @@ class PermissionsTableSeeder extends Seeder
         DB::table('permissions')->insert([
         'name' => 'Editar Vinculacion',
         'slug' => 'vinculacion.editar'
+        ]);
+        //semillas modulo administracion formulario de inscripcion de tesis
+        DB::table('permissions')->insert([
+        'name' => 'Sitios de interes',
+        'slug' => 'sitios.interes'
         ]);
         DB::table('permissions')->insert([
             'name' => 'Formulario de inscripcion',
@@ -125,7 +126,7 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Crear reporte FIT',
             'slug' => 'reportes.reportefit'
         ]);
-        /******permisos avances de tesis */
+        //Semillas modulos de avances de tesis
         DB::table('permissions')->insert([
             'name' => 'Navegar Avances',
             'slug' => 'avances.index'
@@ -138,6 +139,7 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Editar Avances',
             'slug' => 'avances.editar'
         ]);
+        //Semillas Botones y funcionas exclusivas 
         DB::table('permissions')->insert([
             'name' => 'Aprobar Fit',
             'slug' => 'tesis.aprobar'
@@ -146,10 +148,36 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Avances por usuario',
             'slug' => 'avances.listaralumnos'
         ]);  
+        //Semillas administracion de notas pendientes
         DB::table('permissions')->insert([
             'name' => 'Navegar notas pendientes',
             'slug' => 'notaspendientes.index'
-        ]);  
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Ingresar nota pendiente',
+            'slug' => 'notaspendientes.crear'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Editar nota pendiente',
+            'slug' => 'notaspendientes.editar'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Ingresar Prorroga',
+            'slug' => 'notaspendientes.prorroga'
+        ]);    
+        //Semillas administracion de notas pendientes  
+        DB::table('permissions')->insert([
+            'name' => 'Navegar bitacoras',
+            'slug' => 'bitacoras.index'
+        ]); 
+        DB::table('permissions')->insert([
+            'name' => 'Crear Bitacora',
+            'slug' => 'bitacoras.crear'
+        ]); 
+        DB::table('permissions')->insert([
+            'name' => 'Editar Bitacoras',
+            'slug' => 'bitacoras.editar'
+        ]); 
     }
 }
 

@@ -170,24 +170,36 @@
                   </router-link>  
                 </template>
               </li>
-              <template v-if="listPermisos.includes('vinculacion.index')">
-                <router-link class="nav-link" :to="'/vinculacion'">
-                  <i class="nav-icon fas fa-hands-helping"></i>
-                  <p>
-                    Vinculaciones
-                  </p>
-                </router-link>
-              </template>  
+              <li class="nav-item">
+                <template v-if="listPermisos.includes('bitacoras.index')">
+                  <router-link class="nav-link" :to="'/bitacoras'">
+                    <i class="nav-icon fas fa-clipboard-check"></i>
+                    <p>
+                      Bitacoras
+                    </p>
+                  </router-link>  
+                </template>
+              </li>
+              <li class="nav-item">
+                <template v-if="listPermisos.includes('vinculacion.index')">
+                  <router-link class="nav-link" :to="'/vinculacion'">
+                    <i class="nav-icon fas fa-hands-helping"></i>
+                    <p>
+                        Vinculaciones
+                    </p>
+                  </router-link>
+                </template>  
+              </li>
           </template>
 
           <template  v-if="listPermisos.includes('notaspendientes.index')">
-            <li class="nav-header">SOLICITUDES DARA</li>
+            <li class="nav-header">SOLICITUD NOTA PENDIENTE</li>
               <li class="nav-item">
                 <template v-if="listPermisos.includes('notaspendientes.index')">
                   <router-link class="nav-link" :to="'/notaspendientes'">
-                    <i class="nav-icon far fa-envelope"></i>
+                    <i class="nav-icon fas fa-calendar-day"></i>
                     <p>
-                      Solicitar nota pendiente
+                      Nota pendiente
                     </p>
                   </router-link>  
                 </template>

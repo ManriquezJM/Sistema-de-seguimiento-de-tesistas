@@ -1,9 +1,6 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
-
 
 /*********      RUTAS MODULO DE AUTENTICACION Y REGISTRO          *********/
 Route::post('/authenticate/login', 'Auth\LoginController@login');
@@ -18,7 +15,6 @@ Route::post('/authenticate/logout', 'Auth\LoginController@logout');
 Route::get('/authenticate/getRefrescarUsuarioAutenticado', function () {
   return Auth::user()->load('file');
 });
-
 /*********      RUTAS MODULO ADMINISTRACION DE USUARIOS           *********/
 Route::get('/administracion/usuario/getListarUsuarios', 'Administracion\UsersController@getListarUsuarios');
 Route::post('/administracion/usuario/setRegistrarUsuario', 'Administracion\UsersController@setRegistrarUsuario');
@@ -56,30 +52,45 @@ Route::get('/administracion/vinculacion/getListarVinculacion', 'Administracion\V
 Route::post('/administracion/vinculacion/setRegistrarVinculacion', 'Administracion\VinculacionController@setRegistrarVinculacion');
 Route::post('/administracion/vinculacion/setEditarVinculacion', 'Administracion\VinculacionController@setEditarVinculacion');
 
-/*********    RUTAS MODULO DE ADMINISTRACION DE TESIS     **********/
+/*********    RUTAS MODULO DE ADMINISTRACION DE TESIS (FIT)    **********/
 Route::get('/alumno/getListarTesis', 'AlumnoController@getListarTesis');
 Route::post('/alumno/setRegistrarTesis', 'AlumnoController@setRegistrarTesis');
 Route::post('/alumno/setCambiarEstadoFIT', 'AlumnoController@setCambiarEstadoFIT');
 Route::Post('/alumno/setEditarTesis', 'AlumnoController@setEditarTesis');
 Route::get('/alumno/getListarProfesores', 'AlumnoController@getListarProfesores');
-/*********    RUTAS MODULO DE ADMINISTRACION DE AVANCES    **********/
+
+/*********    RUTAS MODULO DE ADMINISTRACION DE AVANCES DE TESIS   **********/
 Route::get('/avances/getListarAvances', 'AvancesController@getListarAvances');
 Route::get('/avances/getSeleccionarAvance', 'AvancesController@getSeleccionarAvance');
 Route::post('/avances/setRegistrarAvance', 'AvancesController@setRegistrarAvance');
 Route::post('/avances/setEditarAvance', 'AvancesController@setEditarAvance');
 Route::get('/avances/getListarAvancesByAlumno', 'AvancesController@getListarAvancesByAlumno');
 Route::get('/avances/getListarAlumnosByprofesor', 'AvancesController@getListarAlumnosByprofesor');
-/*********    RUTAS MODULO DE ADMINISTRACION DE Documentos     **********/
 
+/*********    RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS Y REPORTES     **********/
+Route::get('/notaspendientes/getListarNotasPendientes', 'NotasPendientesController@getListarNotasPendientes');
+Route::get('/notaspendientes/getListarMiNotaP', 'NotasPendientesController@getListarMiNotaP');
+Route::post('/notaspendientes/setRegistrarNotaP', 'NotasPendientesController@setRegistrarNotaP');;
+Route::post('/notaspendientes/setAsignarNotaP', 'NotasPendientesController@setAsignarNotaP');
+Route::get('/notaspendientes/getMiNotaP', 'NotasPendientesController@getMiNotaP');
+Route::post('/notaspendientes/setEditarNotaP', 'NotasPendientesController@setEditarNotaP');
+Route::post('/notaspendientes/setIngresarProrroga', 'NotasPendientesController@setIngresarProrroga');
+
+/*********    RUTAS MODULO DE ADMINISTRACION DE BITACORAS    **********/
+
+
+
+
+
+
+/*********    RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS Y REPORTES     **********/
 Route::Post('/administracion/tesis/setGenerarDocumento', 'AlumnoController@setGenerarDocumento');
 Route::get('/administracion/reportes/getListarTesisReporte', 'Administracion\ReportesController@getListarTesisReporte');
 Route::get('/administracion/reportes/export', 'Administracion\ReportesController@export');
 Route::post('/archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
-Route::post('/archivo/setRegistrarArchivoPDF', 'FilesController@setRegistrarArchivoPDF');
+});//cierre rutas que requieren autenticacion
 
-
-
-});
+/********** RUTA BASE **********/
 Route::get('/{optional?}', function () {
     return view('app');
 })->name('basepath')

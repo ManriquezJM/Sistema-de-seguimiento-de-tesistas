@@ -19,9 +19,6 @@ class CreatePdftesisTable extends Migration
             $table->string('path');
             $table->string('filename');
 
-            $table->bigInteger('created_by')->unsigned()->index();
-            $table->bigInteger('updated_by')->unsigned()->index();
-
             $table->timestamps();
         });
     }

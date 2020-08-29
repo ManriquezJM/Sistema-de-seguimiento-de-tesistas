@@ -166,7 +166,6 @@ export default {
       this.fullscreenLoading = true;
       var url = '/administracion/roles/getListarRoles'
       axios.get(url, {
-
       }).then(response => {
           //this.inicializarPaginacion();
           this.listRoles = response.data;
@@ -208,7 +207,6 @@ export default {
           this.fillEditarUsuarios.cEscuela    = response.data[0].id_escuela;
       })
     },
-    
     abrirModal(){
       this.modalShow = !this.modalShow;
     },

@@ -67,7 +67,13 @@ Route::post('/avances/setEditarAvance', 'AvancesController@setEditarAvance');
 Route::get('/avances/getListarAvancesByAlumno', 'AvancesController@getListarAvancesByAlumno');
 Route::get('/avances/getListarAlumnosByprofesor', 'AvancesController@getListarAlumnosByprofesor');
 
-/*********    RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS Y REPORTES     **********/
+/*********    RUTAS MODULO DE ADMINISTRACION DE BITACORAS    **********/
+Route::get('bitacoras/getListarMisBitacoras', 'BitacorasController@getListarMisBitacoras');
+Route::post('/bitacoras/setRegistrarBitacora', 'BitacorasController@setRegistrarBitacora');
+Route::get('/bitacoras/getListarBitacorasByAlumno', 'BitacorasController@getListarBitacorasByAlumno');
+Route::post('/bitacoras/setEditarBitacora', 'BitacorasController@setEditarBitacora');
+
+/*********    RUTAS MODULO DE ADMINISTRACION DE NOTAS PENDIENTES    **********/
 Route::get('/notaspendientes/getListarNotasPendientes', 'NotasPendientesController@getListarNotasPendientes');
 Route::get('/notaspendientes/getListarMiNotaP', 'NotasPendientesController@getListarMiNotaP');
 Route::post('/notaspendientes/setRegistrarNotaP', 'NotasPendientesController@setRegistrarNotaP');;
@@ -76,18 +82,17 @@ Route::get('/notaspendientes/getMiNotaP', 'NotasPendientesController@getMiNotaP'
 Route::post('/notaspendientes/setEditarNotaP', 'NotasPendientesController@setEditarNotaP');
 Route::post('/notaspendientes/setIngresarProrroga', 'NotasPendientesController@setIngresarProrroga');
 
-/*********    RUTAS MODULO DE ADMINISTRACION DE BITACORAS    **********/
-
-
-
-
-
+/*********    RUTAS MODULO DE ADMINISTRACION DE COMISIONES    **********/
+Route::post('/comisiones/setRegistrarComision', 'ComisionesController@setRegistrarComision');
+Route::get('comisiones/getListarMisComisiones', 'ComisionesController@getListarMisComisiones');
+Route::get('comisiones/getListarComisiones', 'ComisionesController@getListarComisiones');
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS Y REPORTES     **********/
 Route::Post('/administracion/tesis/setGenerarDocumento', 'AlumnoController@setGenerarDocumento');
 Route::get('/administracion/reportes/getListarTesisReporte', 'Administracion\ReportesController@getListarTesisReporte');
 Route::get('/administracion/reportes/export', 'Administracion\ReportesController@export');
 Route::post('/archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
+Route::post('/archivo/setRegistrarArchivoPDF', 'FilesController@setRegistrarArchivoPDF');
 });//cierre rutas que requieren autenticacion
 
 /********** RUTA BASE **********/

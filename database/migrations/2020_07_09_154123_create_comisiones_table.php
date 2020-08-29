@@ -16,15 +16,15 @@ class CreateComisionesTable extends Migration
         Schema::create('comisiones', function (Blueprint $table) {
             $table->id('id')->unsigned();
             $table->bigInteger('id_tesis')->unsigned()->nullable();
-            $table->string('alumno');
-            $table->string('profesor_guia');
-            $table->string('p_comision_1');
-            $table->string('p_comision_2');
+            $table->bigInteger('id_profesor1')->unsigned()->nullable();
+            $table->bigInteger('id_profesor2')->unsigned()->nullable();
             $table->string('p_externo')->nullable();
             $table->string('correo_p_externo')->nullable();
             $table->string('institucion_p_externo')->nullable();
 
             $table->foreign('id_tesis')->references('id')->on('fit');
+            $table->foreign('id_profesor1')->references('id_user')->on('users');
+            $table->foreign('id_profesor2')->references('id_user')->on('users');
             $table->timestamps();
         });
     }

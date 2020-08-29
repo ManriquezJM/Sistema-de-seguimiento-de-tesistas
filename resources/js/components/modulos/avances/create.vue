@@ -164,8 +164,8 @@ export default {
     setGuardarAvance(nIdFile){
       var url = '/avances/setRegistrarAvance'
       axios.post(url, {
-        'descripcion'    : this.fillCrearAvances.cDescripcion,
-        'id_archivo': nIdFile
+        'descripcion'     : this.fillCrearAvances.cDescripcion,
+        'id_archivo'      : nIdFile
       })
     },
   }// cierre methods

@@ -181,6 +181,16 @@
                 </template>
               </li>
               <li class="nav-item">
+                <template v-if="listPermisos.includes('comisiones.index')">
+                  <router-link class="nav-link" :to="'/comisiones'">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>
+                      Comisiones
+                    </p>
+                  </router-link>  
+                </template>
+              </li>
+              <li class="nav-item">
                 <template v-if="listPermisos.includes('vinculacion.index')">
                   <router-link class="nav-link" :to="'/vinculacion'">
                     <i class="nav-icon fas fa-hands-helping"></i>

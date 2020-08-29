@@ -44,7 +44,7 @@ class FilesController extends Controller
         $rpta->path = asset('storage/users/'.$fileserver);
         $rpta->filename = $filename;
         $rpta->save(); 
-
+        //$nIdFile = $rpta->id;                                                               
         return $rpta;
     }
 }

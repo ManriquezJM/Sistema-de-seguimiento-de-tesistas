@@ -342,6 +342,32 @@ export const rutas = [
     },
     props : true
 },
+/******** RUTAS MODULO DE COMISIONES ********/
+{ 
+    path: '/comisiones', 
+    name: 'comisiones.index',
+    component: require('./components/modulos/comisiones/index').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},
+{ 
+    path: '/comisiones/crear',
+    name: 'comisiones.crear',
+    component: require('./components/modulos/comisiones/create').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},
+{ 
+    path: '/comisiones/editar/:id',
+    name: 'comisiones.editar',
+    component: require('./components/modulos/comisiones/edit').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    },
+    props : true
+},
 /******** RUTAS MODULO DE ADMINISTRACION DE REPORTES *********/
 { 
     path: '/reportes',

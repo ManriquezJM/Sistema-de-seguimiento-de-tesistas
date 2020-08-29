@@ -34,7 +34,7 @@
                       <div class="form-group row">
                           <label class="col-md-3 col-form-label">Seleccionar alumno</label>
                           <div class="col-md-9">
-                              <el-select v-model="fillBsqAvanceByAlumno.id_user" 
+                              <el-select v-model="fillBsqBitacoraByAlumno.id_user" 
                               placeholder="Asignar alumno"
                               clearable>
                               <el-option
@@ -54,7 +54,7 @@
               <div class="card-footer">
                 <div class="row">
                   <div class="col-md-4 offset-4">
-                    <button class="btn btn-flat btn-info btnWidth" @click.prevent="getListarAvancesByAlumno" v-loading.fullscreen.lock="fullscreenLoading"
+                    <button class="btn btn-flat btn-info btnWidth" @click.prevent="getListarBitacorasByAlumno" v-loading.fullscreen.lock="fullscreenLoading"
                       >Buscar</button>
                     <button class="btn btn-flat btn-default btnWidth" @click.prevent="limpiarCriteriosBsq">Limpiar</button>
                   </div>
@@ -128,7 +128,7 @@ export default {
     props: ['usuario'],
   data(){
     return{
-        fillBsqAvanceByAlumno:{
+        fillBsqBitacoraByAlumno:{
         id_user: '',
       },
       listRolPermisosByUsuario: JSON.parse(localStorage.getItem('listRolPermisosByUsuario')),
@@ -179,7 +179,7 @@ export default {
     }
   },
   mounted(){
-    //this.getListarBitacoras();
+    this.getListarMisBitacoras();
     this.getListarAlumnosByprofesor();
   },
   methods:{
@@ -193,9 +193,9 @@ export default {
           this.fullscreenLoading = false;
       })
     },
-    getListarBitacoras(){
+    getListarMisBitacoras(){
       this.fullscreenLoading = true;
-      var url = '/alumno/getListarBitacoras'
+      var url = '/bitacoras/getListarMisBitacoras'
       axios.get(url, {
         
       }).then(response => {
@@ -204,14 +204,25 @@ export default {
           this.fullscreenLoading = false;
       })
     },
+    getListarBitacorasByAlumno(){
+      this.fullscreenLoading = true;
+      var url = '/bitacoras/getListarBitacorasByAlumno'
+      axios.get(url, {
+        params: {
+          'id_user' : this.fillBsqBitacoraByAlumno.id_user,
+        }
+      }).then(response => {
+          this.inicializarPaginacion();
+          this.listBitacoras = response.data;
+          this.fullscreenLoading = false;
+      })
+    },
     limpiarCriteriosBsq(){
-      this.fillBsqTesis.cNombre = '';
-      this.fillBsqTesis.cSlug = '';
+      this.fillBsqBitacoraByAlumno.id_user = '';
     },
     limpiarBandejaUsuarios(){
       this.listBitacoras = [];
     },
-
     nextPage(){
       this.pageNumber++;
     },
@@ -228,66 +239,6 @@ export default {
       this.modalShow = !this.modalShow;
       this.limpiarModal();
     },
-    limpiarModal(){
-      this.fillVerFIT.cNombre = ''
-      this.fillVerFIT.cSlug = ''
-      this.listPermisos = [];
-      this.modalOption = 0;
-    },
-    abrirModalByOption(modulo, accion, data){
-    switch (modulo) {
-      case "roles":
-        {
-          switch (accion) {
-            case "ver":
-              {
-                this.fillVerFIT.cNombre = data.name;
-                this.fillVerFIT.cSlug = data.slug;
-                //obtener los permisos por el rol seleccionado
-                this.getListarPermisosByRol(data.id);
-              }
-              break;
-          
-            default:
-              break;
-          }
-        }
-        
-        break;
-    
-      default:
-        break;
-    }
-  },
-  setCambiarEstadoFIT(op, id){
-      Swal.fire({
-      title: 'Estas seguro? ' + ((op == 1) ? 'Aprobar ' : 'Rechazar ') + '  El formulario de inscripcion',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: ((op == 1) ? 'Si, Aprobar' : 'Si, Rechazar')
-    }).then((result) => {
-      if (result.value) {
-        this.fullscreenLoading = true;
-        var url = '/alumno/setCambiarEstadoFIT'
-        axios.post(url, {
-          'nIdTesis' : id,
-          'cEstadoPg'    : (op == 1) ? 'A' : 'R'
-        }).then(response => {
-            Swal.fire({
-            icon: 'success',
-            title: 'Se ' + ((op == 1) ? 'Aprobo ' : 'Rechazo ') +' El formulario de inscripcion',
-            showConfirmButton: false,
-            timer: 1500
-            })
-            this.getListarBitacoras();
-        })
-      }
-    })
-    }
-   
-  
   }//cierre de methods
 }
 </script>

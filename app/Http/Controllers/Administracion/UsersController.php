@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class UsersController extends Controller
 {
     public function getListarUsuarios(Request $request){
-        
         if(!$request->ajax()) return redirect('/');
 
         $nIdUsuario   =   $request->nIdUsuario;
@@ -44,19 +43,19 @@ class UsersController extends Controller
     public function setRegistrarUsuario(Request $request){
         if(!$request->ajax()) return redirect('/');
 
-        $cNombre = $request->cNombre;
-        $cApellido = $request->cApellido;
-        $cCorreo = $request->cCorreo;
-        $cContrasena = Hash::make($request->cContrasena);
-        $cEscuela = $request->cEscuela;
-        $oFotografia = $request->oFotografia;
+        $cNombre        = $request->cNombre;
+        $cApellido      = $request->cApellido;
+        $cCorreo        = $request->cCorreo;
+        $cContrasena    = Hash::make($request->cContrasena);
+        $cEscuela       = $request->cEscuela;
+        $oFotografia    = $request->oFotografia;
 
-        $cNombre = ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
-        $cApellido = ($cApellido == NULL) ? ($cApellido = '') : $cApellido;
-        $cCorreo = ($cCorreo == NULL) ? ($cCorreo = '') : $cCorreo;
-        $cContrasena = ($cContrasena == NULL) ? ($cContrasena = '') : $cContrasena;
-        $cEscuela = ($cEscuela == NULL) ? ($cEscuela = '') : $cEscuela;
-        $oFotografia = ($oFotografia == NULL) ? ($oFotografia = NULL) : $oFotografia;
+        $cNombre        = ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
+        $cApellido      = ($cApellido == NULL) ? ($cApellido = '') : $cApellido;
+        $cCorreo        = ($cCorreo == NULL) ? ($cCorreo = '') : $cCorreo;
+        $cContrasena    = ($cContrasena == NULL) ? ($cContrasena = '') : $cContrasena;
+        $cEscuela       = ($cEscuela == NULL) ? ($cEscuela = '') : $cEscuela;
+        $oFotografia    = ($oFotografia == NULL) ? ($oFotografia = NULL) : $oFotografia;
 
         $rpta = DB::select('call sp_Usuario_setRegistrarUsuario (?, ?, ?, ?, ?, ?)',
                                                                 [
@@ -73,24 +72,24 @@ class UsersController extends Controller
     public function setEditarUsuario(Request $request){
         if(!$request->ajax()) return redirect('/');
 
-        $nIdUsuario = $request->nIdUsuario;
-        $cNombre = $request->cNombre;
-        $cApellido = $request->cApellido;
-        $cCorreo = $request->cCorreo;
-        $cContrasena = $request->cContrasena;
+        $nIdUsuario     = $request->nIdUsuario;
+        $cNombre        = $request->cNombre;
+        $cApellido      = $request->cApellido;
+        $cCorreo        = $request->cCorreo;
+        $cContrasena    = $request->cContrasena;
         if($cContrasena != NULL){
-            $cContrasena = Hash::make($cContrasena);
+                $cContrasena = Hash::make($cContrasena);
         }
-        $cEscuela = $request->cEscuela;
-        $oFotografia = $request->oFotografia;
+        $cEscuela       = $request->cEscuela;
+        $oFotografia    = $request->oFotografia;
 
-        $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = '') : $nIdUsuario;
-        $cNombre = ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
-        $cApellido = ($cApellido == NULL) ? ($cApellido = '') : $cApellido;
-        $cCorreo = ($cCorreo == NULL) ? ($cCorreo = '') : $cCorreo;
-        $cContrasena = ($cContrasena == NULL) ? ($cContrasena = '') : $cContrasena;
-        $cEscuela = ($cEscuela == NULL) ? ($cEscuela = '') : $cEscuela;
-        $oFotografia = ($oFotografia == 0) ? ($oFotografia = 0) : $oFotografia;
+        $nIdUsuario     = ($nIdUsuario == NULL) ? ($nIdUsuario = '') : $nIdUsuario;
+        $cNombre        = ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
+        $cApellido      = ($cApellido == NULL) ? ($cApellido = '') : $cApellido;
+        $cCorreo        = ($cCorreo == NULL) ? ($cCorreo = '') : $cCorreo;
+        $cContrasena    = ($cContrasena == NULL) ? ($cContrasena = '') : $cContrasena;
+        $cEscuela       = ($cEscuela == NULL) ? ($cEscuela = '') : $cEscuela;
+        $oFotografia    = ($oFotografia == 0) ? ($oFotografia = 0) : $oFotografia;
 
         $rpta = DB::select('call sp_Usuario_setEditarUsuario (?, ?, ?, ?, ?, ?, ?)',
                                                                 [
@@ -107,10 +106,10 @@ class UsersController extends Controller
         if(!$request->ajax()) return redirect('/');
 
         $nIdUsuario = $request->nIdUsuario;
-        $cEstado = $request->cEstado;
+        $cEstado    = $request->cEstado;
 
         $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
-        $cEstado = ($cEstado == NULL) ? ($cEstado = 0) : $cEstado;
+        $cEstado    = ($cEstado == NULL) ? ($cEstado = 0) : $cEstado;
 
         $rpta = DB::select('call sp_Usuario_setCambiarEstadoUsuario (?, ?)',
                                                                 [
@@ -122,10 +121,10 @@ class UsersController extends Controller
         if(!$request->ajax()) return redirect('/');
 
         $nIdUsuario = $request->nIdUsuario;
-        $nIdRol = $request->nIdRol;
+        $nIdRol     = $request->nIdRol;
        
         $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = '') : $nIdUsuario;
-        $nIdRol = ($nIdRol == NULL) ? ($nIdRol = '') : $nIdRol;
+        $nIdRol     = ($nIdRol == NULL) ? ($nIdRol = '') : $nIdRol;
        
         $rpta = DB::select('call sp_Usuario_setEditarRolByUsuario (?, ?)',
                                                                 [
@@ -134,7 +133,6 @@ class UsersController extends Controller
                                                                 ]);
     }
     public function getRolByUsuario(Request $request){
-
         if(!$request->ajax()) return redirect('/');
 
         $nIdUsuario = $request->nIdUsuario;
@@ -148,7 +146,6 @@ class UsersController extends Controller
         return $rpta;
     }
     public function getListarPermisosByRolAsignado(Request $request){
-        
         if(!$request->ajax()) return redirect('/');
 
         $nIdUsuario = $request->nIdUsuario;
@@ -162,7 +159,6 @@ class UsersController extends Controller
         return $rpta;
     }
     public function getListarPermisosByUsuario(Request $request){
-
         if(!$request->ajax()) return redirect('/');
 
         $nIdUsuario = $request->nIdUsuario;
@@ -176,7 +172,6 @@ class UsersController extends Controller
         return $rpta;
     }
     public function setRegistrarPermisosByUsuario(Request $request){
-        
         if(!$request->ajax()) return redirect('/');
 
         $nIdUsuario = $request->nIdUsuario;
@@ -190,7 +185,6 @@ class UsersController extends Controller
                                                                 [
                                                                     $nIdUsuario
                                                                 ]);
-         
             $listPermisos     = $request->listPermisosFilter;
             $listPermisosSize = sizeof($listPermisos);
             if($listPermisosSize > 0){
@@ -210,7 +204,6 @@ class UsersController extends Controller
         }
     }
     public function getListarRolPermisosByUsuario(Request $request){
-       
         if(!$request->ajax()) return redirect('/');
 
         $nIdUsuario = $request->nIdUsuario;

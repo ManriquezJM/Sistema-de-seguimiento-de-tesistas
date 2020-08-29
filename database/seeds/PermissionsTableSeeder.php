@@ -162,22 +162,35 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'notaspendientes.editar'
         ]);
         DB::table('permissions')->insert([
-            'name' => 'Ingresar Prorroga',
+            'name' => 'Ingresar Prorrogas',
             'slug' => 'notaspendientes.prorroga'
         ]);    
         //Semillas administracion de notas pendientes  
         DB::table('permissions')->insert([
-            'name' => 'Navegar bitacoras',
+            'name' => 'Navegar Bitacoras',
             'slug' => 'bitacoras.index'
         ]); 
         DB::table('permissions')->insert([
-            'name' => 'Crear Bitacora',
+            'name' => 'Crear Bitacoras',
             'slug' => 'bitacoras.crear'
         ]); 
         DB::table('permissions')->insert([
             'name' => 'Editar Bitacoras',
             'slug' => 'bitacoras.editar'
+        ]);
+        //Semillas administracion de Comisiones
+        DB::table('permissions')->insert([
+            'name' => 'Navegar Comisiones',
+            'slug' => 'comisiones.index'
         ]); 
+        DB::table('permissions')->insert([
+            'name' => 'Crear Comisiones',
+            'slug' => 'comisiones.crear'
+        ]); 
+        DB::table('permissions')->insert([
+            'name' => 'Editar Comisiones',
+            'slug' => 'comisiones.editar'
+        ]);
     }
 }
 

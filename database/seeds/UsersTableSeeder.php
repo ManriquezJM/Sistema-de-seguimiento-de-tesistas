@@ -14,57 +14,71 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([// cuenta de administrador
-            'nombres'=>'Jose matias',
-            'apellidos'=>'Manriquez Troncoso',
+            'nombres'=>'Administrador',
+            'apellidos'=>'Emperador',
             'id_escuela'=>'1',
             'email'=>'admin@gmail.com',
             'password'     =>  Hash::make('12345')
         ]);
         DB::table('users')->insert([// cuenta de alumno
-            'nombres'=>'pepito',
-            'apellidos'=>'perez',
+            'nombres'=>'alumno0',
+            'apellidos'=>'estudiante0',
             'id_escuela'=>'1',
-            'email'=>'alumno@gmail.com',
+            'email'=>'alumno0@gmail.com',
             'password'     =>  Hash::make('12345')
         ]);
         DB::table('users')->insert([// cuenta de alumno
-            'nombres'=>'Gabriela',
-            'apellidos'=>'Banda',
+            'nombres'=>'alumno1',
+            'apellidos'=>'estudiante1',
             'id_escuela'=>'2',
             'email'=>'alumno1@gmail.com',
             'password'     =>  Hash::make('12345')
         ]);
         DB::table('users')->insert([// cuenta de alumno
-            'nombres'=>'Barbara',
-            'apellidos'=>'Retamal',
+            'nombres'=>'alumno2',
+            'apellidos'=>'estudiante2',
             'id_escuela'=>'2',
             'email'=>'alumno2@gmail.com',
             'password'     =>  Hash::make('12345')
         ]);
         DB::table('users')->insert([// cuenta de secretaria
-            'nombres'=>'barbara',
-            'apellidos'=>'castro',
+            'nombres'=>'secretaria0',
+            'apellidos'=>'secretaria0',
             'id_escuela'=>'1',
-            'email'=>'secretaria@gmail.com',
+            'email'=>'secretaria0@gmail.com',
+            'password'     =>  Hash::make('12345')
+        ]);
+        DB::table('users')->insert([// cuenta de secretaria
+            'nombres'=>'secretaria1',
+            'apellidos'=>'secretaria1',
+            'id_escuela'=>'2',
+            'email'=>'secretaria1@gmail.com',
             'password'     =>  Hash::make('12345')
         ]);
         DB::table('users')->insert([// cuenta de director
-            'nombres'=>'director',
-            'apellidos'=>'deEscuela',
+            'nombres'=>'director0',
+            'apellidos'=>'deEscuela0',
             'id_escuela'=>'1',
-            'email'=>'director@gmail.com',
+            'email'=>'director0@gmail.com',
             'password'     =>  Hash::make('12345')
         ]);
         DB::table('users')->insert([// cuenta de coordinador
             'nombres'=>'Coordinador',
             'apellidos'=>'DeTesis',
-            'id_escuela'=>'2',
+            'id_escuela'=>'1',
             'email'=>'coordinador@gmail.com',
             'password'     =>  Hash::make('12345')
         ]);
-        DB::table('users')->insert([// cuenta de profesor 1
+        DB::table('users')->insert([// cuenta de profesor 0
+            'nombres'=>'Profesor0',
+            'apellidos'=>'de informatica0',
+            'id_escuela'=>'1',
+            'email'=>'profesor0@gmail.com',
+            'password'     =>  Hash::make('12345')
+        ]);
+        DB::table('users')->insert([// cuenta de profesor 0
             'nombres'=>'Profesor1',
-            'apellidos'=>'de informatica',
+            'apellidos'=>'de informatica1',
             'id_escuela'=>'1',
             'email'=>'profesor1@gmail.com',
             'password'     =>  Hash::make('12345')

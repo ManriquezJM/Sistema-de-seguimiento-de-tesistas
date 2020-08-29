@@ -27,28 +27,21 @@
                             <h3 class="card-title">Formulario  inscripcion de tesis</h3>
                         </div>
                             <div class="card-body">
-                                <form role="form">
+                                
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Titulo</label>
-                                                <div class="col-md-9">
-                                              
-                                                    <el-input
-                                                      type="textarea"
-                                                      :autosize="{ minRows: 2, maxRows: 5}"
-                                                      maxlength="200"
-                                                      placeholder="Objetivo"
-                                                      v-model="fillVerFIT.cTitulo">
-                                                    </el-input>
-                                                </div>
+                                          <div class="form-group row">
+                                            <label class="col-md-3 col-form-label">Titulo</label>
+                                            <div class="col-md-9">
+                                            <textarea class="form-control" readonly v-model="fillVerFIT.cTitulo" rows="3"></textarea>
                                             </div>
+                                          </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Profesor Guia</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillVerFIT.cProfesorguia" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.cProfesorguia" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -56,16 +49,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Vinculacion</label>
                                                 <div class="col-md-9">
-                                                    <el-select v-model="fillVerFIT.nIdVinculacion" 
-                                                    placeholder="Asignar Vinculacion"
-                                                    clearable>
-                                                    <el-option
-                                                        v-for="item in listVinculacion"
-                                                        :key="item.id"
-                                                        :label="item.nombre"
-                                                        :value="item.id">
-                                                    </el-option>
-                                                    </el-select>
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.nIdVinculacion" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -73,44 +57,31 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Tipo de trabajo</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillVerFIT.cTipo" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.cTipo" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Objetivo
-                                                </label>
-                                                <div class="col-md-9">
-                                                    <el-input
-                                                      type="textarea"
-                                                      :autosize="{ minRows: 2, maxRows: 5}"
-                                                      maxlength="500"
-                                                      placeholder="Objetivo"
-                                                      v-model="fillVerFIT.cObjetivo">
-                                                    </el-input>
-                                                </div>
+                                          <div class="form-group row">
+                                            <label class="col-md-3 col-form-label">Objetivo</label>
+                                            <div class="col-md-9">
+                                            <textarea class="form-control" readonly v-model="fillVerFIT.cObjetivo" rows="3"></textarea>
                                             </div>
+                                          </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Contribucion</label>
-                                                <div class="col-md-9">
-                                                    <el-input
-                                                      type="textarea"
-                                                      :autosize="{ minRows: 2, maxRows: 5}"
-                                                      maxlength="500"
-                                                      placeholder="Contribucion"
-                                                      v-model="fillVerFIT.cContribucion">
-                                                    </el-input>
-                                                </div>
+                                          <div class="form-group row">
+                                            <label class="col-md-3 col-form-label">Contribucion</label>
+                                            <div class="col-md-9">
+                                            <textarea class="form-control" readonly v-model="fillVerFIT.cContribucion" rows="3"></textarea>
                                             </div>
+                                          </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Nombre integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillVerFIT.cNombreI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.cNombreI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -118,7 +89,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Rut Integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillVerFIT.cRutI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.cRutI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -126,7 +97,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Telefono Integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillVerFIT.cTelefonoI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.cTelefonoI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +105,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Año ingreso Integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillVerFIT.cIngresoI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.cIngresoI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -142,7 +113,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">email Integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillVerFIT.cEmailI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.cEmailI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -150,7 +121,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Nombre Integrante 2</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillVerFIT.cNombreI2" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.cNombreI2" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -158,7 +129,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Rut Integrante 2</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillVerFIT.cRutI2" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.cRutI2" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -166,7 +137,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Email Integrante 2</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillVerFIT.cEmailI2" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.cEmailI2" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -174,7 +145,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Año ingreso Integrante 2</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillVerFIT.cIngresoI2" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.cIngresoI2" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -182,13 +153,13 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Telefono Integrante 2</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillVerFIT.cTelefonoI2" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" readonly class="form-control" v-model="fillVerFIT.cTelefonoI2" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
                                         
                                     </div>
-                                </form>
+                                
                             </div>
                         </div>
                   </div>
@@ -242,7 +213,7 @@ export default {
         {value: 'Tesis', label: 'Tesis'},
         {value: 'Memoria', label: 'Memoria'}
       ],
-      listUsuarios:[],
+
       listEscuelas:[],
       listVinculacion:[],
       fullscreenLoading: false,
@@ -262,7 +233,6 @@ export default {
   },
    mounted(){
     this.getTesisById();
-    this.getListarUsuarios();
     this.getListarVinculacion();
   },
   methods:{
@@ -276,86 +246,13 @@ export default {
           this.fullscreenLoading = false;
       })
     },
-    getListarUsuarios(){
-      this.fullscreenLoading = true;
-      var url = '/administracion/usuario/getListarUsuarios'
-      axios.get(url, {
-      }).then(response => {
-          //this.inicializarPaginacion();
-          this.listUsuarios = response.data;
-          this.fullscreenLoading = false;
-      })
-    },
+
     limpiarCriterios(){
       this.fillVerFIT.cNombre = '';
       this.fillVerFIT.nIdEscuela = '';
     },
     abrirModal(){
       this.modalShow = !this.modalShow;
-    },
-    validarRegistrarTesis(){
-      this.error = 0;
-      this.mensajeError = [];
-        if(!this.fillVerFIT.cTitulo){
-          this.mensajeError.push("El Titulo es un campo obligatorio")
-        }
-        if(!this.fillVerFIT.nIdPg){
-          this.mensajeError.push("El profesor guia es un campo obligatorio")
-        }
-        if(!this.fillVerFIT.cTipo){
-          this.mensajeError.push("El tipo es un campo obligatorio")
-        }
-        if(!this.fillVerFIT.cObjetivo){
-          this.mensajeError.push("El objetivo es un campo obligatorio")
-        }
-        if(!this.fillVerFIT.cContribucion){
-          this.mensajeError.push("La contribucion es un campo obligatorio")
-        }
-        if(!this.fillVerFIT.cNombreI1){
-          this.mensajeError.push("El nombre es un campo obligatorio")
-        }
-        if(!this.fillVerFIT.cTelefonoI1){
-          this.mensajeError.push("El telefono es un campo obligatorio")
-        }
-        if(!this.fillVerFIT.cRutI1){
-          this.mensajeError.push("El rut es un campo obligatorio")
-        }
-        if(!this.fillVerFIT.cEmailI1){
-          this.mensajeError.push("El email es un campo obligatorio")
-        }
-        if(this.mensajeError.length){
-          this.error = 1;
-        }
-        return this.error;
-    },
-    setRegistrarTesis(){
-      if(this.validarRegistrarTesis()){
-        this.modalShow = true;
-        return;
-      }
-      this.fullscreenLoading = true;
-      var url = '/alumno/setRegistrarTesis'
-      axios.post(url, {
-        'cTitulo'            : this.fillVerFIT.cTitulo,
-        'nIdPg'              : this.fillVerFIT.nIdPg,
-        'nIdVinculacion'     : this.fillVerFIT.nIdVinculacion,
-        'cTipo'              : this.fillVerFIT.cTipo,
-        'cObjetivo'          : this.fillVerFIT.cObjetivo,
-        'cContribucion'      : this.fillVerFIT.cContribucion,
-        'cNombreI1'          : this.fillVerFIT.cNombreI1,
-        'cRutI1'             : this.fillVerFIT.cRutI1,
-        'cTelefonoI1'        : this.fillVerFIT.cTelefonoI1,
-        'cIngresoI1'         : this.fillVerFIT.cIngresoI1,
-        'cEmailI1'           : this.fillVerFIT.cEmailI1,
-        'cNombreI2'          : this.fillVerFIT.cNombreI2,
-        'cRutI2'             : this.fillVerFIT.cRutI2,
-        'cEmailI2'           : this.fillVerFIT.cEmailI2,
-        'cIngresoI2'         : this.fillVerFIT.cIngresoI2,
-        'cTelefonoI2'        : this.fillVerFIT.cTelefonoI2
-      }).then(response => {
-        this.fullscreenLoading = false;
-        this.$router.push('/tesis');
-      })
     },
     nextPage(){
       this.pageNumber++;
@@ -386,7 +283,7 @@ export default {
     getUsuarioVer(data){
           this.fillVerFIT.cTitulo = data.titulo;
           this.fillVerFIT.cProfesorguia = data.pname;
-          this.fillVerFIT.nIdVinculacion = data.id_vinculacion;
+          this.fillVerFIT.nIdVinculacion = data.vname;
           this.fillVerFIT.cTipo = data.tipo;
           this.fillVerFIT.cObjetivo = data.objetivo;
           this.fillVerFIT.cContribucion = data.contribucion;

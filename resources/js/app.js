@@ -12,13 +12,13 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/es'
 
-Vue.use(ElementUI, { locale })
+Vue.use(ElementUI, { locale }) // plantillas con vuejs
 window.Vue.use(ElementUI);
 
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';// alertas en botones
 window.Swal = Swal;
 
-export const EventBus = new Vue();
+export const EventBus = new Vue();// Para traspasar permisos entre componentes
 window.EventBus = EventBus;
 
 Vue.component('App', require('./components/App.vue').default);

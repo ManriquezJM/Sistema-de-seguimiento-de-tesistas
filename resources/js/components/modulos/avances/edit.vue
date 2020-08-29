@@ -40,7 +40,7 @@
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Archivo</label>
                         <div class="col-md-9">
-                            <input type="file" class="form-control"  @change="getFile">
+                            <input type="file" class="form-control" accept="application/pdf" @change="getFile">
                         </div>
                       </div>
                     </div>
@@ -104,14 +104,14 @@ export default {
     }
   },
   mounted(){
-      this.getUsuarioById();
+      this.getAvance();
   },
   methods:{
     limpiarCriterios(){
       this.fillEditarAvance.cDescripcion = '';
       this.fillEditarAvance.oArchivo = '';
     },
-    getUsuarioById(){
+    getAvance(){
         var url = '/avances/getSeleccionarAvance'
         axios.get(url, {
         params: {
@@ -129,13 +129,12 @@ export default {
       this.fillEditarAvance.oArchivo = e.target.files[0];
     },
     setEditarAvance(){
-      if (this.validarRegistrarUsuario()){
+      if (this.validarRegistrarAvance()){
           this.modalShow = true;
           return;
       }
       this.fullscreenLoading = true;
       if(!this.fillEditarAvance.oArchivo || this.fillEditarAvance.oArchivo == undefined){
-        
         this.setGuardarAvance(0);
       } else {
         this.setRegistrarArchivoPDF();
@@ -146,7 +145,7 @@ export default {
       const config = { headers: {'Content-Type': 'multipart/form-data'}}
       var url = '/archivo/setRegistrarArchivoPDF'
       axios.post(url, this.form, config).then(response =>{
-        console.log(response)
+        //console.log(response)
         var nIdFile = response.data.id;
         this.setGuardarAvance(nIdFile);
       }) 
@@ -154,9 +153,9 @@ export default {
     setGuardarAvance(nIdFile){
       var url = '/avances/setEditarAvance'
       axios.post(url, {
-        'id' : this.fillEditarAvance.nIdAvance, 
+        'id'             : this.fillEditarAvance.nIdAvance, 
         'descripcion'    : this.fillEditarAvance.cDescripcion,
-        'id_archivo': nIdFile
+        'id_archivo'     : nIdFile,
       }).then(response => {
           Swal.fire({
           icon: 'success',
@@ -166,12 +165,12 @@ export default {
         })
       })
     },
-    validarRegistrarUsuario(){
+    validarRegistrarAvance(){
       this.error = 0;
       this.mensajeError = [];
 
         if(!this.fillEditarAvance.cDescripcion){
-          this.mensajeError.push("el nombre es un campo obligatorio")
+          this.mensajeError.push("La descripcion es un campo obligatorio")
         }
         if(this.mensajeError.length){
           this.error = 1;

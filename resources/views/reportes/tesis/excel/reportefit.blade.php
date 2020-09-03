@@ -10,13 +10,15 @@
     <table>
         <thead>
         <tr>
-            <th>Titulo</th>
-            <th>Alumno</th>
+            <th>Nombre Alumno1</th>
+            <th>Rut Alumno1</th>
+            <th>Nombre Alumno2</th>
+            <th>Rut Alumno2</th>
+            <th>Profesor Tutor</th>
             <th>Tipo</th>
-            <th>Vinculacion</th>
-            <th>Email</th>
-            <th>Telefono</th>
-            <th>Rut</th>
+            <th>Fecha ultima Bitacora</th>
+            <th>Comentario bitacora</th>
+            <th>Fecha ultimo Avance </th>
             <th>Estado</th>
             <th>Fecha ingreso</th>
         </tr>
@@ -24,15 +26,17 @@
         <tbody>
         @foreach($reportefit as $datatesis)
             <tr>
-                <td>{{ $datatesis->titulo }}</td>
                 <td>{{ $datatesis->nombre_int1 }}</td>
-                <td>{{ $datatesis->tipo }}</td>
-                <td>{{ $datatesis->namevinculacion }}</td>
-                <td>{{ $datatesis->email_int1 }}</td>
-                <td>{{ $datatesis->telefono_int1 }}</td>
                 <td>{{ $datatesis->rut_int1 }}</td>
+                <td>{{ $datatesis->nombre_int2 }}</td>
+                <td>{{ $datatesis->rut_int2 }}</td>
+                <td>{{ $datatesis->nombre_pt }}</td>
+                <td>{{ $datatesis->tipo_trabajo }}</td>
+                <td>{{ $datatesis->fecha_bitacora }}</td>
+                <td>{{ $datatesis->comentario_bitacora }}</td>
+                <td>{{ $datatesis->fecha_avance }}</td>
                 <td>{{ $datatesis->estado }}</td>
-                <td>{{ $datatesis->created_at }}</td>
+                <td>{{ $datatesis->fecha_inscripcion }}</td>
             </tr>
         @endforeach
         </tbody>

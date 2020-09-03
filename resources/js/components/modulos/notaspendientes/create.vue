@@ -32,9 +32,9 @@
                                 <form role="form">
                                     <div class="row">
                                         
-                                        <div class="col-md-9">
+                                        <div class="col-md-12">
                                             <div class="form-group row">
-                                              <div class="col-md-9">
+                                              <div class="col-md-12">
                                                 <template>
                                                     <label class="col-md-3 col-form-label">Fecha Propuesta</label>
                                                         <el-date-picker
@@ -43,14 +43,10 @@
                                                             size="large"
                                                             value-format="yyyy-MM-dd"
                                                             placeholder="Selecionar fecha de nota pendiente">
-        
                                                         </el-date-picker>
                                                 </template>
                                                 </div>
                                             </div>
-                                            <label class="col-md-9 col-form-label">Tengase presente que este formulario solo es para dejar constancia a nivel de facultad, 
-                                                por lo que aun es necesario realizar la solicitud a traves del portal del alumno.
-                                            </label>
                                         </div> 
                                     </div>
                                 </form>
@@ -113,6 +109,9 @@ export default {
   },
   computed: {
   },
+   mounted(){
+      this.alertaNotaP();
+  },
   methods:{
     limpiarCriterios(){
       this.fillCrearNotaP.cNombre = '';
@@ -152,6 +151,13 @@ export default {
       var url = '/notaspendientes/setAsignarNotaP'
       axios.post(url, {
         'id_notapendiente': IdNotaP
+      })
+    },
+    alertaNotaP(){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Importante!',
+        text: 'Tengase presente que este formulario solo es para dejar constancia a nivel de facultad, por lo que aun es necesario realizar la solicitud a traves del portal del alumno.',
       })
     },
     nextPage(){

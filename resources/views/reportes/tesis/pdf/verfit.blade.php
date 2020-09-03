@@ -67,7 +67,7 @@
         <br>
         <br>
        
-        <table width="100%" cellspacing="1" cellspacing="1" align="center">
+        <table width="100%" cellspacing="0" cellspacing="1" align="center">
             <tr>
                 <td>Nombre Completo: {{$datosfit[0]->nombre_int1}}</td>
             </tr>
@@ -94,6 +94,8 @@
             <tr>
                 <td style="text-align: center;">&nbsp;</td>
             </tr>
+        </table>
+        <table width="100%" cellspacing="0" cellspacing="1" align="center">
             <tr>
                 <td>Nombre Tesis/Memoria: {{$datosfit[0]->titulo}}</td>
             </tr>
@@ -107,7 +109,7 @@
                 <td style="text-align: center;">&nbsp;</td>
             </tr>
             <tr>
-                <td>Contribucion esperada: {{$datosfit[0]->contribucion}}</td>
+                <td >Contribucion esperada: {{$datosfit[0]->contribucion}}</td>
             </tr>
         </table>
 

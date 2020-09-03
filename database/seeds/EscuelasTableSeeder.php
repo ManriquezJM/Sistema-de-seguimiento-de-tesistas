@@ -14,31 +14,31 @@ class EscuelasTableSeeder extends Seeder
     {
         DB::table('escuelas')->insert([
             'id'=>'1',
-            'nombre'=>'Ing. Civil Informatica'
+            'nombre'=>'INGENIERIA CIVIL INFORMATICA'
         ]);
         DB::table('escuelas')->insert([
             'id'=>'2',
-            'nombre'=>'Arquitectura'
+            'nombre'=>'ARQUITECTURA'
         ]);
         DB::table('escuelas')->insert([
             'id'=>'3',
-            'nombre'=>'Ing. Civil'
+            'nombre'=>'INGENIERIA CIVIL'
         ]);
         DB::table('escuelas')->insert([
             'id'=>'4',
-            'nombre'=>'Contruccion Civil'
+            'nombre'=>'CONTRUCCION CIVIL'
         ]);
         DB::table('escuelas')->insert([
             'id'=>'5',
-            'nombre'=>'Ing. Civil Industrial'
+            'nombre'=>'INGENIERIA CIVIL INDUSTRIAL'
         ]);
         DB::table('escuelas')->insert([
             'id'=>'6',
-            'nombre'=>'Ing. Civil Electronica'
+            'nombre'=>'INGENIERIA CIVIL ELECTRONICA'
         ]);
         DB::table('escuelas')->insert([
             'id'=>'7',
-            'nombre'=>'Ing. en Contruccion'
+            'nombre'=>'INGENIERIA EN CONTRUCCION'
         ]);
     }
 }

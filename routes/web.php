@@ -87,13 +87,19 @@ Route::post('/comisiones/setRegistrarComision', 'ComisionesController@setRegistr
 Route::get('comisiones/getListarMisComisiones', 'ComisionesController@getListarMisComisiones');
 Route::get('comisiones/getListarComisiones', 'ComisionesController@getListarComisiones');
 
-/*********    RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS Y REPORTES     **********/
+/*********    RUTAS MODULO DE ADMINISTRACION DE REPORTES    **********/
 Route::Post('/administracion/tesis/setGenerarDocumento', 'AlumnoController@setGenerarDocumento');
 Route::get('/administracion/reportes/getListarTesisReporte', 'Administracion\ReportesController@getListarTesisReporte');
 Route::get('/administracion/reportes/export', 'Administracion\ReportesController@export');
 Route::post('/archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
 Route::post('/archivo/setRegistrarArchivoPDF', 'FilesController@setRegistrarArchivoPDF');
-});//cierre rutas que requieren autenticacion
+Route::get('/reportes/getListarProfesorByEscuela', 'Administracion\ReportesController@getListarProfesorByEscuela');
+
+/*********    RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS ALUMNOS     **********/
+Route::get('/secretaria/getListarAlumnos', 'SecretariaController@getListarAlumnos');
+Route::Post('/secretaria/setGenerarMemoRevision', 'SecretariaController@setGenerarMemoRevision');
+
+});//cierre de rutas que requieren autenticacion
 
 /********** RUTA BASE **********/
 Route::get('/{optional?}', function () {

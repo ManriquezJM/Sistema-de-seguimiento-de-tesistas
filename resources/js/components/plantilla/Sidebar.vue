@@ -139,9 +139,9 @@
             <li class="nav-item">
               <template v-if="listPermisos.includes('documentos.index')">
                 <router-link class="nav-link" :to="'/documentos'">
-                  <i class="nav-icon far fa-envelope"></i>
+                  <i class="nav-icon far fa-id-card"></i>
                   <p>
-                    configurar documentos
+                    Documentos alumnos
                   </p>
                 </router-link>  
               </template>

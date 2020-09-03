@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Reportes de Tesis</h1>
+            <h1 class="m-0 text-dark">Reportes de Tesistas</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -12,7 +12,6 @@
 
     <div class="container container-fluid">
       <div class="card">
-        
         <div class="card-body">
           <div class="container-fluid">
               <div class="card card-info">
@@ -22,20 +21,27 @@
               <div class="card-body">
                 <form role="form">
                   <div class="row">
-                    
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Rut Alumno</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" v-model="fillBsqTesisReporte.nRut">
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Tipo de trabajo</label>
+                        <label class="col-md-3 col-form-label">Escuelas</label>
                         <div class="col-md-9">
-                            <el-select v-model="fillBsqTesisReporte.cTipo" 
-                            placeholder="Seleccione un estado"
+                            <el-select v-model="fillBsqTesisReporte.nIdEscuela" @change="getListarProfesorByEscuela"
+                            placeholder="Asignar Escuela"
                             clearable>
-                              <el-option
-                                v-for="item in listTipoDeTrabajo"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                              </el-option>
+                            <el-option
+                                v-for="item in listEscuelas"
+                                :key="item.id"
+                                :label="item.nombre"
+                                :value="item.id">
+                            </el-option>
                             </el-select>
                         </div>
                       </div>
@@ -57,6 +63,24 @@
                         </div>
                       </div>
                     </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Profesor</label>
+                        <div class="col-md-9">
+                                <el-select v-model="fillBsqTesisReporte.nIdProfesor" 
+                                placeholder="Asignar Escuela"
+                                clearable>
+                                <el-option
+                                    v-for="item in listProfesores"
+                                    :key="item.id"
+                                    :label="item.fullname"
+                                    :value="item.id_user">
+                                </el-option>
+                                </el-select>
+                            </div>
+                      </div>
+                    </div>
+                    
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Estado</label>
@@ -91,7 +115,6 @@
                     </div>
                   </div>
                 </form>
-              
               </div>
               <div class="card-footer">
                 <div class="row">
@@ -109,10 +132,13 @@
                 <h3 class="card-title">
                     <template v-if="listTesis.length">
                         <el-tooltip class="item" effect="dark" content="Exportar en Formato Excel" placement="right">
-                            <i @click.prevent="setGenerarDocumento" class="fas fa-file-excel"></i>
+                          <el-button @click.prevent="setGenerarDocumento">
+                          <i  class="fas fa-file-excel"></i>
+                          Exportar
+                          </el-button>
                         </el-tooltip>
                     </template>
-                Bandeja de resultados</h3>
+                  Bandeja de resultados</h3>
               </div>
               <div class="card-body table table-responsive">
                 <template v-if="listTesis.length">
@@ -120,18 +146,20 @@
                   <table class ="table table-hover table-head-fixed text-nowrap projects">
                     <thead>
                       <tr>
-                        <th>Titulo</th>
                         <th>Alumno</th>
-                        <th>Vinculacion</th>
+                        <th>Rut</th>
+                        <th>Escuela</th>
+                        <th>Profesor Tutor</th>
                         <th>Estado Tesis</th>
-                        <th>Acciones </th>
+                        <th>Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="(item, index) in listTesis" :key="index">
-                        <td v-text="item.titulo"></td>
                         <td v-text="item.nombre_int1"></td>
-                        <td v-text="item.namevinculacion"></td>
+                        <td v-text="item.rut_int1"></td>
+                        <td v-text="item.escuela_nom"></td>
+                        <td v-text="item.nombre_pt"></td>
                         <td>
                           <template v-if="item.estado == 'D'">
                             <span class="badge badge-warning" >En desarrollo</span>
@@ -145,7 +173,7 @@
                         </td>
                         <td>
                           <router-link class="btn btn-flat btn-primary btn-sm" :to="{name:'tesis.ver', params:{id: item.id}}">
-                            <i class="fas fa-folder"></i> Ver
+                             Ver Fit
                           </router-link>
                           <template v-if="item.aprobado_pg == 'A'">
                             <button class="btn btn-flat btn-light btn-sm" @click.prevent="setGenerarDocumento(item.id)">
@@ -195,89 +223,6 @@
         </div>
       </div>
     </div>
-    <div class="modal fade" :class="{ show: modalShow }" :style="modalShow ? mostrarModal : ocultarModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Sistema de tesis UCM</h5>
-            <button class="close" @click="abrirModal"></button>
-          </div>
-          <div class="modal-body">
-            
-            <template v-if="modalOption == 1">
-              <div class="callout callout-danger" style="padding: 5px" v-for="(item, index) in mensajeError" :key="index" v-text="item"></div>
-            </template>
-            <template v-if="modalOption == 2">
-              
-                    <div class="container-fluid">
-                      <div class="card card-info">
-                        <div class="card-header">
-                          <h3 class="card-title">Formulario de inscripcion de tesis</h3>
-                        </div>
-                        <div class="card-body">
-                          <form role="form">
-                            <div class="row">
-                              <div class="col-md-12">
-                                <div class="form-group row">
-                                  <label class="col-md-12 col-form-label">Alumno</label>
-                                  <div class="col-md-9">
-                                      <span class="form-control" v-text="fillVerFIT.cNombre"></span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-12">
-                                <div class="form-group row">
-                                  <label class="col-md-12 col-form-label">Profesor Guia</label>
-                                  <div class="col-md-9">
-                                      <span class="form-control" v-text="fillVerFIT.cSlug"></span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-
-                      <div class="card card-info">
-                        <div class="card-header">
-                          <h3 class="card-title">Listado de Permisos</h3>
-                        </div>
-                        <div class="card-body table-resposive">
-                          <template v-if="listPermisos.length">
-                          <div class="scrollTable">
-                            <table class ="table table-hover table-head-fixed text-nowrap projects">
-                              <thead>
-                                <tr>
-                                  <th>Nombre</th>
-                                  <th>Url amigable </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr v-for="(item, index) in listPermisos" :key="index">
-                                  <td v-text="item.name"></td>
-                                  <td v-text="item.slug"></td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            </div>
-                          </template>
-                          <template v-else>
-                            <div class="callout callout-info">
-                              <h5> No se han encontrado resultados...</h5>
-                            </div>
-                          </template>
-                        </div>
-                      </div>
-                    </div>
-
-            </template>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
-          </div>
-        </div>
-      </div>
-    </div>
 </div>
 
 </template>
@@ -288,6 +233,9 @@ export default {
   data(){
     return{
       fillBsqTesisReporte:{
+        nRut: '',
+        nIdEscuela:'',
+        nIdProfesor:'',
         nIdTesis: '',
         cTitulo: '',
         nIdPg: '',
@@ -298,10 +246,6 @@ export default {
         cVinculacion: '',
         dfecharango: '',
         cEstadoTesis: ''
-      },
-      fillVerFIT:{
-        cNombre: '',
-        cSlug: ''
       },
       listRolPermisosByUsuario: JSON.parse(localStorage.getItem('listRolPermisosByUsuario')),
       listTipoDeTrabajo: [
@@ -319,9 +263,11 @@ export default {
         {value: 'D', label: 'En Desarrollo'}
       ],
       listTesis:[],
+      listEscuelas:[],
+      listProfesores:[],
       fullscreenLoading: false,
       pageNumber: 0,
-      perPage: 5,
+      perPage: 10,
       modalShow: false,
       modalOption: 0, 
       mostrarModal: {
@@ -363,12 +309,34 @@ export default {
     }
   },
   mounted(){
-    //this.getListarTesisReporte();
+    this.getListarEscuelas();
+    this.getListarProfesorByEscuela();
   },
   methods:{
+    getListarEscuelas(){
+      this.fullscreenLoading = true;
+      var url = '/administracion/escuelas/getListarEscuelas'
+      axios.get(url, {
+
+      }).then(response => {
+          this.listEscuelas = response.data;
+          this.fullscreenLoading = false;
+      })
+    },
+    getListarProfesorByEscuela(){
+      this.fullscreenLoading = true;
+      var url = '/reportes/getListarProfesorByEscuela'
+      axios.get(url, {
+        params: {
+          'nIdEscuela' : this.fillBsqTesisReporte.nIdEscuela,
+        }
+      }).then(response => {
+          this.listProfesores = response.data;
+          this.fullscreenLoading = false;
+      })
+    },
     setGenerarDocumento(){
       //this.fullscreenLoading = true;
-      
       var url = '/administracion/reportes/export'
       axios.get(url, {
           responseType: 'blob',
@@ -388,11 +356,14 @@ export default {
       var url = '/administracion/reportes/getListarTesisReporte'
       axios.get(url, {
         params: {
-          'cTipo'     : this.fillBsqTesisReporte.cTipo,
-          'cVinculacion'   : this.fillBsqTesisReporte.cVinculacion,
-          'cEstadoTesis'     : this.fillBsqTesisReporte.cEstadoTesis,
-          'dFechaInicio'  :   (!this.fillBsqTesisReporte.dfecharango) ? '' : this.fillBsqTesisReporte.dfecharango[0],
-          'dFechaFin'     :   (!this.fillBsqTesisReporte.dfecharango) ? '' : this.fillBsqTesisReporte.dfecharango[1],
+          'nRut'        : this.fillBsqTesisReporte.nRut,
+          'nIdEscuela'  : this.fillBsqTesisReporte.nIdEscuela,
+          'nIdProfesor' : this.fillBsqTesisReporte.nIdProfesor,
+          'cTipo'       : this.fillBsqTesisReporte.cTipo,
+          'cVinculacion': this.fillBsqTesisReporte.cVinculacion,
+          'cEstadoTesis': this.fillBsqTesisReporte.cEstadoTesis,
+          'dFechaInicio': (!this.fillBsqTesisReporte.dfecharango) ? '' : this.fillBsqTesisReporte.dfecharango[0],
+          'dFechaFin'   : (!this.fillBsqTesisReporte.dfecharango) ? '' : this.fillBsqTesisReporte.dfecharango[1],
         }
       }).then(response => {
           this.inicializarPaginacion();
@@ -401,6 +372,9 @@ export default {
       })
     },
     limpiarCriteriosBsq(){
+      this.fillBsqTesisReporte.nRut = '';
+      this.fillBsqTesisReporte.nIdEscuela = '';
+      this.fillBsqTesisReporte.nIdProfesor = '';
       this.fillBsqTesisReporte.cTipo = '';
       this.fillBsqTesisReporte.cVinculacion = '';
       this.fillBsqTesisReporte.cEstadoTesis = '';
@@ -431,31 +405,6 @@ export default {
       this.listPermisos = [];
       this.modalOption = 0;
     },
-    abrirModalByOption(modulo, accion, data){
-    switch (modulo) {
-      case "roles":
-        {
-          switch (accion) {
-            case "ver":
-              {
-                this.fillVerFIT.cNombre = data.name;
-                this.fillVerFIT.cSlug = data.slug;
-                //obtener los permisos por el rol seleccionado
-                this.getListarPermisosByRol(data.id);
-              }
-              break;
-          
-            default:
-              break;
-          }
-        }
-        
-        break;
-    
-      default:
-        break;
-    }
-  },
   setCambiarEstadoFIT(op, id){
       Swal.fire({
       title: 'Estas seguro? ' + ((op == 1) ? 'Aprobar ' : 'Rechazar ') + '  El formulario de inscripcion',

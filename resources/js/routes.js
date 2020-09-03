@@ -378,18 +378,32 @@ export const rutas = [
     }
 },
 /******** RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS *********/
-    { 
-        path: '/documentos ',
-        name: 'documentos.index',
-        component: require('./components/modulos/documentos/Index').default,
-        beforeEnter: (to, from, next) => {
-            verificarAcceso(to, from, next);
-        }
-    },
-    { 
-        path: '*',
-        component: require('./components/plantilla/404').default,
+{ 
+    path: '/documentos',
+    name: 'documentos.index',
+    component: require('./components/modulos/documentos/Index').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+ },
+ /*
+{ 
+    path: '/documentos/crear',
+    name: 'documentos.crear',
+    component: require('./components/modulos/documentos/create').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
     }
+},
+{ 
+    path: '/documentos/editar/:id',
+    name: 'documentos.editar',
+    component: require('./components/modulos/documentos/edit').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    },
+    props : true
+ }*/
 ]//cierre concentracion de rutas
 
 export default new Router({

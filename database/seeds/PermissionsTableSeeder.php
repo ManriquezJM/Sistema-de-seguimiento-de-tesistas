@@ -191,6 +191,19 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Editar Comisiones',
             'slug' => 'comisiones.editar'
         ]);
+        //Semillas administracion documentos secretaria 
+        DB::table('permissions')->insert([
+            'name' => 'Navegar documentos alumnos',
+            'slug' => 'documentos.index'
+        ]); 
+        DB::table('permissions')->insert([
+            'name' => 'Crear Comisiones',
+            'slug' => 'comisiones.crear'
+        ]); 
+        DB::table('permissions')->insert([
+            'name' => 'Editar Comisiones',
+            'slug' => 'comisiones.editar'
+        ]);
     }
 }
 

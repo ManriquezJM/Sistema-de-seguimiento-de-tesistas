@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use App\Fit;
 use App\Bitacoras;
 use Carbon\Carbon;
+use App\Mail\MailBitacoras;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class BitacorasController extends Controller
 {
@@ -42,6 +44,16 @@ class BitacorasController extends Controller
 
         $IdAlumno   = $request->id_user;
         $idTesis    = Fit::select('id')->where('id_alumno',$IdAlumno)->get();
+
+        $DatosEmail = DB::table('fit')
+                            ->join('users as profesor_guia', 'profesor_guia.id_user', '=', 'fit.id_profesorguia')
+                            ->join('users as alumno', 'alumno.id_user', '=', 'fit.id_alumno')
+                            ->where('fit.id', '=', $idTesis[0]->id)
+                            ->select('alumno.email as email_a','fit.titulo', DB::raw("CONCAT(profesor_guia.nombres,' ',profesor_guia.apellidos) as full_name"))
+                            ->get();
+        $DatosEmail[0]->fecha = Carbon::now();
+
+        Mail::to($DatosEmail[0]->email_a)->queue(new MailBitacoras($DatosEmail[0]));
 
         $Bitacora               = new Bitacoras();
         $Bitacora->comentario   = $request->Comentario;

@@ -80,7 +80,6 @@
                             </div>
                       </div>
                     </div>
-                    
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Estado</label>
@@ -226,216 +225,212 @@
 </div>
 
 </template>
-
 <script>
-export default {
-    props: ['usuario'],
-  data(){
-    return{
-      fillBsqTesisReporte:{
-        nRut: '',
-        nIdEscuela:'',
-        nIdProfesor:'',
-        nIdTesis: '',
-        cTitulo: '',
-        nIdPg: '',
-        cNombreI1: '',
-        cEstadoPg: '',
-        cEstadoD: '',
-        cTipo: '',
-        cVinculacion: '',
-        dfecharango: '',
-        cEstadoTesis: ''
-      },
-      listRolPermisosByUsuario: JSON.parse(localStorage.getItem('listRolPermisosByUsuario')),
-      listTipoDeTrabajo: [
-        {value: 'Tesis', label: 'Tesis'},
-        {value: 'Memoria', label: 'Memoria'}
-      ],
-      listTipoVinculacion: [
-        {value: 'Fondo Concursable', label: 'Fondo Concursable'},
-        {value: 'Empresa', label: 'Empresa'},
-        {value: 'Comunidad', label: 'Comunidad'}
-      ],
-      listEstadosTesis: [
-        {value: 'A', label: 'Aprobada'},
-        {value: 'R', label: 'Reprobada'},
-        {value: 'D', label: 'En Desarrollo'}
-      ],
-      listTesis:[],
-      listEscuelas:[],
-      listProfesores:[],
-      fullscreenLoading: false,
-      pageNumber: 0,
-      perPage: 10,
-      modalShow: false,
-      modalOption: 0, 
-      mostrarModal: {
-        display: 'block',
-        background: '#0000006b',
-      },
-      ocultarModal: {
-        display: 'none',
-      },
-      error: 0,
-      mensajeError:[]
-    }
-  },
-  computed: {
-    pageCount(){
-      //obtener el numero de paginas 
-      let a = this.listTesis.length,
-          b = this.perPage;
-      return Math.ceil(a / b);
-    },
-    listarTesisPaginated(){
-      //
-      let inicio = this.pageNumber * this.perPage,
-        fin = inicio + this.perPage;
-      return this.listTesis.slice(inicio, fin);
-    },
-    pagesList(){
-      let a = this.listTesis.length,
-          b = this.perPage;
-      let pageCount = Math.ceil(a / b);
-      let count = 0,
-        pagesArray = [];
-      while (count < pageCount){
-        pagesArray.push(count);
-        count++;
+  export default {
+      props: ['usuario'],
+    data(){
+      return{
+        fillBsqTesisReporte:{
+          nRut: '',
+          nIdEscuela:'',
+          nIdProfesor:'',
+          nIdTesis: '',
+          cTitulo: '',
+          nIdPg: '',
+          cNombreI1: '',
+          cEstadoPg: '',
+          cEstadoD: '',
+          cTipo: '',
+          cVinculacion: '',
+          dfecharango: '',
+          cEstadoTesis: ''
+        },
+        listRolPermisosByUsuario: JSON.parse(localStorage.getItem('listRolPermisosByUsuario')),
+        listTipoDeTrabajo: [
+          {value: 'Tesis', label: 'Tesis'},
+          {value: 'Memoria', label: 'Memoria'}
+        ],
+        listTipoVinculacion: [
+          {value: 'Fondo Concursable', label: 'Fondo Concursable'},
+          {value: 'Empresa', label: 'Empresa'},
+          {value: 'Comunidad', label: 'Comunidad'}
+        ],
+        listEstadosTesis: [
+          {value: 'A', label: 'Aprobada'},
+          {value: 'R', label: 'Reprobada'},
+          {value: 'D', label: 'En Desarrollo'}
+        ],
+        listTesis:[],
+        listEscuelas:[],
+        listProfesores:[],
+        fullscreenLoading: false,
+        pageNumber: 0,
+        perPage: 10,
+        modalShow: false,
+        modalOption: 0, 
+        mostrarModal: {
+          display: 'block',
+          background: '#0000006b',
+        },
+        ocultarModal: {
+          display: 'none',
+        },
+        error: 0,
+        mensajeError:[]
       }
-      return pagesArray;
-
-    }
-  },
-  mounted(){
-    this.getListarEscuelas();
-    this.getListarProfesorByEscuela();
-  },
-  methods:{
-    getListarEscuelas(){
-      this.fullscreenLoading = true;
-      var url = '/administracion/escuelas/getListarEscuelas'
-      axios.get(url, {
-
-      }).then(response => {
-          this.listEscuelas = response.data;
-          this.fullscreenLoading = false;
-      })
     },
-    getListarProfesorByEscuela(){
-      this.fullscreenLoading = true;
-      var url = '/reportes/getListarProfesorByEscuela'
-      axios.get(url, {
-        params: {
-          'nIdEscuela' : this.fillBsqTesisReporte.nIdEscuela,
+    computed: {
+      pageCount(){
+        //obtener el numero de paginas 
+        let a = this.listTesis.length,
+            b = this.perPage;
+        return Math.ceil(a / b);
+      },
+      listarTesisPaginated(){
+        //
+        let inicio = this.pageNumber * this.perPage,
+          fin = inicio + this.perPage;
+        return this.listTesis.slice(inicio, fin);
+      },
+      pagesList(){
+        let a = this.listTesis.length,
+            b = this.perPage;
+        let pageCount = Math.ceil(a / b);
+        let count = 0,
+          pagesArray = [];
+        while (count < pageCount){
+          pagesArray.push(count);
+          count++;
         }
-      }).then(response => {
-          this.listProfesores = response.data;
-          this.fullscreenLoading = false;
-      })
+        return pagesArray;
+      }
     },
-    setGenerarDocumento(){
-      //this.fullscreenLoading = true;
-      var url = '/administracion/reportes/export'
-      axios.get(url, {
-          responseType: 'blob',
-          params:{
-              'listTesis': JSON.stringify(this.listTesis)
-          }
-      }).then(response => {
-        var oMyBlob = new Blob([response.data], {type : 'application/vnd.ms-excel'});
-        var url = document.createElement('a')
-        url.href = URL.createObjectURL(oMyBlob);
-        url.download = 'usuarios.xlsx'
-        url.click()
-      })
+    mounted(){
+      this.getListarEscuelas();
+      this.getListarProfesorByEscuela();
     },
-    getListarTesisReporte(){
-      this.fullscreenLoading = true;
-      var url = '/administracion/reportes/getListarTesisReporte'
-      axios.get(url, {
-        params: {
-          'nRut'        : this.fillBsqTesisReporte.nRut,
-          'nIdEscuela'  : this.fillBsqTesisReporte.nIdEscuela,
-          'nIdProfesor' : this.fillBsqTesisReporte.nIdProfesor,
-          'cTipo'       : this.fillBsqTesisReporte.cTipo,
-          'cVinculacion': this.fillBsqTesisReporte.cVinculacion,
-          'cEstadoTesis': this.fillBsqTesisReporte.cEstadoTesis,
-          'dFechaInicio': (!this.fillBsqTesisReporte.dfecharango) ? '' : this.fillBsqTesisReporte.dfecharango[0],
-          'dFechaFin'   : (!this.fillBsqTesisReporte.dfecharango) ? '' : this.fillBsqTesisReporte.dfecharango[1],
-        }
-      }).then(response => {
-          this.inicializarPaginacion();
-          this.listTesis = response.data;
-          this.fullscreenLoading = false;
-      })
-    },
-    limpiarCriteriosBsq(){
-      this.fillBsqTesisReporte.nRut = '';
-      this.fillBsqTesisReporte.nIdEscuela = '';
-      this.fillBsqTesisReporte.nIdProfesor = '';
-      this.fillBsqTesisReporte.cTipo = '';
-      this.fillBsqTesisReporte.cVinculacion = '';
-      this.fillBsqTesisReporte.cEstadoTesis = '';
-      this.fillBsqTesisReporte.dfecharango = '';
-    },
-    limpiarBandejaUsuarios(){
-      this.listTesis = [];
-    },
-    nextPage(){
-      this.pageNumber++;
-    },
-    prevPage(){
-      this.pageNumber--;
-    },
-    selectPage(page){
-      this.pageNumber = page;
-    },
-    inicializarPaginacion(){
-      this.pageNumber = 0;
-    },
-    abrirModal(){
-      this.modalShow = !this.modalShow;
-      this.limpiarModal();
-    },
-    limpiarModal(){
-      this.fillVerFIT.cNombre = ''
-      this.fillVerFIT.cSlug = ''
-      this.listPermisos = [];
-      this.modalOption = 0;
-    },
-  setCambiarEstadoFIT(op, id){
-      Swal.fire({
-      title: 'Estas seguro? ' + ((op == 1) ? 'Aprobar ' : 'Rechazar ') + '  El formulario de inscripcion',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: ((op == 1) ? 'Si, Aprobar' : 'Si, Rechazar')
-    }).then((result) => {
-      if (result.value) {
+    methods:{
+      getListarEscuelas(){
         this.fullscreenLoading = true;
-        var url = '/administracion/alumno/setCambiarEstadoFIT'
-        axios.post(url, {
-          'nIdTesis' : id,
-          'cEstadoPg'    : (op == 1) ? 'A' : 'R'
+        var url = '/administracion/escuelas/getListarEscuelas'
+        axios.get(url, {
         }).then(response => {
-            Swal.fire({
-            icon: 'success',
-            title: 'Se ' + ((op == 1) ? 'Aprobo ' : 'Rechazo ') +' El formulario de inscripcion',
-            showConfirmButton: false,
-            timer: 1500
-            })
-            this.getListarTesisReporte();
+            this.listEscuelas = response.data;
+            this.fullscreenLoading = false;
         })
+      },
+      getListarProfesorByEscuela(){
+        this.fullscreenLoading = true;
+        var url = '/reportes/getListarProfesorByEscuela'
+        axios.get(url, {
+          params: {
+            'nIdEscuela' : this.fillBsqTesisReporte.nIdEscuela,
+          }
+        }).then(response => {
+            this.listProfesores = response.data;
+            this.fullscreenLoading = false;
+        })
+      },
+      setGenerarDocumento(){
+        //this.fullscreenLoading = true;
+        var url = '/administracion/reportes/export'
+        axios.get(url, {
+            responseType: 'blob',
+            params:{
+                'listTesis': JSON.stringify(this.listTesis)
+            }
+        }).then(response => {
+          var oMyBlob = new Blob([response.data], {type : 'application/vnd.ms-excel'});
+          var url = document.createElement('a')
+          url.href = URL.createObjectURL(oMyBlob);
+          url.download = 'usuarios.xlsx'
+          url.click()
+        })
+      },
+      getListarTesisReporte(){
+        this.fullscreenLoading = true;
+        var url = '/administracion/reportes/getListarTesisReporte'
+        axios.get(url, {
+          params: {
+            'nRut'        : this.fillBsqTesisReporte.nRut,
+            'nIdEscuela'  : this.fillBsqTesisReporte.nIdEscuela,
+            'nIdProfesor' : this.fillBsqTesisReporte.nIdProfesor,
+            'cTipo'       : this.fillBsqTesisReporte.cTipo,
+            'cVinculacion': this.fillBsqTesisReporte.cVinculacion,
+            'cEstadoTesis': this.fillBsqTesisReporte.cEstadoTesis,
+            'dFechaInicio': (!this.fillBsqTesisReporte.dfecharango) ? '' : this.fillBsqTesisReporte.dfecharango[0],
+            'dFechaFin'   : (!this.fillBsqTesisReporte.dfecharango) ? '' : this.fillBsqTesisReporte.dfecharango[1],
+          }
+        }).then(response => {
+            this.inicializarPaginacion();
+            this.listTesis = response.data;
+            this.fullscreenLoading = false;
+        })
+      },
+      limpiarCriteriosBsq(){
+        this.fillBsqTesisReporte.nRut = '';
+        this.fillBsqTesisReporte.nIdEscuela = '';
+        this.fillBsqTesisReporte.nIdProfesor = '';
+        this.fillBsqTesisReporte.cTipo = '';
+        this.fillBsqTesisReporte.cVinculacion = '';
+        this.fillBsqTesisReporte.cEstadoTesis = '';
+        this.fillBsqTesisReporte.dfecharango = '';
+      },
+      limpiarBandejaUsuarios(){
+        this.listTesis = [];
+      },
+      nextPage(){
+        this.pageNumber++;
+      },
+      prevPage(){
+        this.pageNumber--;
+      },
+      selectPage(page){
+        this.pageNumber = page;
+      },
+      inicializarPaginacion(){
+        this.pageNumber = 0;
+      },
+      abrirModal(){
+        this.modalShow = !this.modalShow;
+        this.limpiarModal();
+      },
+      limpiarModal(){
+        this.fillVerFIT.cNombre = ''
+        this.fillVerFIT.cSlug = ''
+        this.listPermisos = [];
+        this.modalOption = 0;
+      },
+    setCambiarEstadoFIT(op, id){
+        Swal.fire({
+        title: 'Estas seguro? ' + ((op == 1) ? 'Aprobar ' : 'Rechazar ') + '  El formulario de inscripcion',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: ((op == 1) ? 'Si, Aprobar' : 'Si, Rechazar')
+      }).then((result) => {
+        if (result.value) {
+          this.fullscreenLoading = true;
+          var url = '/administracion/alumno/setCambiarEstadoFIT'
+          axios.post(url, {
+            'nIdTesis' : id,
+            'cEstadoPg'    : (op == 1) ? 'A' : 'R'
+          }).then(response => {
+              Swal.fire({
+              icon: 'success',
+              title: 'Se ' + ((op == 1) ? 'Aprobo ' : 'Rechazo ') +' El formulario de inscripcion',
+              showConfirmButton: false,
+              timer: 1500
+              })
+              this.getListarTesisReporte();
+          })
+        }
+      })
       }
-    })
-    }
-   
-
-  }//cierre de methods
-}
+    
+    }//cierre de methods
+  }
 </script>
 
 <style>

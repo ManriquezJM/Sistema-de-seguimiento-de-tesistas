@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Avances;
 use App\Fit;
+use App\Mail\MailAvances;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 
 class AvancesController extends Controller
@@ -84,6 +86,17 @@ class AvancesController extends Controller
         
         $idUser  = Auth::user()->id_user;
         $idTesis = Fit::select('id')->where('id_alumno',$idUser)->get();
+
+        $DatosEmail = DB::table('avancestesis')
+                            ->join('fit', 'fit.id', '=', 'avancestesis.id_tesis')
+                            ->join('users as profesor_guia', 'profesor_guia.id_user', '=', 'fit.id_profesorguia')
+                            ->join('users as alumno', 'alumno.id_user', '=', 'fit.id_alumno')
+                            ->where('fit.id', '=', $idTesis[0]->id)
+                            ->select('profesor_guia.email as email_pg','fit.titulo', DB::raw("CONCAT(alumno.nombres,' ',alumno.apellidos) as full_name"))
+                            ->get();
+        $DatosEmail[0]->fecha = Carbon::now();
+
+        Mail::to($DatosEmail[0]->email_pg)->queue(new MailAvances($DatosEmail[0]));
    
         $rpta               = new Avances();
         $rpta->descripcion  = $request->descripcion;

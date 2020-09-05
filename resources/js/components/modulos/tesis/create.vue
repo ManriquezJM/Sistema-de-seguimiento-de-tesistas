@@ -29,21 +29,7 @@
                             <div class="card-body">
                                 <form role="form">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Titulo</label>
-                                                <div class="col-md-9">
-                                                    <el-input
-                                                      type="textarea"
-                                                      :autosize="{ minRows: 2, maxRows: 5}"
-                                                      maxlength="200"
-                                                      placeholder="Objetivo"
-                                                      v-model="fillCrearFIT.cTitulo">
-                                                    </el-input>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
+                                      <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Profesor Guia</label>
                                                 <div class="col-md-9">
@@ -55,23 +41,6 @@
                                                         :key="item.id_user"
                                                         :label="item.fullname"
                                                         :value="item.id_user">
-                                                    </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Vinculacion</label>
-                                                <div class="col-md-9">
-                                                    <el-select v-model="fillCrearFIT.nIdVinculacion" 
-                                                    placeholder="Asignar Vinculacion"
-                                                    clearable>
-                                                    <el-option
-                                                        v-for="item in listVinculacion"
-                                                        :key="item.id"
-                                                        :label="item.nombre"
-                                                        :value="item.id">
                                                     </el-option>
                                                     </el-select>
                                                 </div>
@@ -96,19 +65,20 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Objetivo
-                                                </label>
+                                                <label class="col-md-3 col-form-label">Titulo</label>
                                                 <div class="col-md-9">
                                                     <el-input
                                                       type="textarea"
                                                       :autosize="{ minRows: 2, maxRows: 5}"
-                                                      maxlength="500"
+                                                      maxlength="200"
                                                       placeholder="Objetivo"
-                                                      v-model="fillCrearFIT.cObjetivo">
+                                                      show-word-limit
+                                                      v-model="fillCrearFIT.cTitulo">
                                                     </el-input>
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Contribucion</label>
@@ -118,8 +88,44 @@
                                                       :autosize="{ minRows: 2, maxRows: 5}"
                                                       maxlength="500"
                                                       placeholder="Contribucion"
+                                                      show-word-limit
                                                       v-model="fillCrearFIT.cContribucion">
                                                     </el-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Objetivo
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <el-input
+                                                      type="textarea"
+                                                      :autosize="{ minRows: 2, maxRows: 5}"
+                                                      maxlength="500"
+                                                      placeholder="Objetivo"
+                                                      show-word-limit
+                                                      v-model="fillCrearFIT.cObjetivo">
+                                                    </el-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Vinculacion</label>
+                                                <div class="col-md-9">
+                                                    <el-select v-model="fillCrearFIT.nIdVinculacion" 
+                                                    placeholder="Asignar Vinculacion"
+                                                    clearable>
+                                                    <el-option
+                                                        v-for="item in listVinculacion"
+                                                        :key="item.id"
+                                                        :label="item.nombre"
+                                                        :value="item.id">
+                                                    </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -127,23 +133,24 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Nombre integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearFIT.cNombreI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" class="form-control" maxlength="40" v-model="fillCrearFIT.cNombreI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Rut Integrante 1</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearFIT.cRutI1" @keyup.enter="setRegistrarTesis">
+                                                <div class="col-md-9">   
+                                               <input type="text" class="form-control" maxlength="12" placeholder="sin puntos 19866976-1" v-model="fillCrearFIT.cRutI1" @keyup.enter="setRegistrarTesis"> 
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Telefono Integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearFIT.cTelefonoI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="number" maxlength="9" class="form-control" v-model="fillCrearFIT.cTelefonoI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -151,7 +158,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Año ingreso Integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearFIT.cIngresoI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="number" class="form-control" maxlength="4" v-model="fillCrearFIT.cIngresoI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -159,7 +166,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">email Integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearFIT.cEmailI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="email" class="form-control" maxlength="40" v-model="fillCrearFIT.cEmailI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -167,7 +174,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Nombre Integrante 2</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearFIT.cNombreI2" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" class="form-control" maxlength="50" v-model="fillCrearFIT.cNombreI2" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -175,7 +182,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Rut Integrante 2</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearFIT.cRutI2" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" class="form-control" maxlength="12" placeholder="sin puntos 19866976-1" v-model="fillCrearFIT.cRutI2" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -183,7 +190,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Email Integrante 2</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearFIT.cEmailI2" @keyup.enter="setRegistrarTesis">
+                                                    <input type="email" class="form-control" maxlength="40"  v-model="fillCrearFIT.cEmailI2" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -191,7 +198,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Año ingreso Integrante 2</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearFIT.cIngresoI2" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" maxlength="4" class="form-control" v-model="fillCrearFIT.cIngresoI2" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -199,11 +206,10 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Telefono Integrante 2</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearFIT.cTelefonoI2" @keyup.enter="setRegistrarTesis">
+                                                    <input type="tel" maxlength="9" class="form-control" v-model="fillCrearFIT.cTelefonoI2" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
-                                        </div>
-                                        
+                                        </div>   
                                     </div>
                                 </form>
                             </div>
@@ -296,7 +302,6 @@ export default {
       var url = '/administracion/vinculacion/getListarVinculacion'
       axios.get(url, {
       }).then(response => {
-          //this.inicializarPaginacion();
           this.listVinculacion = response.data;
           this.fullscreenLoading = false;
       })
@@ -306,22 +311,10 @@ export default {
       var url = '/alumno/getListarProfesores'
       axios.get(url, {
       }).then(response => {
-          //this.inicializarPaginacion();
           this.listProfesores = response.data;
           this.fullscreenLoading = false;
       })
     },
-    /*getListarUsuarios(){
-      this.fullscreenLoading = true;
-      var url = '/administracion/usuario/getListarUsuarios'
-      axios.get(url, {
-      }).then(response => {
-          //this.inicializarPaginacion();
-          this.listProfesores = response.data;
-          this.fullscreenLoading = false;
-      })
-    },*/
-
     limpiarCriterios(){
       this.fillCrearFIT.cNombre = '';
       this.fillCrearFIT.nIdEscuela = '';
@@ -405,12 +398,9 @@ export default {
     inicializarPaginacion(){
       this.pageNumber = 0;
     },
-
-  
   }// cierre methods
 }
 </script>
-
 <style>
 
 </style>

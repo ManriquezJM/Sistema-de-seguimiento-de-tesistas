@@ -14,9 +14,16 @@
       <div class="card">
         <div class="card-header">
           <div class="card-tools">
-            <router-link class="btn btn-info bnt-sm" :to="'/tesis/crear'">
-              <i class="fas fa-plus-square"></i> Ingresar FIT
-            </router-link>
+            <template v-if="listMiTesis.length == 0">
+              <router-link class="btn btn-info bnt-sm" :to="'/tesis/crear'">
+                <i class="fas fa-plus-square"></i> Ingresar Formulario de inscripcion
+              </router-link>
+            </template>
+            <template v-if="listMiTesis.length > 0">
+              <router-link class="btn btn-info bnt-sm link-disabled" :to="''">
+              <i class="fas fa-plus-square"></i> Usted ya ingreso un formulario
+              </router-link>
+            </template>
           </div>
         </div>
         <div class="card-body">
@@ -118,90 +125,6 @@
         </div>
       </div>
     </div>
-
-    <div class="modal fade" :class="{ show: modalShow }" :style="modalShow ? mostrarModal : ocultarModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Sistema de tesis UCM</h5>
-            <button class="close" @click="abrirModal"></button>
-          </div>
-          <div class="modal-body">
-            
-            <template v-if="modalOption == 1">
-              <div class="callout callout-danger" style="padding: 5px" v-for="(item, index) in mensajeError" :key="index" v-text="item"></div>
-            </template>
-            <template v-if="modalOption == 2">
-              
-                    <div class="container-fluid">
-                      <div class="card card-info">
-                        <div class="card-header">
-                          <h3 class="card-title">Formulario de inscripcion de tesis</h3>
-                        </div>
-                        <div class="card-body">
-                          <form role="form">
-                            <div class="row">
-                              <div class="col-md-12">
-                                <div class="form-group row">
-                                  <label class="col-md-12 col-form-label">Alumno</label>
-                                  <div class="col-md-9">
-                                      <span class="form-control" v-text="fillVerFIT.cNombre"></span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-12">
-                                <div class="form-group row">
-                                  <label class="col-md-12 col-form-label">Profesor Guia</label>
-                                  <div class="col-md-9">
-                                      <span class="form-control" v-text="fillVerFIT.cSlug"></span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-
-                      <div class="card card-info">
-                        <div class="card-header">
-                          <h3 class="card-title">Listado de Permisos</h3>
-                        </div>
-                        <div class="card-body table-resposive">
-                          <template v-if="listPermisos.length">
-                          <div class="scrollTable">
-                            <table class ="table table-hover table-head-fixed text-nowrap projects">
-                              <thead>
-                                <tr>
-                                  <th>Nombre</th>
-                                  <th>Url amigable </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr v-for="(item, index) in listPermisos" :key="index">
-                                  <td v-text="item.name"></td>
-                                  <td v-text="item.slug"></td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            </div>
-                          </template>
-                          <template v-else>
-                            <div class="callout callout-info">
-                              <h5> No se han encontrado resultados...</h5>
-                            </div>
-                          </template>
-                        </div>
-                      </div>
-                    </div>
-
-            </template>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
-          </div>
-        </div>
-      </div>
-    </div>
 </div>
 
 </template>
@@ -236,6 +159,7 @@ export default {
         {value: 'D', label: 'En Desarrollo'}
       ],
       listTesis:[],
+      listMiTesis:[],
       fullscreenLoading: false,
       pageNumber: 0,
       perPage: 5,
@@ -276,20 +200,18 @@ export default {
         count++;
       }
       return pagesArray;
-
     }
   },
   mounted(){
     this.getListarTesis();
+    this.getListarMiTesis();
   },
   methods:{
     setGenerarDocumento(nIdTesis){
       //this.fullscreenLoading = true;
-
       var config = {
         responseType: 'blob'
       }
-
       var url = '/administracion/tesis/setGenerarDocumento'
       axios.post(url, {
           'nIdTesis' :nIdTesis
@@ -299,18 +221,24 @@ export default {
           var url = URL.createObjectURL(oMyBlob);
           //console.log(url)
           window.open(url);
-          //this.listTesis = response.data;
-          //this.fullscreenLoading = false;
       })
     },
     getListarTesis(){
       this.fullscreenLoading = true;
       var url = '/alumno/getListarTesis'
       axios.get(url, {
-        
       }).then(response => {
           this.inicializarPaginacion();
           this.listTesis = response.data;
+          this.fullscreenLoading = false;
+      })
+    },
+    getListarMiTesis(){
+      this.fullscreenLoading = true;
+      var url = '/alumno/getListarMiTesis'
+      axios.get(url, {
+      }).then(response => {
+          this.listMiTesis = response.data;
           this.fullscreenLoading = false;
       })
     },
@@ -321,7 +249,6 @@ export default {
     limpiarBandejaUsuarios(){
       this.listTesis = [];
     },
-
     nextPage(){
       this.pageNumber++;
     },
@@ -344,31 +271,6 @@ export default {
       this.listPermisos = [];
       this.modalOption = 0;
     },
-    abrirModalByOption(modulo, accion, data){
-    switch (modulo) {
-      case "roles":
-        {
-          switch (accion) {
-            case "ver":
-              {
-                this.fillVerFIT.cNombre = data.name;
-                this.fillVerFIT.cSlug = data.slug;
-                //obtener los permisos por el rol seleccionado
-                this.getListarPermisosByRol(data.id);
-              }
-              break;
-          
-            default:
-              break;
-          }
-        }
-        
-        break;
-    
-      default:
-        break;
-    }
-  },
   setCambiarEstadoFIT(op, id){
       Swal.fire({
       title: 'Estas seguro? ' + ((op == 1) ? 'Aprobar ' : 'Rechazar ') + '  El formulario de inscripcion',

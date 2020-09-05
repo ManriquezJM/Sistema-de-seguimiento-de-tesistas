@@ -15,6 +15,8 @@ import locale from 'element-ui/lib/locale/lang/es'
 Vue.use(ElementUI, { locale }) // plantillas con vuejs
 window.Vue.use(ElementUI);
 
+
+
 import Swal from 'sweetalert2';// alertas en botones
 window.Swal = Swal;
 

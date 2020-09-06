@@ -46,6 +46,11 @@
                         <b>Registrarme como alumno</b>
                     </router-link>
                 </p>
+                <p class="mb-0">
+                    <router-link :to="{name:'passrecovery'}">
+                        <b>Recuperar contraseña</b>
+                    </router-link>
+                </p>
                 <!-- /.social-auth-links -->
             </div>
             <!-- /.login-card-body -->

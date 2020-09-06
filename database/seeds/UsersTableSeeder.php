@@ -90,5 +90,12 @@ class UsersTableSeeder extends Seeder
             'email'=>'profesor2@gmail.com',
             'password'     =>  Hash::make('12345')
         ]);
+        DB::table('users')->insert([// cuenta de profesor 1
+            'nombres'=>'jose matias',
+            'apellidos'=>'manriquez troncoso',
+            'id_escuela'=>'2',
+            'email'=>'manriquez.josematias@gmail.com',
+            'password'     =>  Hash::make('12345')
+        ]);
     }
 }

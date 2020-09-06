@@ -2,11 +2,14 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-/*********      RUTAS MODULO DE AUTENTICACION Y REGISTRO          *********/
+/*********      RUTAS MODULO DE AUTENTICACION , REGISTRO  Y RECUPERACION DE CONTRASENA     *********/
 Route::post('/authenticate/login', 'Auth\LoginController@login');
 Route::get('/administracion/escuelas/getListarEscuelas', 'Administracion\EscuelasController@getListarEscuelas');
 Route::post('/authenticate/registro/setRegistrarAlumno', 'AlumnoController@setRegistrarAlumno');
 Route::post('/authenticate/registro/setEditarRolAlumno', 'AlumnoController@setEditarRolAlumno');
+Route::post('/passrecovery/sendToken','Auth\LoginController@sendToken');
+Route::post('/passrecovery/validateToken','Auth\LoginController@validateToken');
+Route::post('/passrecovery/resetPassword','Auth\LoginController@resetPassword');
 
 /*********      RUTAS QUE REQUIEREN AUTENTICACION        *********/
 Route::group(['middleware' => ['auth']], function () {

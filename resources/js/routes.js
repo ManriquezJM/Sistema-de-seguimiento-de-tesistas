@@ -38,6 +38,11 @@ export const rutas = [
         name: 'login',
         component: require('./components/modulos/authenticate/login').default
     },
+    {
+        path: '/passrecovery',
+        name: 'passrecovery',
+        component: require('./components/modulos/authenticate/passrecovery').default
+    },
     { 
         path: '/',
         name: 'dashboard.index',

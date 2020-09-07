@@ -15,10 +15,15 @@ class AlumnoController extends Controller
     public function setRegistrarAlumno(Request $request){
         if(!$request->ajax()) return redirect('/');
 
+        $validar = $request->validate([
+            
+            'email' =>'required|email|unique:users',
+        ]);
+
         $cNombre = $request->cNombre;
         $cApellido = $request->cApellido;
         $nIdEscuela = $request->nIdEscuela;
-        $cCorreo = $request->cCorreo;
+        $cCorreo = $request->email;
         $cContrasena = Hash::make($request->cContrasena);
         $oFotografia = $request->oFotografia;
 

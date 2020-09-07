@@ -25,7 +25,7 @@
                 <div class="alert alert-secondary">
                     <form v-on:submit.prevent="validateToken">
                         <div class="form-group">
-                            <label>2. Ingresa el codigo que te hemos enviado</label>
+                            <label>2. Ingresa el codigo recibido</label>
                             <input type="text" class="form-control" v-bind:class="{ 'is-invalid:': errorToken, 'is-valid': infoToken}" placeholder="codigo" v-model="token">
                             <div class="invalid-feedback">
                                 {{errorToken}}

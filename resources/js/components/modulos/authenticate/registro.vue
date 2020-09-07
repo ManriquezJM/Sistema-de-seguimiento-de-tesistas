@@ -100,6 +100,7 @@ export default {
             oFotografia: '',
             nIdRol:  2
         },
+        EmailError:[],
         listEscuelas:[],
         fullscreenLoading: false,
         modalShow: false,
@@ -137,7 +138,7 @@ export default {
           return;
       }
       if(!this.fillRegistrarAlumno.oFotografia || this.fillRegistrarAlumno.oFotografia == undefined){
-        this.fullscreenLoading = true;
+        //this.fullscreenLoading = true;
         this.setGuardarAlumno();
       } else {
         this.setRegistrarArchivo();
@@ -173,10 +174,19 @@ export default {
         'cNombre'    : this.fillRegistrarAlumno.cNombre,
         'cApellido'  : this.fillRegistrarAlumno.cApellido,
         'nIdEscuela'   : this.fillRegistrarAlumno.nIdEscuela,
-        'cCorreo'    : this.fillRegistrarAlumno.cCorreo,
+        'email'    : this.fillRegistrarAlumno.cCorreo,
         'cContrasena': this.fillRegistrarAlumno.cContrasena,
         
         'oFotografia': nIdFile
+      }).catch(error => {
+        this.error = 0;
+        this.mensajeError = [];
+        if (error.response.status == 422){
+          this.mensajeError.push("Este correo ya esta registrado en nuestro sistema")
+          this.error = 1;
+          this.modalShow = true;
+          return;
+        }
       }).then(response => {
         this.setEditarRolAlumno(response.data);
       })

@@ -21,7 +21,6 @@ class AvancesController extends Controller
         
         $idUser    = ($idUser == NULL) ? ($idUser = 0) : $idUser;
         $nIdAvance = ($nIdAvance == NULL) ? ($nIdAvance = 0) : $nIdAvance;
-        
 
         $avances = DB::table('avancestesis')
                         ->join('fit', 'fit.id', '=', 'avancestesis.id_tesis')
@@ -57,12 +56,12 @@ class AvancesController extends Controller
         $idUser     = ($idUser == NULL) ? ($idUser = 0) : $idUser;
         $nIdAvance  = ($nIdAvance == NULL) ? ($nIdAvance = 0) : $nIdAvance;
 
-        $alumnos = DB::table('fit')
-                        ->join('users', 'users.id_user', '=', 'fit.id_alumno')
-                        ->select('users.id_user','users.nombres', 'users.apellidos')
-                        ->Where('fit.id_profesorguia', '=', $idUser)
-                        ->orderBy('users.id_user', 'desc')
-                        ->get();
+        $alumnos    = DB::table('fit')
+                            ->join('users', 'users.id_user', '=', 'fit.id_alumno')
+                            ->select('users.id_user','users.nombres', 'users.apellidos')
+                            ->Where('fit.id_profesorguia', '=', $idUser)
+                            ->orderBy('users.id_user', 'desc')
+                            ->get();
         return $alumnos;
     }
     public function getSeleccionarAvance(Request $request){
@@ -84,16 +83,16 @@ class AvancesController extends Controller
     public function setRegistrarAvance(Request $request){
         if(!$request->ajax()) return redirect('/');
         
-        $idUser  = Auth::user()->id_user;
-        $idTesis = Fit::select('id')->where('id_alumno',$idUser)->get();
+        $idUser     = Auth::user()->id_user;
+        $idTesis    = Fit::select('id')->where('id_alumno',$idUser)->get();
 
-        $DatosEmail = DB::table('avancestesis')
-                            ->join('fit', 'fit.id', '=', 'avancestesis.id_tesis')
+        $DatosEmail = DB::table('fit')
                             ->join('users as profesor_guia', 'profesor_guia.id_user', '=', 'fit.id_profesorguia')
                             ->join('users as alumno', 'alumno.id_user', '=', 'fit.id_alumno')
                             ->where('fit.id', '=', $idTesis[0]->id)
                             ->select('profesor_guia.email as email_pg','fit.titulo', DB::raw("CONCAT(alumno.nombres,' ',alumno.apellidos) as full_name"))
                             ->get();
+
         $DatosEmail[0]->fecha = Carbon::now();
 
         Mail::to($DatosEmail[0]->email_pg)->queue(new MailAvances($DatosEmail[0]));

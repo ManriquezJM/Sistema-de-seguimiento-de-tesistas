@@ -13,6 +13,14 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         DB::table('permissions')->insert([
+            'name' => 'EsAlumno',
+            'slug' => 'EsAlumno'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'EsProfesor',
+            'slug' => 'EsProfesor'
+        ]);
+        DB::table('permissions')->insert([
             'name' => 'Dashboard',
             'slug' => 'dashboard.index'
         ]);
@@ -194,9 +202,16 @@ class PermissionsTableSeeder extends Seeder
         //Semillas administracion documentos secretaria 
         DB::table('permissions')->insert([
             'name' => 'Navegar documentos alumnos',
-            'slug' => 'documentos.index'
+            'slug' => 'actadefensa.index'
         ]); 
-
+        DB::table('permissions')->insert([
+            'name' => 'Subir acta de defensa',
+            'slug' => 'actadefensa.subiracta'
+        ]); 
+        DB::table('permissions')->insert([
+            'name' => 'Subir nota de tesis',
+            'slug' => 'actadefensa.subirnota'
+        ]); 
     }
 }
 

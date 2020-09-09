@@ -41,7 +41,8 @@ class NotasPendientesController extends Controller
 
         $NotaP    = DB::table('notaspendientes')
                         ->join('fit', 'fit.id_notapendiente', '=', 'notaspendientes.id')
-                        ->select('notaspendientes.id','fecha_presentacion', 'fecha_propuesta', 'fecha_prorroga', 'notaspendientes.estado')
+                        ->join('users', 'users.id_user', '=', 'fit.id_alumno')
+                        ->select('notaspendientes.id','fecha_presentacion', 'fecha_propuesta', 'fecha_prorroga', 'notaspendientes.estado',DB::raw("CONCAT(users.nombres,' ',users.apellidos) as full_name"))
                         ->where('fit.id_alumno', '=', $idAlumno)
                         ->get();
         return $NotaP;
@@ -49,6 +50,29 @@ class NotasPendientesController extends Controller
     public function getListarNotasPendientes(Request $request){
         if(!$request->ajax()) return redirect('/');
 
+        $IdProfesor       = Auth::id();
+        $nIdNotaP       = $request->nIdNotaP;
+        $estado         = $request->estado;
+        $dFechaInicio   = $request->dFechaInicio;
+        $dFechaFin      = $request->dFechaFin;
+
+        $nIdNotaP       = ($nIdNotaP == NULL) ? ($nIdNotaP = 0) : $nIdNotaP;
+        $NotasP = DB::table('fit')
+                        ->leftjoin('notaspendientes', 'notaspendientes.id', '=','fit.id_notapendiente')
+                        ->join('users', 'users.id_user', '=', 'fit.id_alumno')
+                        ->Where('notaspendientes.estado', '=', $estado)
+                        ->OrWhere('notaspendientes.id', '=', $nIdNotaP)
+                        ->OrWhere('fit.id_profesorguia', '=', $IdProfesor)
+                        ->OrWhere('notaspendientes.id', '=', 0)
+                        ->orWhereBetween('notaspendientes.fecha_propuesta', [$dFechaInicio, $dFechaFin])
+                        ->select('notaspendientes.id','fecha_presentacion', 'fecha_propuesta', 'fecha_prorroga', 'notaspendientes.estado',DB::raw("CONCAT(users.nombres,' ',users.apellidos) as full_name"))
+                        ->get();
+        return $NotasP;
+    }  
+    public function getListarNotasPendientesByAlumno(Request $request){
+        if(!$request->ajax()) return redirect('/');
+
+        $IdProfesor       = Auth::id();
         $nIdNotaP       = $request->nIdNotaP;
         $estado         = $request->estado;
         $dFechaInicio   = $request->dFechaInicio;
@@ -59,6 +83,7 @@ class NotasPendientesController extends Controller
                         ->leftjoin('notaspendientes', 'notaspendientes.id', '=','fit.id_notapendiente')
                         ->Where('notaspendientes.estado', '=', $estado)
                         ->OrWhere('notaspendientes.id', '=', $nIdNotaP)
+                        ->OrWhere('fit.id_profesorguia', '=', $IdProfesor)
                         ->OrWhere('notaspendientes.id', '=', 0)
                         ->orWhereBetween('notaspendientes.fecha_propuesta', [$dFechaInicio, $dFechaFin])
                         ->select('notaspendientes.id','fecha_presentacion', 'fecha_propuesta', 'fecha_prorroga', 'notaspendientes.estado')

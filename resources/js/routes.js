@@ -382,33 +382,43 @@ export const rutas = [
         verificarAcceso(to, from, next);
     }
 },
-/******** RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS *********/
+/******** RUTAS MODULO DE ADMINISTRACION ACTA DE DEFENSA Y CALIFICACION *********/
 { 
-    path: '/documentos',
-    name: 'documentos.index',
-    component: require('./components/modulos/documentos/Index').default,
+    path: '/actadefensa',
+    name: 'actadefensa.index',
+    component: require('./components/modulos/actadefensa/Index').default,
     beforeEnter: (to, from, next) => {
         verificarAcceso(to, from, next);
     } 
  },
- /*
-{ 
-    path: '/documentos/crear',
-    name: 'documentos.crear',
-    component: require('./components/modulos/documentos/create').default,
-    beforeEnter: (to, from, next) => {
-        verificarAcceso(to, from, next);
-    }
-},
-{ 
-    path: '/documentos/editar/:id',
-    name: 'documentos.editar',
-    component: require('./components/modulos/documentos/edit').default,
+ { 
+    path: '/actadefensa/subiracta/:id',
+    name: 'actadefensa.subiracta',
+    component: require('./components/modulos/actadefensa/subiracta').default,
     beforeEnter: (to, from, next) => {
         verificarAcceso(to, from, next);
     },
     props : true
- }*/
+ },
+ { 
+    path: '/actadefensa/subirnota/:id',
+    name: 'actadefensa.subirnota',
+    component: require('./components/modulos/actadefensa/subirnota').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    },
+    props : true
+ },
+ /******** RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS *********/
+{ 
+    path: '/documentos',
+    name: 'documentos.index',
+    component: require('./components/modulos/documentos/index').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+ },
+
 ]//cierre concentracion de rutas
 
 export default new Router({

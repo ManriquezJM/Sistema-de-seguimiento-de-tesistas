@@ -144,7 +144,7 @@ export default {
         this.fullscreenLoading = false;
         var IdNotaP = response.data.id;
         this.setAsignarNotaP(IdNotaP);
-        //this.$router.push('/notaspendientes');
+        this.$router.push('/notaspendientes');
       })
     },
     setAsignarNotaP(IdNotaP){

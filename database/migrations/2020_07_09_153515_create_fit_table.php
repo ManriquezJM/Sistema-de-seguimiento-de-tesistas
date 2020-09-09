@@ -19,12 +19,15 @@ class CreateFitTable extends Migration
             $table->bigInteger('id_profesorguia')->unsigned()->nullable();
             $table->bigInteger('id_vinculacion')->unsigned()->nullable();
             $table->bigInteger('id_pdftesis')->unsigned()->nullable();
+            $table->bigInteger('id_actadefensa')->unsigned()->nullable();
             $table->bigInteger('id_notapendiente')->unsigned()->nullable();
             $table->decimal('nota', 2, 1)->nullable();
             $table->enum('estado',['A','R','D'])->nullable()->default('D');
             $table->string('titulo')->nullable();
             $table->string('tipo');
+            $table->date('fecha_ultimoramo');
             $table->text('objetivo');
+            $table->text('descripcion');
             $table->text('contribucion');
             $table->string('carrera')->nullable();
             $table->string('nombre_int1');
@@ -41,9 +44,10 @@ class CreateFitTable extends Migration
 
             $table->foreign('id_alumno')->references('id_user')->on('users');
             $table->foreign('id_profesorguia')->references('id_user')->on('users');
-            $table->foreign('id_vinculacion')->references('id')->on('vinculaciones');
-            $table->foreign('id_pdftesis')->references('id')->on('pdftesis');
-            $table->foreign('id_notapendiente')->references('id')->on('notaspendientes');
+            $table->foreign('id_vinculacion')->references('id')->on('vinculaciones')->onDelete('set null');
+            $table->foreign('id_pdftesis')->references('id')->on('pdftesis')->onDelete('set null');
+            $table->foreign('id_actadefensa')->references('id')->on('pdftesis');
+            $table->foreign('id_notapendiente')->references('id')->on('notaspendientes')->onDelete('set null');
             $table->timestamps();
         });
     }

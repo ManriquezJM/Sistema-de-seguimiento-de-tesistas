@@ -48,7 +48,7 @@
               <router-link class="nav-link" :to="'/'">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
-                  Dashboard
+                  Inicio
                 </p>
               </router-link>
             </template>
@@ -134,8 +134,21 @@
             </li>
           </template>
           <!-- VISTA PARA ADMINISTRACION DE DOCUMENTOS -->
-          <template  v-if="listPermisos.includes('documentos.index')">
+          <template  v-if="listPermisos.includes('actadefensa.index')">
             <li class="nav-header">CONTROL DE DOCUMENTOS</li>
+            <li class="nav-item">
+              <template v-if="listPermisos.includes('actadefensa.index')">
+                <router-link class="nav-link" :to="'/actadefensa'">
+                  <i class="nav-icon fas fa-user-check"></i>
+                  <p>
+                    Acta de defensa y nota
+                  </p>
+                </router-link>  
+              </template>
+            </li>
+          </template>
+          <template  v-if="listPermisos.includes('documentos.index')">
+            
             <li class="nav-item">
               <template v-if="listPermisos.includes('documentos.index')">
                 <router-link class="nav-link" :to="'/documentos'">
@@ -149,7 +162,7 @@
           </template>
           <!-- PESTAÑAS PARA EL ALUMNO -->
           <template  v-if="listPermisos.includes('tesis.fit')">
-            <li class="nav-header">SEGUIMIENTO TESIS</li>
+            <li class="nav-header">SEGUIMIENTO DE TESIS</li>
               <li class="nav-item">
                 <template v-if="listPermisos.includes('tesis.fit')">
                   <router-link class="nav-link" :to="'/tesis'">

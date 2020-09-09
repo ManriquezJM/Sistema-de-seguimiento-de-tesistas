@@ -66,28 +66,28 @@
                             </div>
                             <div class="card-body table-resposive">
                                   <template v-if="listPermisosFilter.length">
-                                    
-                                    <table class ="table table-hover table-head-fixed text-nowrap projects">
-                                      <thead>
-                                        <tr>
-                                          <th>Accion</th>
-                                          <th>Nombre</th>
-                                          <th>Url Amigable</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr v-for="(item, index) in listPermisosFilter" :key="index" @click.prevent="marcarFila(index)">
+                                    <div class="scrollTable">
+                                      <table class ="table table-hover table-head-fixed text-nowrap projects">
+                                        <thead>
+                                          <tr>
+                                            <th>Accion</th>
+                                            <th>Nombre</th>
+                                            <th>Url Amigable</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr v-for="(item, index) in listPermisosFilter" :key="index" @click.prevent="marcarFila(index)">
 
-                                          <td>
-                                            <!-- cheeekboh-->
-                                            <el-checkbox v-model="item.checked">Opción</el-checkbox>
-                                          </td>
-                                          <td v-text="item.name"></td>
-                                          <td v-text="item.slug"></td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                    
+                                            <td>
+                                              <!-- cheeekboh-->
+                                              <el-checkbox v-model="item.checked">Opción</el-checkbox>
+                                            </td>
+                                            <td v-text="item.name"></td>
+                                            <td v-text="item.slug"></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
                                   </template>
                                   <template v-else>
                                     <div class="callout callout-info">

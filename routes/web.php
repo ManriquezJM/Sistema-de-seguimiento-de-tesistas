@@ -101,7 +101,8 @@ Route::get('/reportes/getListarProfesorByEscuela', 'Administracion\ReportesContr
 /*********    RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS ALUMNOS     **********/
 Route::get('/secretaria/getListarAlumnos', 'SecretariaController@getListarAlumnos');
 Route::Post('/secretaria/setGenerarMemoRevision', 'SecretariaController@setGenerarMemoRevision');
-
+Route::post('/secretaria/setSubirActa', 'SecretariaController@setSubirActa');
+Route::post('/secretaria/setRegistrarNota', 'SecretariaController@setRegistrarNota');
 });//cierre de rutas que requieren autenticacion
 
 /********** RUTA BASE **********/

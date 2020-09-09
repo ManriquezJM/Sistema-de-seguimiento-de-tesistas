@@ -111,6 +111,22 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Descripcion
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <el-input
+                                                      type="textarea"
+                                                      :autosize="{ minRows: 2, maxRows: 5}"
+                                                      maxlength="500"
+                                                      placeholder="Objetivo"
+                                                      show-word-limit
+                                                      v-model="fillCrearFIT.cDescripcion">
+                                                    </el-input>
+                                                </div>
+                                            </div>
+                                        </div>
                                         
                                         <div class="col-md-6">
                                             <div class="form-group row">
@@ -141,7 +157,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Rut Integrante 1</label>
                                                 <div class="col-md-9">   
-                                               <input type="text" class="form-control" maxlength="12" placeholder="sin puntos 19866976-1" v-model="fillCrearFIT.cRutI1" @keyup.enter="setRegistrarTesis"> 
+                                               <input type="text" class="form-control" maxlength="10" placeholder="sin puntos 19866976-1" v-model="fillCrearFIT.cRutI1" @keyup.enter="setRegistrarTesis"> 
                                                 </div>
                                             </div>
                                         </div>
@@ -150,7 +166,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Telefono Integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="number" maxlength="9" class="form-control" v-model="fillCrearFIT.cTelefonoI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="tel" maxlength="9" class="form-control" v-model="fillCrearFIT.cTelefonoI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -158,7 +174,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Año ingreso Integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="number" class="form-control" maxlength="4" v-model="fillCrearFIT.cIngresoI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="text" class="form-control" maxlength="4" v-model="fillCrearFIT.cIngresoI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -166,7 +182,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">email Integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="email" class="form-control" maxlength="40" v-model="fillCrearFIT.cEmailI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="email" maxlength="40"  class="form-control" v-model="fillCrearFIT.cEmailI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -210,6 +226,18 @@
                                                 </div>
                                             </div>
                                         </div>   
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Fecha que curso su ultimo ramo</label>
+                                                <div class="col-md-9">
+                                                      <el-date-picker
+                                                        v-model="fillCrearFIT.dFechaUR"
+                                                        type="month"
+                                                        placeholder="Elige mes y año">
+                                                      </el-date-picker>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -257,7 +285,9 @@ export default {
         nIdPg: '',
         nIdVinculacion: '',
         cTipo: '',
+        dFechaUR: '',
         cObjetivo: '',
+        cDescripcion: '',
         cContribucion: '',
         cNombreI1: '',
         cRutI1: '',
@@ -337,6 +367,9 @@ export default {
         if(!this.fillCrearFIT.cObjetivo){
           this.mensajeError.push("El objetivo es un campo obligatorio")
         }
+        if(!this.fillCrearFIT.cDescripcion){
+          this.mensajeError.push("La descripcion es un campo obligatorio")
+        }
         if(!this.fillCrearFIT.cContribucion){
           this.mensajeError.push("La contribucion es un campo obligatorio")
         }
@@ -369,7 +402,9 @@ export default {
         'nIdPg'              : this.fillCrearFIT.nIdPg,
         'nIdVinculacion'     : this.fillCrearFIT.nIdVinculacion,
         'cTipo'              : this.fillCrearFIT.cTipo,
+        'dFechaUR'           : this.fillCrearFIT.dFechaUR,
         'cObjetivo'          : this.fillCrearFIT.cObjetivo,
+        'cDescripcion'       : this.fillCrearFIT.cDescripcion,
         'cContribucion'      : this.fillCrearFIT.cContribucion,
         'cNombreI1'          : this.fillCrearFIT.cNombreI1,
         'cRutI1'             : this.fillCrearFIT.cRutI1,

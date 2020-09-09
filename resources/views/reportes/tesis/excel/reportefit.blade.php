@@ -20,7 +20,10 @@
             <th>Comentario bitacora</th>
             <th>Fecha ultimo Avance </th>
             <th>Estado</th>
-            <th>Fecha ingreso</th>
+            <th>Fecha Aceptacion de formulario</th>
+            <th>Fecha Nota Pendiente</th>
+            <th>Fecha Prorroga nota P</th>
+            <th>Año que curso su ultimo ramo</th>
         </tr>
         </thead>
         <tbody>
@@ -37,6 +40,9 @@
                 <td>{{ $datatesis->fecha_avance }}</td>
                 <td>{{ $datatesis->estado }}</td>
                 <td>{{ $datatesis->fecha_inscripcion }}</td>
+                <td>{{ $datatesis->fecha_notap }}</td>
+                <td>{{ $datatesis->prorroga_notap }}</td>
+                <td>{{ $datatesis->fecha_ultimoramo }}</td>
             </tr>
         @endforeach
         </tbody>

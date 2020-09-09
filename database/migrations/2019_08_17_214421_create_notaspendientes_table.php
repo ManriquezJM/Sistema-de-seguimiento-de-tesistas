@@ -19,7 +19,7 @@ class CreateNotaspendientesTable extends Migration
             $table->date('fecha_propuesta');
             $table->date('fecha_autorizada')->nullable();
             $table->date('fecha_prorroga')->nullable();
-            $table->enum('estado',['A','R','V','P'])->nullable()->default('P');
+            $table->enum('estado',['A','R','V'])->nullable()->default('A');
             
             $table->timestamps();
         });

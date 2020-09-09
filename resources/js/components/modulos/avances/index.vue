@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Avances</h1>
+            <h1 class="m-0 text-dark">Avances de tesis</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -15,7 +15,7 @@
         <div class="card-header">
           <div class="card-tools">
             <router-link class="btn btn-info bnt-sm" :to="'/avances/crear'">
-              <i class="fas fa-plus-square"></i> Nuevo Avance
+              <i class="fas fa-plus-square"></i> Subir Avance
             </router-link>
           </div>
         </div>
@@ -25,17 +25,14 @@
             <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Criterios de busqueda</h3>
-              </div>
-
-
-              
+              </div>              
              <!-- Filtro de busqueda de avances -->
               <div class="card-body">
                 <form role="form">
                   <div class="row">
                     <div class="col-md-9">
                       <div class="form-group row">
-                          <label class="col-md-3 col-form-label">Seleccionar alumno</label>
+                          <label class="col-md-3 col-form-label">Seleccionar Alumno</label>
                           <div class="col-md-9">
                               <el-select v-model="fillBsqAvanceByAlumno.id_user" 
                               placeholder="Asignar alumno"
@@ -62,14 +59,14 @@
                   </div>
                 </div>
               </div>
-              </div>
-            </template>
+            </div>
+          </template>
               
             <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Bandeja de resultados</h3>
               </div>
-              <div class="card-body table-resposive">
+              <div class="card-body table table-responsive">
                 <template v-if="listarAvancesPaginated.length">
                   
                   <table class ="table table-hover table-head-fixed text-nowrap projects">
@@ -88,6 +85,7 @@
                         <td >
                           <a class="btn btn-flat btn-warning btn-sm" :href="item.path"><i class="fas fa-file-download"> </i> Descargar</a>
                         </td>
+
                         <td>
                             <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'avances.editar', params:{id: item.id}}">
                               <i class="fas fa-pencil-alt"></i> Editar

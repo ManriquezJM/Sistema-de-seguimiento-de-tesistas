@@ -82,7 +82,24 @@
                     </div>
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Estado</label>
+                        <label class="col-md-3 col-form-label">Nota Pendiente</label>
+                        <div class="col-md-9">
+                            <el-select v-model="fillBsqTesisReporte.cEstadoNotap" 
+                            placeholder="Seleccione un estado"
+                            clearable>
+                              <el-option
+                                v-for="item in listTipoDeNotap"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                              </el-option>
+                            </el-select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Estado Tesis</label>
                         <div class="col-md-9">
                             <el-select v-model="fillBsqTesisReporte.cEstadoTesis" 
                             placeholder="Seleccione un estado"
@@ -97,13 +114,15 @@
                         </div>
                       </div>
                     </div>
+
+                    
                      <div class="col-md-12">
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Rango de Fechas</label>
+                            <label class="col-md-3 col-form-label">Fecha de ultimo ramo aprobado</label>
                             <div class="col-md-9">
                                 <el-date-picker
                                     v-model="fillBsqTesisReporte.dfecharango"
-                                    type="daterange"
+                                    type="monthrange"
                                     range-separator="Hasta"
                                     start-placeholder="Fecha Inicio"
                                     end-placeholder="Fecha Fin"
@@ -112,6 +131,7 @@
                             </div>
                         </div>
                     </div>
+                    
                   </div>
                 </form>
               </div>
@@ -235,6 +255,7 @@
           nIdEscuela:'',
           nIdProfesor:'',
           nIdTesis: '',
+          cEstadoNotap: '',
           cTitulo: '',
           nIdPg: '',
           cNombreI1: '',
@@ -246,6 +267,16 @@
           cEstadoTesis: ''
         },
         listRolPermisosByUsuario: JSON.parse(localStorage.getItem('listRolPermisosByUsuario')),
+        listFechaUR: [
+          {value: '1', label: 'hace 1 año'},
+          {value: '2', label: 'hace 2 años'},
+          {value: '3', label: 'hace 3 años'},
+          {value: '4', label: 'mas de 3 años'}
+        ],
+        listTipoDeNotap: [
+          {value: 'A', label: 'Activa'},
+          {value: 'V', label: 'Vencida'}
+        ],
         listTipoDeTrabajo: [
           {value: 'Tesis', label: 'Tesis'},
           {value: 'Memoria', label: 'Memoria'}
@@ -354,6 +385,8 @@
           params: {
             'nRut'        : this.fillBsqTesisReporte.nRut,
             'nIdEscuela'  : this.fillBsqTesisReporte.nIdEscuela,
+            'cEstadoNotap'  : this.fillBsqTesisReporte.cEstadoNotap,
+            'dFechaUR'  : this.fillBsqTesisReporte.dFechaUR,
             'nIdProfesor' : this.fillBsqTesisReporte.nIdProfesor,
             'cTipo'       : this.fillBsqTesisReporte.cTipo,
             'cVinculacion': this.fillBsqTesisReporte.cVinculacion,
@@ -370,6 +403,8 @@
       limpiarCriteriosBsq(){
         this.fillBsqTesisReporte.nRut = '';
         this.fillBsqTesisReporte.nIdEscuela = '';
+        this.fillBsqTesisReporte.cEstadoNotap = '';
+        this.fillBsqTesisReporte.dFechaUR = '';
         this.fillBsqTesisReporte.nIdProfesor = '';
         this.fillBsqTesisReporte.cTipo = '';
         this.fillBsqTesisReporte.cVinculacion = '';

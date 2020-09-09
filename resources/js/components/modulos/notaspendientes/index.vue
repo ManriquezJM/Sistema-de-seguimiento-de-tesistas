@@ -13,16 +13,27 @@
       <div class="card">
         <div class="card-header">
           <div class="card-tools">
-            <router-link class="btn btn-info bnt-sm" :to="'/notaspendientes/crear'">
-              <i class="fas fa-plus-square"></i> Solicitar Nota Pendiente
-            </router-link>
+            <!-- /.container-fluid -->
+                            <!-- /.container-fluid -->
+            <template v-if="listRolPermisosByUsuario.includes('EsAlumno') && listNotasPendientes.length > 0">
+              <div>
+              <router-link class="btn btn-info bnt-sm link-disabled" :to="''">
+                <i class="fas fa-plus-square"></i> Usted ya ingreso una nota pendiente
+              </router-link>
+              </div>
+            </template>
+            <template v-if="listNotasPendientes.length == 0">
+              <router-link class="btn btn-info bnt-sm" :to="'/notaspendientes/crear'">
+                <i class="fas fa-plus-square"></i> Solicitar Nota Pendiente
+              </router-link>
+            </template>
           </div>
         </div>
 
         <div class="card-body">
           <div class="container-fluid">
             <!-- inicio formulario de busqueda-->
-            <div class="card card-info">
+           <!-- <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Criterios de busqueda</h3>
               </div>
@@ -73,19 +84,19 @@
                   </div>
                 </div>
               </div>
-            </div> <!-- cierre formulario de busqueda-->
+            </div>  cierre formulario de busqueda-->
 
             <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Bandeja de resultados</h3>
               </div>
-              <div class="card-body table-resposive">
+              <div class="card-body table-responsive">
                 <template v-if="listarNotasPendientesPaginated.length">
                   
                   <table class ="table table-hover table-head-fixed text-nowrap projects">
                     <thead>
                       <tr>
-                        <th>Estado</th>
+                        <th>Alumno</th>
                         <th>Fecha de ingreso</th>
                         <th>Fecha propuesta</th>
                         <th>Fecha prorroga</th>
@@ -94,14 +105,16 @@
                     </thead>
                     <tbody>
                       <tr v-for="(item, index) in listarNotasPendientesPaginated" :key="index">
-                        <td v-text="item.estado"></td>  
+                        <td v-text="item.full_name"></td>
                         <td v-text="item.fecha_presentacion"></td>  
                         <td v-text="item.fecha_propuesta"></td>  
                         <td v-text="item.fecha_prorroga"></td>  
                         <td>
-                            <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'notaspendientes.editar', params:{id: item.id}}">
-                              <i class="fas fa-pencil-alt"></i> Editar
-                            </router-link>
+                            <template  v-if="listRolPermisosByUsuario.includes('notaspendientes.editar')">
+                              <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'notaspendientes.editar', params:{id: item.id}}">
+                                <i class="fas fa-pencil-alt"></i> Editar
+                              </router-link>
+                            </template>
                             <router-link class="btn btn-flat btn-success btn-sm" :to="{name:'notaspendientes.prorroga', params:{id: item.id}}">
                               <i class="fas fa-calendar-check"></i> Solicitar Prorroga
                             </router-link>      
@@ -131,6 +144,7 @@
                 </template>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -153,16 +167,15 @@ export default {
         {value: 'V', label: 'Vencida'}
       ],
       listNotasPendientes:[],
+      listAlumnos:[],
       fullscreenLoading: false,
       pageNumber: 0,
       perPage: 5,
+      listRolPermisosByUsuario: JSON.parse(localStorage.getItem('listRolPermisosByUsuario')),
     }
   },
-  listRolPermisosByUsuario: JSON.parse(localStorage.getItem('listRolPermisosByUsuario')),
   computed: {
-
     pageCount(){
-      //obtener el numero de paginas 
       let a = this.listNotasPendientes.length,
           b = this.perPage;
       return Math.ceil(a / b);
@@ -186,9 +199,34 @@ export default {
     }
   },
   mounted(){
+    this.getListarNotasPendientes();
     this.getMiNotaP();
+    
   },
   methods:{
+    getListarAvancesByAlumno(){
+      this.fullscreenLoading = true;
+      var url = '/avances/getListarAvancesByAlumno'
+      axios.get(url, {
+        params: {
+          'id_user' : this.fillBsqAvanceByAlumno.id_user,
+        }
+      }).then(response => {
+          this.inicializarPaginacion();
+          this.listAvances = response.data;
+          this.fullscreenLoading = false;
+      })
+    },
+    getListarAlumnosByprofesor(){
+      this.fullscreenLoading = true;
+      var url = '/avances/getListarAlumnosByprofesor'
+      axios.get(url, {
+      }).then(response => {
+          this.inicializarPaginacion();
+          this.listAlumnos = response.data;
+          this.fullscreenLoading = false;
+      })
+    },
     limpiarCriteriosBsq(){
       this.fillBsqNotasPendientes.estado = '';
       this.fillBsqNotasPendientes.dfecharango = '';
@@ -233,7 +271,6 @@ export default {
     inicializarPaginacion(){
       this.pageNumber = 0;
     },
-
   }//cierre de methods
 }
 </script>

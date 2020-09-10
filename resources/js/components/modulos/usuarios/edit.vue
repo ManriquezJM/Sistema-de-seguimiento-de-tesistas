@@ -60,13 +60,22 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Escuela</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" v-model="fillEditarUsuarios.cEscuela" @keyup.enter="setEditarUsuario">
-                        </div>
+                          <div class="form-group row">
+                              <label class="col-md-3 col-form-label">Asignar Escuela</label>
+                              <div class="col-md-9">
+                                  <el-select v-model="fillEditarUsuarios.cEscuela" 
+                                  placeholder="Asignar Escuela"
+                                  clearable>
+                                  <el-option
+                                      v-for="item in listEscuelas"
+                                      :key="item.id"
+                                      :label="item.nombre"
+                                      :value="item.id">
+                                  </el-option>
+                                  </el-select>
+                              </div>
+                          </div>
                       </div>
-                    </div>
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Rol</label>
@@ -160,8 +169,19 @@ export default {
   mounted(){
       this.getUsuarioById();
       this.getListarRoles();
+      this.getListarEscuelas();
   },
   methods:{
+    getListarEscuelas(){
+      this.fullscreenLoading = true;
+      var url = '/administracion/escuelas/getListarEscuelas'
+      axios.get(url, {
+
+      }).then(response => {
+          this.listEscuelas = response.data;
+          this.fullscreenLoading = false;
+      })
+    },
     getListarRoles(){
       this.fullscreenLoading = true;
       var url = '/administracion/roles/getListarRoles'

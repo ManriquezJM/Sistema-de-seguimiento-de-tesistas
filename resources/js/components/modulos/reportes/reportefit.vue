@@ -257,11 +257,9 @@
           nIdTesis: '',
           cEstadoNotap: '',
           cTitulo: '',
-          nIdPg: '',
           cNombreI1: '',
           cEstadoPg: '',
           cEstadoD: '',
-          cTipo: '',
           cVinculacion: '',
           dfecharango: '',
           cEstadoTesis: ''

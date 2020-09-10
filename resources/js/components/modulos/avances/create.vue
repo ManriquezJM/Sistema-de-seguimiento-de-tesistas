@@ -166,7 +166,11 @@ export default {
       axios.post(url, {
         'descripcion'     : this.fillCrearAvances.cDescripcion,
         'id_archivo'      : nIdFile
+      }).then(response => {
+        this.fullscreenLoading = false;
+        this.$router.push('/avances');
       })
+      
     },
   }// cierre methods
 }

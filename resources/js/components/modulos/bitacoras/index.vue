@@ -75,7 +75,6 @@
                       <tr>
                         <th>Fecha</th>
                         <th>Comentario</th>
-                        <th>Alumno</th>
                         <th>Acciones </th>
                       </tr>
                     </thead>
@@ -83,7 +82,6 @@
                       <tr v-for="(item, index) in listBitacoras" :key="index">
                         <td v-text="item.fecha"></td>
                         <td v-text="item.comentario"></td>
-                        <td v-text="item.nombre_alumno"></td>
                         <td>
                             <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'bitacoras.editar', params:{id: item.id}}">
                               <i class="fas fa-pencil-alt"></i> Editar

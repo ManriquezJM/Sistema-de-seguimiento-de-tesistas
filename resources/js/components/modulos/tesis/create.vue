@@ -127,7 +127,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Vinculacion</label>
@@ -360,6 +359,9 @@ export default {
         }
         if(!this.fillCrearFIT.nIdPg){
           this.mensajeError.push("El profesor guia es un campo obligatorio")
+        }
+        if(!this.fillCrearFIT.dFechaUR){
+          this.mensajeError.push("La fecha de su ultimo ramo es un campo obligatorio")
         }
         if(!this.fillCrearFIT.cTipo){
           this.mensajeError.push("El tipo es un campo obligatorio")

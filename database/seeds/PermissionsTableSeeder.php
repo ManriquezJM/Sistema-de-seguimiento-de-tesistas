@@ -12,14 +12,7 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('permissions')->insert([
-            'name' => 'EsAlumno',
-            'slug' => 'EsAlumno'
-        ]);
-        DB::table('permissions')->insert([
-            'name' => 'EsProfesor',
-            'slug' => 'EsProfesor'
-        ]);
+        
         DB::table('permissions')->insert([
             'name' => 'Dashboard',
             'slug' => 'dashboard.index'
@@ -212,6 +205,18 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Subir nota de tesis',
             'slug' => 'actadefensa.subirnota'
         ]); 
+        DB::table('permissions')->insert([
+            'name' => 'Documentos alumnos',
+            'slug' => 'documentos.index'
+        ]); 
+        DB::table('permissions')->insert([
+            'name' => 'EsAlumno',
+            'slug' => 'EsAlumno'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'EsProfesor',
+            'slug' => 'EsProfesor'
+        ]);
     }
 }
 

@@ -27,7 +27,7 @@ class SecretariaController extends Controller
 
         $alumnos = DB::table('users')
                         ->join('fit', 'fit.id_alumno', '=', 'users.id_user')
-                        ->join('pdftesis', 'pdftesis.id', '=', 'fit.id_actadefensa')
+                        ->leftjoin('pdftesis', 'pdftesis.id', '=', 'fit.id_actadefensa')
                         ->select('fit.estado as estado_tesis', 'fit.id as id_tesis',DB::raw("CONCAT(users.nombres,' ',users.apellidos) as full_name"),'fit.rut_int1','pdftesis.path')
                         ->where([['users.id_escuela', '=', $IdEscuela[0]->id_escuela],[DB::raw("CONCAT(users.nombres,' ',users.apellidos)"), 'like', "%{$nombre}%"],
                                 ['fit.rut_int1', 'like', "%{$rut}%"]])

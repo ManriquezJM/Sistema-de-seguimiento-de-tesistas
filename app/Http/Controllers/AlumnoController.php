@@ -255,7 +255,16 @@ class AlumnoController extends Controller
                         ->where([
                             ['roles.name', '=', 'Profesor'],
                             ['users.id_escuela', '=', $escuela],
-                        ])->get();
+                        ])
+                        ->orwhere([
+                            ['roles.name', '=', 'Director'],
+                            ['users.id_escuela', '=', $escuela],
+                        ])
+                        ->orwhere([
+                            ['roles.name', '=', 'Coordinador'],
+                            ['users.id_escuela', '=', $escuela],
+                        ])
+                        ->get();
         return $profesores;
     }
 }

@@ -17,15 +17,5 @@ class VinculacionesTableSeeder extends Seeder
             'nombre' => 'Vinculacion de prueba1',
             'descripcion' => 'Vinculacion de prueba1 '
         ]);
-        DB::table('vinculaciones')->insert([
-            'tipo' => 'Empresa',
-            'nombre' => 'Vinculacion de prueba2 empresa',
-            'descripcion' => 'Vinculacion de prueba2 empresa '
-        ]);
-        DB::table('vinculaciones')->insert([
-            'tipo' => 'Comunidad',
-            'nombre' => 'Vinculacion de comunidad',
-            'descripcion' => 'Vinculacion de prueba2'
-        ]);
     }
 }

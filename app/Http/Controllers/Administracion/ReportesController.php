@@ -33,7 +33,7 @@ class ReportesController extends Controller
                                     'bitacoras.comentario as comentario_bitacora','telefono_int1','fit.nombre_int2','fit.rut_int2', 'profesor_guia.nombres as nombre_pt', 
                                     'objetivo', 'contribucion', 'carrera', 'fit.tipo as tipo_trabajo','titulo', 'avancestesis.created_at as fecha_avance',
                                     'vinculaciones.nombre AS namevinculacion', 'fit.estado','escuelas.nombre as escuela_nom','fit.created_at as fecha_inscripcion',
-                                    'notaspendientes.fecha_propuesta as fecha_notap','notaspendientes.fecha_prorroga as prorroga_notap', 'notaspendientes.estado as estado_notap', 'fit.fecha_ultimoramo')
+                                    /*'notaspendientes.fecha_propuesta as fecha_notap','notaspendientes.fecha_prorroga as prorroga_notap', 'notaspendientes.estado as estado_notap',*/ 'fit.fecha_ultimoramo')
                             ->leftjoin('vinculaciones', 'vinculaciones.id', '=','fit.id_vinculacion')
                             ->leftjoin('bitacoras', function ($query) {
                                 $query->on('bitacoras.id_tesis','=', 'fit.id')
@@ -43,7 +43,7 @@ class ReportesController extends Controller
                                 $query->on('avancestesis.id_tesis','=', 'fit.id')
                                 ->WhereRaw('avancestesis.id IN (select MAX(a2.id) from avancestesis as a2 join fit as u2 on u2.id = a2.id_tesis group by u2.id)');
                             })
-                            ->leftjoin('notaspendientes', 'notaspendientes.id', '=', 'fit.id_notapendiente')
+                            //->leftjoin('notaspendientes', 'notaspendientes.id', '=', 'fit.id_notapendiente')
                             ->leftjoin('users as profesor_guia', 'profesor_guia.id_user', '=', 'fit.id_profesorguia')
                             ->leftjoin('escuelas', 'escuelas.id','=','profesor_guia.id_escuela')
                             ->leftjoin('users as alumno', 'alumno.id_user', '=', 'fit.id_alumno')
@@ -53,14 +53,10 @@ class ReportesController extends Controller
                                     ['profesor_guia.id_user', '=', null],['fit.estado', '=', $estado],
                                     ['fit.estado', '=', null]])*/
                             ->OrWhere('fit.rut_int1', 'like', "%$rut%")
-                            ->Orwhere('notaspendientes.estado', '=', $estado_notap)
-                            ->Orwhere('notaspendientes.estado', '=', null)
+                            //->Orwhere('notaspendientes.estado', '=', $estado_notap)
                             ->orWhere('profesor_guia.id_escuela', '=', $idescuela)
-                            ->orWhere('profesor_guia.id_escuela', '=', null)
-                            ->orWhere([['profesor_guia.id_user', '=', $idprofesor]])
-                            ->orWhere([['profesor_guia.id_user', '=', null]])
+                            ->orWhere('profesor_guia.id_user', '=', $idprofesor)
                             ->orWhere('fit.estado', '=', $estado)
-                            ->orWhere('fit.estado', '=', null)
                             ->orWhereBetween('fit.fecha_ultimoramo', [$dFechaInicio, $dFechaFin])
                             ->get();
         return $reportdata;

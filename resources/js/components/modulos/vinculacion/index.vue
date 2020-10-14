@@ -12,13 +12,17 @@
 
     <div class="container container-fluid">
       <div class="card">
-        <div class="card-header">
-          <div class="card-tools">
-            <router-link class="btn btn-info bnt-sm" :to="'/vinculacion/crear'">
-              <i class="fas fa-plus-square"></i> Nueva vinculacion
-            </router-link>
+        <template  v-if="listRolPermisosByUsuario.includes('vinculacion.crear')">
+          <div class="card-header">
+            <div class="card-tools">
+              
+                  <router-link class="btn btn-info bnt-sm" :to="'/vinculacion/crear'">
+                    <i class="fas fa-plus-square"></i> Nueva vinculacion
+                  </router-link>
+              
+            </div>
           </div>
-        </div>
+        </template>
         <div class="card-body">
           <div class="container-fluid">
             <div class="card card-info">
@@ -90,7 +94,10 @@
                         <th>Nombre</th>
                         <th>tipo</th>
                         <th>Descripcion</th>
-                        <th>Acciones </th>
+                        <template  v-if="listRolPermisosByUsuario.includes('vinculacion.editar')">
+                              <th>Acciones </th> 
+                          </template> 
+                        
                       </tr>
                     </thead>
                     <tbody>
@@ -99,9 +106,11 @@
                         <td v-text="item.tipo"></td>
                         <td v-text="item.descripcion"></td>
                         <td>
-                            <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'vinculacion.editar', params:{id: item.id}}">
+                          <template  v-if="listRolPermisosByUsuario.includes('vinculacion.editar')">
+                              <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'vinculacion.editar', params:{id: item.id}}">
                               <i class="fas fa-pencil-alt"></i> Editar
-                            </router-link>   
+                            </router-link>  
+                          </template> 
                         </td>
                       </tr>
                     </tbody>
@@ -139,6 +148,7 @@
 
 <script>
 export default {
+  props: ['usuario'],
   data(){
     return{
       fillBsqVinculacion:{
@@ -146,6 +156,7 @@ export default {
         cTipo: '',
         cDescripcion:''
       },
+      listRolPermisosByUsuario: JSON.parse(localStorage.getItem('listRolPermisosByUsuario')),
       listTipo: [
         {value: 'Fondo Concursable', label: 'Fondo Concursable'},
         {value: 'Empresa', label: 'Empresa'},

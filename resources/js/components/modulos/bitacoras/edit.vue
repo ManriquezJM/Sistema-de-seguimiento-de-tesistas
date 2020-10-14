@@ -34,7 +34,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Comentario</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillEditarBitacora.Comentario" @keyup.enter="setEditarBitacora">
+                                                    <input type="text" maxlength="80" class="form-control" v-model="fillEditarBitacora.Comentario" @keyup.enter="setEditarBitacora">
                                                 </div>
                                             </div>
                                         </div>
@@ -42,7 +42,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Acuerdo</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillEditarBitacora.Acuerdo" @keyup.enter="setEditarBitacora">
+                                                    <input type="text" maxlength="80" class="form-control" v-model="fillEditarBitacora.Acuerdo" @keyup.enter="setEditarBitacora">
                                                 </div>
                                             </div>
                                         </div>

@@ -33,7 +33,7 @@
                       <div class="form-group row">
                         <label class="col-md-6 col-form-label">Acta de defensa firmada</label>
                         <div class="col-md-6">
-                            <input type="file" class="form-control" @change="getFile">
+                            <input type="file" accept="application/pdf" class="form-control" @change="getFile">
                         </div>
                       </div>
                     </div>

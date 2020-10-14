@@ -15,23 +15,34 @@ class SecretariaController extends Controller
         if(!$request->ajax()) return redirect('/');
 
         $idUser     = Auth::id();
-        $IdEscuela  = User::select('id_escuela')->where('id_user', $idUser)->get();
+        //$IdEscuela  = User::select('id_escuela')->where('id_user', $idUser)->get();
 
         $rut        = $request->nRut;
         $nombre     = $request->cNombre;
         $estado     = $request->cEstado_tesis;
+        $IdEscuela  = $request->nIdEscuela;
 
         $rut        = ($rut == NULL) ? ($rut = '') : $rut;
         $nombre     = ($nombre == NULL) ? ($nombre = '') : $nombre;
         $estado     = ($estado == NULL) ? ($estado = '') : $estado;
+        $IdEscuela  = ($IdEscuela == NULL) ? ($IdEscuela = '') : $IdEscuela;
 
         $alumnos = DB::table('users')
                         ->join('fit', 'fit.id_alumno', '=', 'users.id_user')
                         ->leftjoin('pdftesis', 'pdftesis.id', '=', 'fit.id_actadefensa')
                         ->select('fit.estado as estado_tesis', 'fit.id as id_tesis',DB::raw("CONCAT(users.nombres,' ',users.apellidos) as full_name"),'fit.rut_int1','pdftesis.path')
-                        ->where([['users.id_escuela', '=', $IdEscuela[0]->id_escuela],[DB::raw("CONCAT(users.nombres,' ',users.apellidos)"), 'like', "%{$nombre}%"],
-                                ['fit.rut_int1', 'like', "%{$rut}%"]])
+
+                        ->where('users.id_escuela', 'like', "%{$IdEscuela}%")
+                        ->where([[(function($query) use ($nombre,$IdEscuela,$rut){
+                            $query
+                            ->where('fit.rut_int1', 'like', "%{$rut}%")
+                            ->where(DB::raw("CONCAT(users.nombres,' ',users.apellidos)"), 'like', "%{$nombre}%")  ;
+                                  
+                            })]])
                         ->get();
+                        //->where(DB::raw("CONCAT(users.nombres,' ',users.apellidos)"), 'like', "%{$nombre}%")
+                        //->orwhere('fit.rut_int1', 'like', "%{$rut}%")
+                        //->where('users.id_escuela', '=', $IdEscuela)
         return $alumnos;
     }
     public function setGenerarMemoRevision(Request $request){

@@ -148,6 +148,7 @@ export default {
         Acuerdo: ''
       },
       listAlumnos:[],
+      listProfesores:[],
       fullscreenLoading: false,
       modalShow: false,
       mostrarModal: {

@@ -58,7 +58,7 @@ class AvancesController extends Controller
 
         $alumnos    = DB::table('fit')
                             ->join('users', 'users.id_user', '=', 'fit.id_alumno')
-                            ->select('users.id_user','users.nombres', 'users.apellidos')
+                            ->select('users.id_user',DB::raw("CONCAT(users.nombres,' ',users.apellidos) as nombres"))
                             ->Where('fit.id_profesorguia', '=', $idUser)
                             ->orderBy('users.id_user', 'desc')
                             ->get();

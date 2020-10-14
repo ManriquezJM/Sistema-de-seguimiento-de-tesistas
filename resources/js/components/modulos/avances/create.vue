@@ -33,7 +33,7 @@
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Descripcion</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" v-model="fillCrearAvances.cDescripcion" @keyup.enter="setRegistrarAvance">
+                            <input type="text" maxlength="60" class="form-control" v-model="fillCrearAvances.cDescripcion" @keyup.enter="setRegistrarAvance">
                         </div>
                       </div>
                     </div>
@@ -41,7 +41,7 @@
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Archivo asociado</label>
                         <div class="col-md-9">
-                            <input type="file" class="form-control" @change="getFile">
+                            <input type="file" accept="application/pdf"  class="form-control" @change="getFile">
                         </div>
                       </div>
                     </div>

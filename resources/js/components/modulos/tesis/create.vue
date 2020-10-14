@@ -51,7 +51,7 @@
                                                 <label class="col-md-3 col-form-label">Tipo de trabajo</label>
                                                 <div class="col-md-9">
                                                     <el-select v-model="fillCrearFIT.cTipo" 
-                                                    placeholder="Seleccione un Tipo"
+                                                    placeholder="Seleccione un Tipo de trabajo"
                                                     clearable>
                                                     <el-option
                                                         v-for="item in listTipo"
@@ -71,7 +71,7 @@
                                                       type="textarea"
                                                       :autosize="{ minRows: 2, maxRows: 5}"
                                                       maxlength="200"
-                                                      placeholder="Objetivo"
+                                                      placeholder="Titulo de la tesis"
                                                       show-word-limit
                                                       v-model="fillCrearFIT.cTitulo">
                                                     </el-input>
@@ -87,7 +87,7 @@
                                                       type="textarea"
                                                       :autosize="{ minRows: 2, maxRows: 5}"
                                                       maxlength="500"
-                                                      placeholder="Contribucion"
+                                                      placeholder="Contribucion esperada"
                                                       show-word-limit
                                                       v-model="fillCrearFIT.cContribucion">
                                                     </el-input>
@@ -104,7 +104,7 @@
                                                       type="textarea"
                                                       :autosize="{ minRows: 2, maxRows: 5}"
                                                       maxlength="500"
-                                                      placeholder="Objetivo"
+                                                      placeholder="Objetivo de la tesis"
                                                       show-word-limit
                                                       v-model="fillCrearFIT.cObjetivo">
                                                     </el-input>
@@ -120,7 +120,7 @@
                                                       type="textarea"
                                                       :autosize="{ minRows: 2, maxRows: 5}"
                                                       maxlength="500"
-                                                      placeholder="Objetivo"
+                                                      placeholder="Descripcion del tema"
                                                       show-word-limit
                                                       v-model="fillCrearFIT.cDescripcion">
                                                     </el-input>
@@ -132,7 +132,7 @@
                                                 <label class="col-md-3 col-form-label">Vinculacion</label>
                                                 <div class="col-md-9">
                                                     <el-select v-model="fillCrearFIT.nIdVinculacion" 
-                                                    placeholder="Asignar Vinculacion"
+                                                    placeholder="Asignar Vinculacion (opcional)"
                                                     clearable>
                                                     <el-option
                                                         v-for="item in listVinculacion"
@@ -165,7 +165,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Telefono Integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="tel" maxlength="9" class="form-control" v-model="fillCrearFIT.cTelefonoI1" @keyup.enter="setRegistrarTesis">
+                                                    <input type="tel" maxlength="9" placeholder="944455566" class="form-control" v-model="fillCrearFIT.cTelefonoI1" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>
@@ -173,7 +173,12 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Año ingreso Integrante 1</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" maxlength="4" v-model="fillCrearFIT.cIngresoI1" @keyup.enter="setRegistrarTesis">
+                                                      <el-date-picker
+                                                        v-model="fillCrearFIT.cIngresoI1"
+                                                        type="year"
+                                                        size="large"
+                                                        placeholder="Elige año">
+                                                      </el-date-picker>
                                                 </div>
                                             </div>
                                         </div>
@@ -209,11 +214,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                         <div class="col-md-6">
+                                        <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Año ingreso Integrante 2</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" maxlength="4" class="form-control" v-model="fillCrearFIT.cIngresoI2" @keyup.enter="setRegistrarTesis">
+                                                      <el-date-picker
+                                                        v-model="fillCrearFIT.cIngresoI2"
+                                                        type="year"
+                                                        placeholder="Elige año">
+                                                      </el-date-picker>
                                                 </div>
                                             </div>
                                         </div>
@@ -221,7 +230,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Telefono Integrante 2</label>
                                                 <div class="col-md-9">
-                                                    <input type="tel" maxlength="9" class="form-control" v-model="fillCrearFIT.cTelefonoI2" @keyup.enter="setRegistrarTesis">
+                                                    <input type="tel" maxlength="9" placeholder="944455566" class="form-control" v-model="fillCrearFIT.cTelefonoI2" @keyup.enter="setRegistrarTesis">
                                                 </div>
                                             </div>
                                         </div>   
@@ -301,7 +310,8 @@ export default {
       },
       listTipo: [
         {value: 'Tesis', label: 'Tesis'},
-        {value: 'Memoria', label: 'Memoria'}
+        {value: 'Memoria', label: 'Memoria'},
+        {value: 'Proyecto de titulo', label: 'Proyecto de titulo'}
       ],
       listProfesores:[],
       listEscuelas:[],

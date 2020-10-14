@@ -34,7 +34,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Nombres</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearPermiso.cNombre" @keyup.enter="setRegistrarPermisos">
+                                                    <input type="text" maxlength="40" class="form-control" v-model="fillCrearPermiso.cNombre" @keyup.enter="setRegistrarPermisos">
                                                 </div>
                                             </div>
                                         </div>
@@ -42,7 +42,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Url amigable</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearPermiso.cSlug" @keyup.enter="setRegistrarPermisos">
+                                                    <input type="text" maxlength="40" class="form-control" v-model="fillCrearPermiso.cSlug" @keyup.enter="setRegistrarPermisos">
                                                 </div>
                                             </div>
                                         </div>

@@ -22,14 +22,16 @@
               </router-link>
               </div>
             </template>
-            <template v-if="listNotasPendientes.length == 0">
-              <router-link class="btn btn-info bnt-sm" :to="'/notaspendientes/crear'">
-                <i class="fas fa-plus-square"></i> Solicitar Nota Pendiente
-              </router-link>
+            <template v-if="listRolPermisosByUsuario.includes('notaspendientes.crear')">
+              <template v-if="listNotasPendientes.length == 0">
+                <router-link class="btn btn-info bnt-sm" :to="'/notaspendientes/crear'">
+                  <i class="fas fa-plus-square"></i> Solicitar Nota Pendiente
+                </router-link>
+              </template>
             </template>
           </div>
         </div>
-
+        
         <div class="card-body">
           <div class="container-fluid">
             <!-- inicio formulario de busqueda-->

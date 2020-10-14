@@ -12,13 +12,18 @@
 
     <div class="container container-fluid">
       <div class="card">
-        <div class="card-header">
-          <div class="card-tools">
-            <router-link class="btn btn-info bnt-sm" :to="'/bitacoras/crear'">
-              <i class="fas fa-plus-square"></i> Ingresar Bitacora
-            </router-link>
+        <template  v-if="listRolPermisosByUsuario.includes('bitacoras.crear')">
+          <div class="card-header">
+            <div class="card-tools">
+              
+                                <router-link class="btn btn-info bnt-sm" :to="'/bitacoras/crear'">
+                <i class="fas fa-plus-square"></i> Ingresar Bitacora
+              </router-link> 
+                            
+              
+            </div>
           </div>
-        </div>
+        </template>
         <div class="card-body">
           <div class="container-fluid">
               <template  v-if="listRolPermisosByUsuario.includes('avances.listaralumnos')">

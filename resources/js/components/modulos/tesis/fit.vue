@@ -12,6 +12,7 @@
 
     <div class="container container-fluid">
       <div class="card">
+        <template v-if="listRolPermisosByUsuario.includes('tesis.crear')">
         <div class="card-header">
           <div class="card-tools">
             <template v-if="listMiTesis.length == 0">
@@ -26,6 +27,7 @@
             </template>
           </div>
         </div>
+        </template>
         <div class="card-body">
           <div class="container-fluid">
 

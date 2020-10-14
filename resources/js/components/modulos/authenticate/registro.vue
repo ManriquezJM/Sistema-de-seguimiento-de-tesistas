@@ -11,7 +11,7 @@
 
                 <form method="post">
                     <div class="input-group mb-3">
-                        <input type="text" v-model="fillRegistrarAlumno.cNombre" @keyup.enter="setRegistrarAlumno" class="form-control" placeholder="Nombres" >
+                        <input type="text" maxlength="30" v-model="fillRegistrarAlumno.cNombre" @keyup.enter="setRegistrarAlumno" class="form-control" placeholder="Nombres" >
                         <div class="input-group-append">
                             <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="text" v-model="fillRegistrarAlumno.cApellido" @keyup.enter="setRegistrarAlumno" class="form-control" placeholder="Apellidos" >
+                        <input type="text" maxlength="30" v-model="fillRegistrarAlumno.cApellido" @keyup.enter="setRegistrarAlumno" class="form-control" placeholder="Apellidos" >
                         <div class="input-group-append">
                             <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -41,7 +41,7 @@
                             </div>
                         </div>
                     <div class="input-group mb-3">
-                        <input type="email" v-model="fillRegistrarAlumno.cCorreo" @keyup.enter="setRegistrarAlumno" class="form-control" placeholder="Email" >
+                        <input type="email" maxlength="50" v-model="fillRegistrarAlumno.cCorreo" @keyup.enter="setRegistrarAlumno" class="form-control" placeholder="Email" >
                         <div class="input-group-append">
                             <div class="input-group-text">
                             <span class="fas fa-envelope"></span>

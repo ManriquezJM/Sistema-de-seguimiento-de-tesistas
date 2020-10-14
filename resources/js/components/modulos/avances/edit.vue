@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Editar Usuario</h1>
+            <h1 class="m-0 text-dark">Editar Avance</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -22,16 +22,16 @@
           <div class="container-fluid">
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">Formulario Editar Usuario</h3>
+                <h3 class="card-title">Formulario Editar Avance</h3>
               </div>
               <div class="card-body">
                 <form role="form">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Nombres</label>
+                        <label class="col-md-3 col-form-label">Descripcion</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" v-model="fillEditarAvance.cDescripcion" @keyup.enter="setEditarAvance">
+                            <input type="text" maxlength="60" class="form-control" v-model="fillEditarAvance.cDescripcion" @keyup.enter="setEditarAvance">
                         </div>
                       </div>
                     </div>

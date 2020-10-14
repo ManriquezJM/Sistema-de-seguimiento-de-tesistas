@@ -33,7 +33,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Nombre</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillEditarVinculacion.cNombre" @keyup.enter="setEditarVinculacion">
+                                                    <input type="text" maxlength="50" class="form-control" v-model="fillEditarVinculacion.cNombre" @keyup.enter="setEditarVinculacion">
                                                 </div>
                                             </div>
                                         </div>
@@ -58,7 +58,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Descripcion</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillEditarVinculacion.cDescripcion" @keyup.enter="setEditarVinculacion">
+                                                    <input type="text" maxlength="70" class="form-control" v-model="fillEditarVinculacion.cDescripcion" @keyup.enter="setEditarVinculacion">
                                                 </div>
                                             </div>
                                         </div>

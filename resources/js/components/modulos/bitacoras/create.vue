@@ -50,13 +50,13 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Comentario</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearBitacora.Comentario" @keyup.enter="setRegistrarBitacora">
+                                                    <input type="text" maxlength="80" class="form-control" v-model="fillCrearBitacora.Comentario" @keyup.enter="setRegistrarBitacora">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Acuerdo</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillCrearBitacora.Acuerdo" @keyup.enter="setRegistrarBitacora">
+                                                    <input type="text" maxlength="80" class="form-control" v-model="fillCrearBitacora.Acuerdo" @keyup.enter="setRegistrarBitacora">
                                                 </div>
                                             </div>
                                         </div>

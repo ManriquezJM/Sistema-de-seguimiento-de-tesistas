@@ -232,37 +232,28 @@ class AlumnoController extends Controller
         ]);
        
         return $pdf->download('invoice.pdf');
-    }/*
-    ->join('fit', 'fit.id', '=', 'comisiones.id_tesis')
-                    ->join('users as alumno', 'alumno.id_user', '=', 'fit.id_alumno')
-                    ->join('users as profesor_guia', 'profesor_guia.id_user', '=', 'fit.id_profesorguia')
-                    ->join('users as profesor_1','profesor_1.id_user','=', 'comisiones.id_profesor1')
-                    ->leftjoin('users as profesor_2','profesor_2.id_user','=', 'comisiones.id_profesor2')
-                    ->select('comisiones.id','comisiones.id_profesor1', 'comisiones.id_profesor2', 'comisiones.p_externo', 'fit.id_profesorguia as profe_guia',
-                    'alumno.nombres as Anombres', 'profesor_guia.nombres as Pnombres', 'profesor_1.nombres as P1nombres','profesor_2.nombres as P2nombres','fit.id as id_fit')
-                    ->where('comisiones.id_profesor1', '=', $IdProfesor)
-                    ->orWhere('comisiones.id_profesor2', '=', $IdProfesor)*/
+    }
+
     public function getListarProfesores(Request $request){
 
         if(!$request->ajax()) return redirect('/');
-
-        $escuela    = Auth::user()->id_escuela;
+        $nIdUsuario  = Auth::id();
 
         $profesores = DB::table('users')
                         ->join('users_roles', 'users_roles.id_user', '=', 'users.id_user')
                         ->join('roles', 'roles.id', '=', 'users_roles.id_roles')
-                        ->select('users.id_user', 'users.nombres AS fullname')
+                        ->select('users.id_user',DB::raw("CONCAT(users.nombres,' ',users.apellidos) as fullname"))
                         ->where([
                             ['roles.name', '=', 'Profesor'],
-                            ['users.id_escuela', '=', $escuela],
+                            ['users.id_user', '<>', $nIdUsuario]
                         ])
                         ->orwhere([
                             ['roles.name', '=', 'Director'],
-                            ['users.id_escuela', '=', $escuela],
+                            ['users.id_user', '<>', $nIdUsuario]
                         ])
                         ->orwhere([
                             ['roles.name', '=', 'Coordinador'],
-                            ['users.id_escuela', '=', $escuela],
+                            ['users.id_user', '<>', $nIdUsuario]
                         ])
                         ->get();
         return $profesores;

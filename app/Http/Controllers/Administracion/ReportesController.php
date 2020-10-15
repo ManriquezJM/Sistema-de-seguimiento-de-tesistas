@@ -27,11 +27,11 @@ class ReportesController extends Controller
         $estado_notap       = ($estado_notap == NULL) ? ($estado_notap = ''): $estado_notap;
         $idprofesor         = ($idprofesor == NULL) ?   ($idprofesor = '')  : $idprofesor;
         $estado             = ($estado == NULL) ?       ($estado = '')      : $estado;
-        $dFechaInicio       = ($dFechaInicio == NULL) ? ($dFechaInicio = ''): $dFechaInicio;
-        $dFechaFin          = ($dFechaFin == NULL) ?    ($dFechaFin = '')   : $dFechaFin;
+        $dFechaInicio       = ($dFechaInicio == NULL) ? ($dFechaInicio = '2000-01-01'): $dFechaInicio;
+        $dFechaFin          = ($dFechaFin == NULL) ?    ($dFechaFin = '2100-01-01')   : $dFechaFin;
 
         $reportdata = Fit::select('fit.id','nombre_int1', 'rut_int1', 'email_int1', 'ingreso_int1', 'bitacoras.fecha as fecha_bitacora',
-                                    'bitacoras.comentario as comentario_bitacora','telefono_int1','fit.nombre_int2','fit.rut_int2', 'profesor_guia.nombres as nombre_pt', 
+                                    'bitacoras.comentario as comentario_bitacora','telefono_int1','fit.nombre_int2','fit.rut_int2',  DB::raw("CONCAT(profesor_guia.nombres,' ',profesor_guia.apellidos) as nombre_pt"),
                                     'objetivo', 'contribucion', 'carrera', 'fit.tipo as tipo_trabajo','titulo', 'avancestesis.created_at as fecha_avance',
                                     'vinculaciones.nombre AS namevinculacion', 'fit.estado','escuelas.nombre as escuela_nom','fit.created_at as fecha_inscripcion','alumno.id_user as IDalumno',
                                     'notaspendientes.fecha_propuesta as fecha_notap','notaspendientes.fecha_prorroga as prorroga_notap', 'notaspendientes.estado as estado_notap','fit.fecha_ultimoramo')
@@ -54,12 +54,14 @@ class ReportesController extends Controller
                                         ->orwhere('notaspendientes.estado', 'like', "%$estado_notap%")
                                         ->orwhere('notaspendientes.estado','=', null)  ;   
                             })]])
+                            
                             //
                             ->Where('fit.rut_int1', 'like', "%$rut%")
                             ->Where('alumno.id_escuela', 'like', "%$idescuela%")
                             ->Where('profesor_guia.id_user', 'like', "%$idprofesor%")
                             ->Where('fit.estado', 'like', "$estado%")
-                            ->orWhereBetween('fit.fecha_ultimoramo', [$dFechaInicio, $dFechaFin])
+
+                            ->WhereBetween('fit.fecha_ultimoramo', [$dFechaInicio, $dFechaFin])
                             ->get();
         return $reportdata;
     }

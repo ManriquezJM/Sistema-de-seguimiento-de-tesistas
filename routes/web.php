@@ -54,6 +54,7 @@ Route::post('/administracion/areatesis/setEditarAreaTesis', 'Administracion\Area
 Route::get('/administracion/vinculacion/getListarVinculacion', 'Administracion\VinculacionController@getListarVinculacion');
 Route::post('/administracion/vinculacion/setRegistrarVinculacion', 'Administracion\VinculacionController@setRegistrarVinculacion');
 Route::post('/administracion/vinculacion/setEditarVinculacion', 'Administracion\VinculacionController@setEditarVinculacion');
+Route::post('/administracion/vinculacion/setCambiarVinculacion', 'Administracion\VinculacionController@setCambiarVinculacion');
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE TESIS (FIT)    **********/
 Route::get('/alumno/getListarTesis', 'AlumnoController@getListarTesis');

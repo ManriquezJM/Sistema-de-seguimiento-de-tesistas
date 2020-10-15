@@ -72,4 +72,20 @@ class VinculacionController extends Controller
                                                                     $cDescripcion
                                                                 ]);
     }
+    public function setCambiarVinculacion(Request $request){
+
+        if(!$request->ajax()) return redirect('/');
+    
+        $nIdVinculacion   = $request->nIdVinculacion;
+        $cEstadopg  = $request->cEstadopg;
+    
+        $nIdVinculacion   = ($nIdVinculacion == NULL) ? ($nIdVinculacion = 0) : $nIdVinculacion;
+        $cEstadopg  = ($cEstadopg == NULL) ? ($cEstadopg = 0) : $cEstadopg;
+    
+        $rpta = DB::select('call sp_Vinculacion_setCambiarVinculacion (?, ?)',
+                                                                [
+                                                                    $nIdVinculacion,
+                                                                    $cEstadopg
+                                                                ]);
+        }
 }

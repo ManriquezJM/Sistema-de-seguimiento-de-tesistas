@@ -169,7 +169,7 @@
                         <th>Escuela</th>
                         <th>Profesor Tutor</th>
                         <th>Estado Tesis</th>
-                        <th>Acciones</th>
+                        <th>Detalles Tesis</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -191,32 +191,15 @@
                         </td>
                         <td>
                           <router-link class="btn btn-flat btn-primary btn-sm" :to="{name:'tesis.ver', params:{id: item.id}}">
-                             Ver Fit
+                              Fit
                           </router-link>
-                          <router-link class="btn btn-flat btn-primary btn-sm" :to="{name:'reportes.detallesavances', params:{id: item.IDalumno}}">
-                             Ver avances
+                          <router-link class="btn btn-flat btn-success btn-sm" :to="{name:'reportes.detallesavances', params:{id: item.IDalumno}}">
+                             avances
                           </router-link>
-                          <router-link class="btn btn-flat btn-primary btn-sm" :to="{name:'reportes.detallesbitacoras', params:{id: item.IDalumno}}">
-                             Ver Bitacoras
+                          <router-link class="btn btn-flat btn-secondary btn-sm" :to="{name:'reportes.detallesbitacoras', params:{id: item.IDalumno}}">
+                             Bitacoras
                           </router-link>
-                          <template v-if="item.aprobado_pg == 'A'">
-                            <button class="btn btn-flat btn-light btn-sm" @click.prevent="setGenerarDocumento(item.id)">
-                              <i class="fas fa-pencil-alt"></i> Ver PDF
-                            </button>
-                          </template>
-                          <template v-if="item.aprobado_pg == 'P' || item.aprobado_pg == 'R'">
-                            <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'tesis.editar', params:{id: item.id}}">
-                              <i class="fas fa-pencil-alt"></i> Editar
-                            </router-link>
-                            <template  v-if="listRolPermisosByUsuario.includes('tesis.aprobar')">
-                                <button class="btn btn-flat btn-success btn-sm" @click.prevent="setCambiarEstadoFIT(1, item.id)">
-                                  <i class="fas fa-check"></i>Aprobar
-                                </button>
-                                <button class="btn btn-flat btn-danger btn-sm" @click.prevent="setCambiarEstadoFIT(2, item.id)">
-                                  <i class="fas fa-trash"></i>Rechazar
-                                </button>
-                            </template>
-                          </template>
+                          
                         </td>
                       </tr>
                     </tbody>

@@ -94,6 +94,7 @@
                         <th>Nombre</th>
                         <th>tipo</th>
                         <th>Descripcion</th>
+                        <th>Estado</th>
                         <template  v-if="listRolPermisosByUsuario.includes('vinculacion.editar')">
                               <th>Acciones </th> 
                           </template> 
@@ -106,11 +107,32 @@
                         <td v-text="item.tipo"></td>
                         <td v-text="item.descripcion"></td>
                         <td>
-                          <template  v-if="listRolPermisosByUsuario.includes('vinculacion.editar')">
+                          <template v-if="item.estado == 'A'">
+                            <span class="badge badge-success" >Activo</span>
+                          </template>
+                          <template v-else>
+                            <span class="badge badge-danger" >Inactivo</span>
+                          </template>
+                        </td>
+                        <td>
+                         <template  v-if="listRolPermisosByUsuario.includes('vinculacion.editar')"> 
+                          <template v-if="item.estado == 'A'">
+                            
                               <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'vinculacion.editar', params:{id: item.id}}">
                               <i class="fas fa-pencil-alt"></i> Editar
                             </router-link>  
-                          </template> 
+                          
+                            <button class="btn btn-flat btn-danger btn-sm" @click.prevent="setCambiarVinculacion(1, item.id)">
+                              <i class="fas fa-trash"></i>Desactivar
+                            </button>
+
+                          </template>
+                          <template v-else>
+                            <button class="btn btn-flat btn-success btn-sm" @click.prevent="setCambiarVinculacion(2, item.id)">
+                              <i class="fas fa-trash"></i>Activar
+                            </button>
+                          </template>
+                        </template> 
                         </td>
                       </tr>
                     </tbody>
@@ -257,6 +279,33 @@ export default {
         break;
     }
   },
+  setCambiarVinculacion(op, id){
+      Swal.fire({
+      title: 'Estas seguro? ' + ((op == 1) ? 'desactivar ' : 'activar ') + ' la vinculacion',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: ((op == 1) ? 'Si, desactivar ' : 'Si, activar ')
+    }).then((result) => {
+      if (result.value) {
+        this.fullscreenLoading = true;
+        var url = '/administracion/vinculacion/setCambiarVinculacion'
+        axios.post(url, {
+          'nIdVinculacion' : id,
+          'cEstadopg'    : (op == 1) ? 'I' : 'A'
+        }).then(response => {
+            Swal.fire({
+            icon: 'success',
+            title: 'Se ' + ((op == 1) ? 'desactivo ' : 'activo ') +'la vinculacion',
+            showConfirmButton: false,
+            timer: 1500
+            })
+            this.getListarVinculacion();
+        })
+      }
+    })
+    }
    
 
   }//cierre de methods

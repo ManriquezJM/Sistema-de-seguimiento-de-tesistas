@@ -14,9 +14,12 @@ class NotasPendientesController extends Controller
         if(!$request->ajax()) return redirect('/');
 
         $idAlumno = Auth::id();
-        
+        $idTesis    = Fit::select('id')->where('id_alumno',$idAlumno)->get();
+        $fecha = $request->fecha_propuesta;
+
         $NotaP                      = new NotasPendientes();
-        $NotaP->fecha_propuesta     = $request->fecha_propuesta;
+        $NotaP->id_tesis                     = $idTesis[0]->id;
+        $NotaP->fecha_propuesta     = $fecha;
         $NotaP->fecha_presentacion  = Carbon::now();
         $NotaP->save();
 
@@ -39,8 +42,8 @@ class NotasPendientesController extends Controller
 
         $idAlumno = Auth::id();
 
-        $NotaP    = DB::table('notaspendientes')
-                        ->join('fit', 'fit.id_notapendiente', '=', 'notaspendientes.id')
+        $NotaP    = DB::table('fit')
+                        ->join('notaspendientes', 'notaspendientes.id_tesis', '=', 'fit.id')
                         ->join('users', 'users.id_user', '=', 'fit.id_alumno')
                         ->select('notaspendientes.id','fecha_presentacion', 'fecha_propuesta', 'fecha_prorroga', 'notaspendientes.estado',DB::raw("CONCAT(users.nombres,' ',users.apellidos) as full_name"))
                         ->where('fit.id_alumno', '=', $idAlumno)
@@ -58,7 +61,7 @@ class NotasPendientesController extends Controller
 
         $nIdNotaP       = ($nIdNotaP == NULL) ? ($nIdNotaP = 0) : $nIdNotaP;
         $NotasP = DB::table('fit')
-                        ->leftjoin('notaspendientes', 'notaspendientes.id', '=','fit.id_notapendiente')
+                        ->join('notaspendientes', 'notaspendientes.id_tesis', '=','fit.id')
                         ->join('users', 'users.id_user', '=', 'fit.id_alumno')
                         ->Where('notaspendientes.estado', '=', $estado)
                         ->OrWhere('notaspendientes.id', '=', $nIdNotaP)

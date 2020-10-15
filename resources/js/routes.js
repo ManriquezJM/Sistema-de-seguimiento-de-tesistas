@@ -382,6 +382,24 @@ export const rutas = [
         verificarAcceso(to, from, next);
     }
 },
+{ 
+    path: '/reportes/detallesavances/:id',
+    name: 'reportes.detallesavances',
+    component: require('./components/modulos/reportes/detallesavances').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    },
+    props : true
+},
+{ 
+    path: '/reportes/detallesbitacoras/:id',
+    name: 'reportes.detallesbitacoras',
+    component: require('./components/modulos/reportes/detallesbitacoras').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    },
+    props : true
+},
 /******** RUTAS MODULO DE ADMINISTRACION ACTA DE DEFENSA Y CALIFICACION *********/
 { 
     path: '/actadefensa',

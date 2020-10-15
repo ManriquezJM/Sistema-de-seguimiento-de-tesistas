@@ -18,6 +18,7 @@ class CreateVinculacionesTable extends Migration
             $table->string('tipo')->nullable();
             $table->string('nombre')->nullable();
             $table->string('descripcion')->nullable();
+            $table->enum('estado',['A','I'])->nullable()->default('A');
             $table->timestamps();
         });
     }

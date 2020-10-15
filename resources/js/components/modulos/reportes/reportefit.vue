@@ -9,7 +9,6 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
-
     <div class="container container-fluid">
       <div class="card">
         <div class="card-body">
@@ -193,6 +192,12 @@
                         <td>
                           <router-link class="btn btn-flat btn-primary btn-sm" :to="{name:'tesis.ver', params:{id: item.id}}">
                              Ver Fit
+                          </router-link>
+                          <router-link class="btn btn-flat btn-primary btn-sm" :to="{name:'reportes.detallesavances', params:{id: item.IDalumno}}">
+                             Ver avances
+                          </router-link>
+                          <router-link class="btn btn-flat btn-primary btn-sm" :to="{name:'reportes.detallesbitacoras', params:{id: item.IDalumno}}">
+                             Ver Bitacoras
                           </router-link>
                           <template v-if="item.aprobado_pg == 'A'">
                             <button class="btn btn-flat btn-light btn-sm" @click.prevent="setGenerarDocumento(item.id)">

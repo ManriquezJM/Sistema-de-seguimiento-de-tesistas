@@ -126,18 +126,18 @@ export default {
   computed: {
   },
   mounted(){
-    //this.getListarMisBitacoras();
+    
     this.getListarAlumnosByprofesor();
   },
   methods:{
     getListarAlumnosByprofesor(){
-      this.fullscreenLoading = true;
+      //this.fullscreenLoading = true;
       var url = '/avances/getListarAlumnosByprofesor'
       axios.get(url, {
       }).then(response => {
-          this.inicializarPaginacion();
+          //this.inicializarPaginacion();
           this.listAlumnos = response.data;
-          this.fullscreenLoading = false;
+          //this.fullscreenLoading = false;
       })
     },
     limpiarCriterios(){
@@ -180,19 +180,8 @@ export default {
         this.fullscreenLoading = false;
         this.$router.push('/bitacoras');
       })
-    },
-    nextPage(){
-      this.pageNumber++;
-    },
-    prevPage(){
-      this.pageNumber--;
-    },
-    selectPage(page){
-      this.pageNumber = page;
-    },
-    inicializarPaginacion(){
-      this.pageNumber = 0;
-    },
+    }
+    
 
   
   }// cierre methods

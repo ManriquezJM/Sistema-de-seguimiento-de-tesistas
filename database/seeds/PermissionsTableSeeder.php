@@ -217,6 +217,14 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'EsProfesor',
             'slug' => 'EsProfesor'
         ]);
+        DB::table('permissions')->insert([
+            'name' => 'Detalles avances alumno',
+            'slug' => 'reportes.detallesavances'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'Detalles avances alumno',
+            'slug' => 'reportes.detallesbitacoras'
+        ]);
     }
 }
 

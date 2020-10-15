@@ -171,7 +171,7 @@ export default {
         this.$router.push('/avances');
       })
       
-    },
+    }
   }// cierre methods
 }
 </script>

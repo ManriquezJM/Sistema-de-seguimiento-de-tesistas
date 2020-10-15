@@ -20,7 +20,6 @@ class CreateFitTable extends Migration
             $table->bigInteger('id_vinculacion')->unsigned()->nullable();
             $table->bigInteger('id_pdftesis')->unsigned()->nullable();
             $table->bigInteger('id_actadefensa')->unsigned()->nullable();
-            $table->bigInteger('id_notapendiente')->unsigned()->nullable();
             $table->decimal('nota', 2, 1)->nullable();
             $table->enum('estado',['A','R','D'])->nullable()->default('D');
             $table->string('titulo')->nullable();
@@ -47,7 +46,6 @@ class CreateFitTable extends Migration
             $table->foreign('id_vinculacion')->references('id')->on('vinculaciones')->onDelete('set null');
             $table->foreign('id_pdftesis')->references('id')->on('pdftesis')->onDelete('set null');
             $table->foreign('id_actadefensa')->references('id')->on('pdftesis');
-            $table->foreign('id_notapendiente')->references('id')->on('notaspendientes')->onDelete('set null');
             $table->timestamps();
         });
     }

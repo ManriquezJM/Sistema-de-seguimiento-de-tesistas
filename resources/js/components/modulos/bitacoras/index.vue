@@ -15,12 +15,9 @@
         <template  v-if="listRolPermisosByUsuario.includes('bitacoras.crear')">
           <div class="card-header">
             <div class="card-tools">
-              
-                                <router-link class="btn btn-info bnt-sm" :to="'/bitacoras/crear'">
-                <i class="fas fa-plus-square"></i> Ingresar Bitacora
-              </router-link> 
-                            
-              
+                <router-link class="btn btn-info bnt-sm" :to="'/bitacoras/crear'">
+              <i class="fas fa-plus-square"></i> Ingresar Bitacora
+            </router-link> 
             </div>
           </div>
         </template>
@@ -80,7 +77,10 @@
                       <tr>
                         <th>Fecha</th>
                         <th>Comentario</th>
-                        <th>Acciones </th>
+                        <template  v-if="listRolPermisosByUsuario.includes('bitacoras.editar')">
+                          <th>Acciones </th>
+                        </template>
+                        
                       </tr>
                     </thead>
                     <tbody>
@@ -88,9 +88,11 @@
                         <td v-text="item.fecha"></td>
                         <td v-text="item.comentario"></td>
                         <td>
-                            <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'bitacoras.editar', params:{id: item.id}}">
+                        <template  v-if="listRolPermisosByUsuario.includes('bitacoras.editar')">
+                          <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'bitacoras.editar', params:{id: item.id}}">
                               <i class="fas fa-pencil-alt"></i> Editar
                             </router-link>
+                        </template>    
                         </td>
                       </tr>
                     </tbody>

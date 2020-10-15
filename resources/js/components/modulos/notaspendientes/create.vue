@@ -142,17 +142,12 @@ export default {
         'fecha_propuesta'            : this.fillCrearNotaP.fecha_propuesta
       }).then(response => {
         this.fullscreenLoading = false;
-        var IdNotaP = response.data.id;
-        this.setAsignarNotaP(IdNotaP);
+        //var IdNotaP = response.data.id;
+        //this.setAsignarNotaP(IdNotaP);
         this.$router.push('/notaspendientes');
       })
     },
-    setAsignarNotaP(IdNotaP){
-      var url = '/notaspendientes/setAsignarNotaP'
-      axios.post(url, {
-        'id_notapendiente': IdNotaP
-      })
-    },
+    
     alertaNotaP(){
       Swal.fire({
         icon: 'warning',

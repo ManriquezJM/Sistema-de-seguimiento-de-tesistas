@@ -12,15 +12,15 @@
 
     <div class="container container-fluid">
       <div class="card">
-        <template  v-if="listRolPermisosByUsuario.includes('avances.crear')">            
+        <template  v-if="listRolPermisosByUsuario.includes('reportes.reportefit')">
           <div class="card-header">
             <div class="card-tools">
-              <router-link class="btn btn-info bnt-sm" :to="'/avances/crear'">
-                <i class="fas fa-plus-square"></i> Subir Avance
-              </router-link>
+              <router-link class="btn btn-info bnt-sm" :to="'/reportes'">
+                <i class="fas fa-arrow-left"></i> Volver a Reportes
+              </router-link> 
             </div>
           </div>
-        </template> 
+        </template>
         <div class="card-body">
           <div class="container-fluid">
             <template  v-if="listRolPermisosByUsuario.includes('avances.listaralumnos')">
@@ -79,7 +79,7 @@
                         <th>Archivo Asociado</th>
                         <template  v-if="listRolPermisosByUsuario.includes('avances.editar')">            
                           <th>Editar</th>
-                        </template> 
+                        </template>
                         
                       </tr>
                     </thead>
@@ -92,12 +92,12 @@
                         </td>
 
                         <td>
+                          
                           <template  v-if="listRolPermisosByUsuario.includes('avances.editar')">            
-                          <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'avances.editar', params:{id: item.id}}">
-                              <i class="fas fa-pencil-alt"></i> Editar
-                            </router-link>
-                        </template> 
-                            
+                            <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'avances.editar', params:{id: item.id}}">
+                                <i class="fas fa-pencil-alt"></i> Editar
+                              </router-link>
+                          </template>
                         </td>
                       </tr>
                     </tbody>
@@ -138,7 +138,7 @@ export default {
   data(){
     return{
       fillBsqAvanceByAlumno:{
-        id_user: '',
+        id_user: this.$attrs.id,
       },
       listRolPermisosByUsuario: JSON.parse(localStorage.getItem('listRolPermisosByUsuario')),
       listAvances:[],
@@ -189,8 +189,9 @@ export default {
     }
   },
   mounted(){
-    this.getListarAvances();
-    this.getListarAlumnosByprofesor();
+   this.getListarAvancesByAlumno()
+    //this.getListarAvances();
+    //this.getListarAlumnosByprofesor();
   },
   methods:{
     

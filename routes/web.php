@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 /*********      RUTAS MODULO DE AUTENTICACION , REGISTRO  Y RECUPERACION DE CONTRASENA     *********/
 Route::post('/authenticate/login', 'Auth\LoginController@login');
 Route::get('/administracion/escuelas/getListarEscuelas', 'Administracion\EscuelasController@getListarEscuelas');
+Route::get('/administracion/reportes/getListarTesisHome', 'Administracion\ReportesController@getListarTesisHome');
+Route::get('/reportes/getListarProfesorByEscuela', 'Administracion\ReportesController@getListarProfesorByEscuela');
 Route::post('/authenticate/registro/setRegistrarAlumno', 'AlumnoController@setRegistrarAlumno');
 Route::post('/authenticate/registro/setEditarRolAlumno', 'AlumnoController@setEditarRolAlumno');
 Route::post('/passrecovery/sendToken','Auth\LoginController@sendToken');
@@ -71,6 +73,8 @@ Route::post('/avances/setRegistrarAvance', 'AvancesController@setRegistrarAvance
 Route::post('/avances/setEditarAvance', 'AvancesController@setEditarAvance');
 Route::get('/avances/getListarAvancesByAlumno', 'AvancesController@getListarAvancesByAlumno');
 Route::get('/avances/getListarAlumnosByprofesor', 'AvancesController@getListarAlumnosByprofesor');
+Route::get('/avances/getEstadoTesis', 'AvancesController@getEstadoTesis');
+Route::post('/avances/setRegistrarFinalPdf', 'AvancesController@setRegistrarFinalPdf');
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE BITACORAS    **********/
 Route::get('bitacoras/getListarMisBitacoras', 'BitacorasController@getListarMisBitacoras');
@@ -98,7 +102,7 @@ Route::get('/administracion/reportes/getListarTesisReporte', 'Administracion\Rep
 Route::get('/administracion/reportes/export', 'Administracion\ReportesController@export');
 Route::post('/archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
 Route::post('/archivo/setRegistrarArchivoPDF', 'FilesController@setRegistrarArchivoPDF');
-Route::get('/reportes/getListarProfesorByEscuela', 'Administracion\ReportesController@getListarProfesorByEscuela');
+
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS ALUMNOS     **********/
 Route::get('/secretaria/getListarAlumnos', 'SecretariaController@getListarAlumnos');

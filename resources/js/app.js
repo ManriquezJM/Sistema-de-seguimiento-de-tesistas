@@ -25,6 +25,7 @@ window.EventBus = EventBus;
 
 Vue.component('App', require('./components/App.vue').default);
 Vue.component('Auth', require('./components/Auth.vue').default);
+Vue.component('Home', require('./components/Home.vue').default);
 
 
 import router from './routes'

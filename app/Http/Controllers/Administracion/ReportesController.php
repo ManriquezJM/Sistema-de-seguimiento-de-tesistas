@@ -65,6 +65,32 @@ class ReportesController extends Controller
                             ->get();
         return $reportdata;
     }
+    public function getListarTesisHome(Request $request){
+        if(!$request->ajax()) return redirect('/');
+
+        $titulo             = $request->cTitulo;
+        $idescuela          = $request->nIdEscuela;
+        $idprofesor         = $request->nIdProfesor;
+        
+
+        $titulo             = ($titulo == NULL) ?          ($titulo = '')         : $titulo;
+        $idescuela          = ($idescuela == NULL) ?    ($idescuela = '')   : $idescuela;
+        $idprofesor         = ($idprofesor == NULL) ?   ($idprofesor = '')  : $idprofesor;
+        
+        $reportdata = Fit::select('fit.id', DB::raw("CONCAT(profesor_guia.nombres,' ',profesor_guia.apellidos) as nombre_pt"),
+                                     'carrera', 'fit.tipo as tipo_trabajo','titulo','pdftesis.path'
+                                    ,'escuelas.nombre as escuela_nom',
+                                )
+                            ->join('pdftesis', 'pdftesis.id', '=', 'fit.id_pdftesis')
+                            ->leftjoin('users as profesor_guia', 'profesor_guia.id_user', '=', 'fit.id_profesorguia')
+                            ->leftjoin('escuelas', 'escuelas.id','=','profesor_guia.id_escuela')
+                            ->Where('fit.titulo', 'like', "%$titulo%")
+                            ->Where('profesor_guia.id_escuela', 'like', "%$idescuela%")
+                            ->Where('profesor_guia.id_user', 'like', "%$idprofesor%")
+
+                            ->get();
+        return $reportdata;
+    }
     public function export(Request $request){
         if(!$request->ajax()) return redirect('/');
 

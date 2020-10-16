@@ -9,7 +9,7 @@
         @if (Auth::check()) 
             <App ruta="{{route('basepath')}}" :usuario="{{Auth::user()->load('file')}}" ></App>
         @else
-            <Auth ruta="{{route('basepath')}}"></Auth>
+            <Home ruta="{{route('basepath')}}"></Home>
         @endif
     </div>
 

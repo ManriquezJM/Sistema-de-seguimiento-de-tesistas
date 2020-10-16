@@ -225,6 +225,10 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Detalles avances alumno',
             'slug' => 'reportes.detallesbitacoras'
         ]);
+        DB::table('permissions')->insert([
+            'name' => 'Subir version final de tesis',
+            'slug' => 'avances.subirfinalpdf'
+        ]);
     }
 }
 

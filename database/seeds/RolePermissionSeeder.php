@@ -53,6 +53,10 @@ class RolePermissionSeeder extends Seeder
         ]);
         DB::table('roles_permissions')->insert([
             'id_role' => 1,
+            'id_permission' => 11
+        ]);
+        DB::table('roles_permissions')->insert([
+            'id_role' => 1,
             'id_permission' => 12
         ]);
         DB::table('roles_permissions')->insert([

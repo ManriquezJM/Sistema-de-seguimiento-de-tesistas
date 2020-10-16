@@ -105,6 +105,16 @@ class AvancesController extends Controller
         
         return $rpta;
     }
+    public function setRegistrarFinalPdf(Request $request){
+        if(!$request->ajax()) return redirect('/');
+
+        $idUser     = Auth::user()->id_user;
+        $idTesis    = Fit::select('id')->where('id_alumno',$idUser)->get();
+
+        $IdArchivo = $request->id_archivo;
+        Fit::find($idTesis[0]->id)->update(['id_pdftesis'=>$IdArchivo]);
+        //NotasPendientes::find($id)->update(['fecha_propuesta'=>$fecha_propuesta]);
+    }
     public function setEditarAvance(Request $request){
         if(!$request->ajax()) return redirect('/');
         
@@ -121,5 +131,13 @@ class AvancesController extends Controller
         }else{
             Avances::find($id)->update(['descripcion'=>$descripcion, 'created_at' =>$fecha, 'id_archivo' =>$id_archivo]);
         }
+    }
+    public function getEstadoTesis(Request $request){
+        if(!$request->ajax()) return redirect('/');
+
+        $idUser     = Auth::user()->id_user;
+        $estado    = Fit::select('estado')->where('id_alumno',$idUser)->get();
+
+        return $estado;
     }
 }

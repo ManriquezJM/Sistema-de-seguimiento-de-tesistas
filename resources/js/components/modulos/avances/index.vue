@@ -15,6 +15,16 @@
         <template  v-if="listRolPermisosByUsuario.includes('avances.crear')">            
           <div class="card-header">
             <div class="card-tools">
+            <template v-if="fillEstadoTesis.cEstado  == 'A'">
+              <router-link class="btn btn-success"  :to="'/avances/subirfinalpdf'">
+                <i class="fas fa-file-upload"></i> Subir PDF final
+              </router-link>
+            </template>
+            <template v-if="fillEstadoTesis.cEstado  == 'D' || fillEstadoTesis.cEstado  == 'R'">
+              <router-link class="btn btn-danger link-disabled" :to="''">
+                <i class="fas fa-lock"></i> Aun no puedes subir el PDF final
+              </router-link>
+            </template>
               <router-link class="btn btn-info bnt-sm" :to="'/avances/crear'">
                 <i class="fas fa-plus-square"></i> Subir Avance
               </router-link>
@@ -140,6 +150,9 @@ export default {
       fillBsqAvanceByAlumno:{
         id_user: '',
       },
+      fillEstadoTesis:{
+        cEstado: '',
+      },
       listRolPermisosByUsuario: JSON.parse(localStorage.getItem('listRolPermisosByUsuario')),
       listAvances:[],
       listAlumnos:[],
@@ -189,6 +202,7 @@ export default {
     }
   },
   mounted(){
+    this.getEstadoTesis()
     this.getListarAvances();
     this.getListarAlumnosByprofesor();
   },
@@ -200,6 +214,14 @@ export default {
     },
     limpiarBandejaUsuarios(){
       this.listAvances = [];
+    },
+    getEstadoTesis(){
+        var url = '/avances/getEstadoTesis'
+        axios.get(url, {
+      }).then(response => {
+          console.log(response.data);
+          this.fillEstadoTesis.cEstado     = response.data[0].estado;
+      })
     },
     getListarAvancesByAlumno(){
       this.fullscreenLoading = true;

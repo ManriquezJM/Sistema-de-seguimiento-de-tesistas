@@ -70,7 +70,7 @@
                                                     <el-input
                                                       type="textarea"
                                                       :autosize="{ minRows: 2, maxRows: 5}"
-                                                      maxlength="200"
+                                                      maxlength="130"
                                                       placeholder="Titulo de la tesis"
                                                       show-word-limit
                                                       v-model="fillCrearFIT.cTitulo">

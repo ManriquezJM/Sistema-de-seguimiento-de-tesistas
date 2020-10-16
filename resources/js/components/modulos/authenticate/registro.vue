@@ -1,5 +1,5 @@
 <template>
-  
+<div class="login-page">
     <div class="register-box">
         <div class="register-logo">
             <a href="../../index2.html"><b>Sistema de seguimiento de tesis </b><p>Facultad de Ingenieria UCM</p></a>
@@ -85,6 +85,7 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>

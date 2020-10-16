@@ -1,4 +1,5 @@
 <template>
+<div class="login-page">
     <div class="login-box">
         <div class="login-logo">
             <router-link :to="{name:'login'}">
@@ -115,6 +116,7 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>

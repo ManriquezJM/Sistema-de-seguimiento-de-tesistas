@@ -23,11 +23,24 @@ function verificarAcceso(to, from, next) {
             }
         }
     } else {
-        next('/login')
+        next('/')
     }
 }
 //concentracion de rutas
 export const rutas = [
+    {
+        path: '/',
+        name: 'home',
+        component: require('./components/modulos/home/index').default,
+        beforeEnter: (to, from, next) => {
+            let authUser = JSON.parse(localStorage.getItem('authUser'));
+            if (authUser) {
+                next({ name: 'dashboard.index' }); // o tambien puede ser next(false)
+            } else {
+                next();
+            }
+        }
+    },
     {
         path: '/registro',
         name: 'registro',
@@ -36,7 +49,15 @@ export const rutas = [
     {
         path: '/login',
         name: 'login',
-        component: require('./components/modulos/authenticate/login').default
+        component: require('./components/modulos/authenticate/login').default,
+        beforeEnter: (to, from, next) => {
+            let authUser = JSON.parse(localStorage.getItem('authUser'));
+            if (authUser) {
+                next({ name: 'dashboard.index' }); // o tambien puede ser next(false)
+            } else {
+                next();
+            }
+        }
     },
     {
         path: '/passrecovery',
@@ -44,7 +65,7 @@ export const rutas = [
         component: require('./components/modulos/authenticate/passrecovery').default
     },
     { 
-        path: '/',
+        path: '/dashboard',
         name: 'dashboard.index',
         component: require('./components/modulos/dashboard/Index').default,
         beforeEnter: (to, from, next) => {
@@ -247,6 +268,14 @@ export const rutas = [
     path: '/avances/crear',
     name: 'avances.crear',
     component: require('./components/modulos/avances/create').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+},
+{ 
+    path: '/avances/subirfinalpdf',
+    name: 'avances.subirfinalpdf',
+    component: require('./components/modulos/avances/subirfinalpdf').default,
     beforeEnter: (to, from, next) => {
         verificarAcceso(to, from, next);
     } 

@@ -45,7 +45,7 @@
           <!-- PESTAÑAS ADMINISTRACION -->
           <li class="nav-item has-treeview">
             <template v-if="listPermisos.includes('dashboard.index')">
-              <router-link class="nav-link" :to="'/'">
+              <router-link class="nav-link" :to="'/dashboard'">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Inicio
@@ -276,7 +276,7 @@ export default {
       var url='/authenticate/logout'
       axios.post(url).then(response => {
         if(response.data.code == 204){
-          this.$router.push({name: 'login'})
+          this.$router.push({name: 'home'})
           location.reload();
           localStorage.clear();
           this.fullscreenLoading = false;

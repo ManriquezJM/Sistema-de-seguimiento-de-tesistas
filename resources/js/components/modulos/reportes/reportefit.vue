@@ -45,23 +45,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Vinculacion</label>
-                        <div class="col-md-9">
-                            <el-select v-model="fillBsqTesisReporte.cVinculacion" 
-                            placeholder="Seleccione un estado"
-                            clearable>
-                              <el-option
-                                v-for="item in listTipoVinculacion"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                              </el-option>
-                            </el-select>
-                        </div>
-                      </div>
-                    </div>
+                    
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Profesor</label>
@@ -248,7 +232,7 @@
           cNombreI1: '',
           cEstadoPg: '',
           cEstadoD: '',
-          cVinculacion: '',
+          
           dfecharango: '',
           cEstadoTesis: ''
         },
@@ -375,7 +359,7 @@
             'dFechaUR'  : this.fillBsqTesisReporte.dFechaUR,
             'nIdProfesor' : this.fillBsqTesisReporte.nIdProfesor,
             'cTipo'       : this.fillBsqTesisReporte.cTipo,
-            'cVinculacion': this.fillBsqTesisReporte.cVinculacion,
+            
             'cEstadoTesis': this.fillBsqTesisReporte.cEstadoTesis,
             'dFechaInicio': (!this.fillBsqTesisReporte.dfecharango) ? '' : this.fillBsqTesisReporte.dfecharango[0],
             'dFechaFin'   : (!this.fillBsqTesisReporte.dfecharango) ? '' : this.fillBsqTesisReporte.dfecharango[1],
@@ -393,7 +377,7 @@
         this.fillBsqTesisReporte.dFechaUR = '';
         this.fillBsqTesisReporte.nIdProfesor = '';
         this.fillBsqTesisReporte.cTipo = '';
-        this.fillBsqTesisReporte.cVinculacion = '';
+        
         this.fillBsqTesisReporte.cEstadoTesis = '';
         this.fillBsqTesisReporte.dfecharango = '';
       },
@@ -422,33 +406,7 @@
         this.listPermisos = [];
         this.modalOption = 0;
       },
-    setCambiarEstadoFIT(op, id){
-        Swal.fire({
-        title: 'Estas seguro? ' + ((op == 1) ? 'Aprobar ' : 'Rechazar ') + '  El formulario de inscripcion',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: ((op == 1) ? 'Si, Aprobar' : 'Si, Rechazar')
-      }).then((result) => {
-        if (result.value) {
-          this.fullscreenLoading = true;
-          var url = '/administracion/alumno/setCambiarEstadoFIT'
-          axios.post(url, {
-            'nIdTesis' : id,
-            'cEstadoPg'    : (op == 1) ? 'A' : 'R'
-          }).then(response => {
-              Swal.fire({
-              icon: 'success',
-              title: 'Se ' + ((op == 1) ? 'Aprobo ' : 'Rechazo ') +' El formulario de inscripcion',
-              showConfirmButton: false,
-              timer: 1500
-              })
-              this.getListarTesisReporte();
-          })
-        }
-      })
-      }
+    
     
     }//cierre de methods
   }

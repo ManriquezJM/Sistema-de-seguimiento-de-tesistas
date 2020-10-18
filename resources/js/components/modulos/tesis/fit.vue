@@ -263,16 +263,7 @@ export default {
     inicializarPaginacion(){
       this.pageNumber = 0;
     },
-    abrirModal(){
-      this.modalShow = !this.modalShow;
-      this.limpiarModal();
-    },
-    limpiarModal(){
-      this.fillVerFIT.cNombre = ''
-      this.fillVerFIT.cSlug = ''
-      this.listPermisos = [];
-      this.modalOption = 0;
-    },
+
   setCambiarEstadoFIT(op, id){
       Swal.fire({
       title: 'Estas seguro? ' + ((op == 1) ? 'Aprobar ' : 'Rechazar ') + '  El formulario de inscripcion',

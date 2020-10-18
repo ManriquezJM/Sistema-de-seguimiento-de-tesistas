@@ -93,8 +93,10 @@ Route::post('/notaspendientes/setIngresarProrroga', 'NotasPendientesController@s
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE COMISIONES    **********/
 Route::post('/comisiones/setRegistrarComision', 'ComisionesController@setRegistrarComision');
-Route::get('comisiones/getListarMisComisiones', 'ComisionesController@getListarMisComisiones');
-Route::get('comisiones/getListarComisiones', 'ComisionesController@getListarComisiones');
+Route::post('/comisiones/setEditarComision', 'ComisionesController@setEditarComision');
+Route::get('/comisiones/getComision', 'ComisionesController@getComision');
+Route::get('/comisiones/getListarMisComisiones', 'ComisionesController@getListarMisComisiones');
+Route::get('/comisiones/getListarComisiones', 'ComisionesController@getListarComisiones');
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE REPORTES    **********/
 Route::Post('/administracion/tesis/setGenerarDocumento', 'AlumnoController@setGenerarDocumento');

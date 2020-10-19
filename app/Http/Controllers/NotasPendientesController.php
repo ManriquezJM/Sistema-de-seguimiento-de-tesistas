@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailNotaPendiente;
 class NotasPendientesController extends Controller
 {
     public function setRegistrarNotaP(Request $request){
@@ -23,6 +24,23 @@ class NotasPendientesController extends Controller
         $NotaP->fecha_presentacion  = Carbon::now();
         $NotaP->save();
 
+        $Coordinador = DB::table('users')
+                    ->join('users_roles', 'users_roles.id_user', '=', 'users.id_user')
+                    ->join('roles', 'roles.id', '=', 'users_roles.id_roles')
+                    ->select('email as emailcoordinador','users.id_user',DB::raw("CONCAT(users.nombres,' ',users.apellidos) as fullname"))
+                    ->where('roles.name', '=', 'Coordinador')
+                    ->get();
+        $DatosEmail = DB::table('fit')
+                    ->join('users as profesor_guia', 'profesor_guia.id_user', '=', 'fit.id_profesorguia')
+                    ->join('users as alumno', 'alumno.id_user', '=', 'fit.id_alumno')
+                    ->where('fit.id', '=', $idTesis[0]->id)
+                    ->select('fit.rut_int1','profesor_guia.email as emailpg','fit.titulo', DB::raw("CONCAT(alumno.nombres,' ',alumno.apellidos) as full_name"))
+                    ->get();
+        $DatosEmail[0]->fechapropuesta = $fecha;
+        $fechaSistema = Carbon::now();
+        $DatosEmail[0]->fecha = $fechaSistema;
+        
+        Mail::to([$DatosEmail[0]->emailpg,$Coordinador[0]->emailcoordinador])->queue(new MailNotaPendiente($DatosEmail[0]));
         return $NotaP;
     }
     public function setAsignarNotaP(Request $request){

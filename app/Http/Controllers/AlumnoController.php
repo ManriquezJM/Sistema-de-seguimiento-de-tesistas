@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Fit;
+use App\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-//use Laravel\Ui\Presets\React;
+use App\Mail\MailRegistroFit;
+use App\Mail\MailAceptacionFit;
+use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class AlumnoController extends Controller
 {
@@ -67,8 +71,8 @@ class AlumnoController extends Controller
         $nIdUsuario  = Auth::id();
         $nIdTesis    =$request->nIdTesis;
        
-        $nIdUsuario  = ($nIdUsuario == NULL) ? ($nIdUsuario = '') : $nIdUsuario;
-        $nIdTesis    = ($nIdTesis == NULL) ? ($nIdTesis = 0) : $nIdTesis;
+        //$nIdUsuario  = ($nIdUsuario == NULL) ? ($nIdUsuario = '') : $nIdUsuario;
+        //$nIdTesis    = ($nIdTesis == NULL) ? ($nIdTesis = 0) : $nIdTesis;
        /*
         $rpta = DB::select('call sp_alumno_getListarTesis (?, ?)',
                                                                 [
@@ -83,9 +87,26 @@ class AlumnoController extends Controller
                                 'rut_int2', 'email_int2', 'ingreso_int2', 'telefono_int2', 'fit.estado','fit.descripcion','fit.fecha_ultimoramo',
                                 'fit.aprobado_pg', 'fit.id_alumno AS idAlumno', 'fit.id_vinculacion')
                     ->where('fit.id', '=', $nIdTesis)
-                    ->orWhere('fit.id', '=', 0)
                     ->orWhere('fit.id_alumno', '=', $nIdUsuario)
                     ->orWhere('fit.id_profesorguia', '=', $nIdUsuario)
+                    ->get();
+        return $rpta;
+    }
+    public function getListarTesisView(Request $request){
+        
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdTesis    =$request->nIdTesis;
+       
+        
+        $rpta = DB::table('fit')
+                    ->join('users', 'users.id_user', '=', 'fit.id_profesorguia')
+                    ->leftjoin('vinculaciones', 'vinculaciones.id', '=', 'fit.id_vinculacion')
+                    ->select('fit.id','fit.id_profesorguia','fit.titulo', 'users.nombres AS pname', 'vinculaciones.nombre AS vname', 'fit.tipo', 'fit.objetivo', 
+                                'fit.contribucion', 'nombre_int1', 'rut_int1', 'telefono_int1', 'ingreso_int1', 'email_int1', 'nombre_int2',
+                                'rut_int2', 'email_int2', 'ingreso_int2', 'telefono_int2', 'fit.estado','fit.descripcion','fit.fecha_ultimoramo',
+                                'fit.aprobado_pg', 'fit.id_alumno AS idAlumno', 'fit.id_vinculacion')
+                    ->where('fit.id', '=', $nIdTesis)
                     ->get();
         return $rpta;
     }
@@ -160,6 +181,8 @@ class AlumnoController extends Controller
         $cEmailI2       = ($cEmailI2 == NULL) ? ($cEmailI2 = '') : $cEmailI2;
         $cIngresoI2     = ($cIngresoI2 == NULL) ? ($cIngresoI2 = '') : $cIngresoI2;
         $cTelefonoI2    = ($cTelefonoI2 == NULL) ? ($cTelefonoI2 = '') : $cTelefonoI2;
+
+        
         
         $rpta = DB::select('call sp_alumno_setRegistrarTesis (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)',
                                                                 [
@@ -183,6 +206,16 @@ class AlumnoController extends Controller
                                                                     $cIngresoI2,
                                                                     $cTelefonoI2
                                                                 ]);
+        
+        $DatosEmail    = DB::table('users')
+                              ->select('email as emailpg')
+                              ->where('id_user','=', $nIdPg)
+                              ->get();
+        $DatosEmail[0]->alumno = $cNombreI1;
+        $DatosEmail[0]->titulo = $cTitulo;
+        $fecha = Carbon::now();
+        $DatosEmail[0]->fecha = $fecha;
+        Mail::to($DatosEmail[0]->emailpg)->queue(new MailRegistroFit($DatosEmail[0]));
     }
     public function setCambiarEstadoFIT(Request $request){
 
@@ -199,6 +232,15 @@ class AlumnoController extends Controller
                                                                 $nIdTesis,
                                                                 $cEstadoPg
                                                             ]);
+    $DatosEmail = DB::table('fit')
+                    ->join('users as profesor_guia', 'profesor_guia.id_user', '=', 'fit.id_profesorguia')
+                    ->join('users as alumno', 'alumno.id_user', '=', 'fit.id_alumno')
+                    ->where('fit.id', '=', $nIdTesis)
+                    ->select('alumno.email as emailpg','fit.titulo', DB::raw("CONCAT(profesor_guia.nombres,' ',profesor_guia.apellidos) as full_name"))
+                    ->get();
+    $fecha = Carbon::now();
+    $DatosEmail[0]->fecha = $fecha;
+    Mail::to($DatosEmail[0]->emailpg)->queue(new MailAceptacionFit($DatosEmail[0]));
     }
     public function setEditarTesis(Request $request){
 

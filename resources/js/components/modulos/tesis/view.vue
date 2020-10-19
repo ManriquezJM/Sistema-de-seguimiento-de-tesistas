@@ -268,7 +268,7 @@ export default {
     },
     getTesisById(){
         this.fullscreenLoading = true;
-        var url = '/alumno/getListarTesis'
+        var url = '/alumno/getListarTesisView'
         axios.get(url, {
         params: {
           'nIdTesis' : this.fillVerFIT.nIdTesis

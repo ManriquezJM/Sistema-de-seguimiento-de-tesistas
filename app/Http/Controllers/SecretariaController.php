@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailNotafinal;
 use App\User;
 use App\Fit;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -90,12 +92,27 @@ class SecretariaController extends Controller
 
         $id         = $request->id_tesis;
         $nota       = $request->nota;
+
+        $DatosEmail = DB::table('fit')
+                    ->join('users as profesor_guia', 'profesor_guia.id_user', '=', 'fit.id_profesorguia')
+                    ->join('users as alumno', 'alumno.id_user', '=', 'fit.id_alumno')
+                    ->where('fit.id', '=', $id)
+                    ->select('profesor_guia.email as emailpg','alumno.email as email','fit.titulo', DB::raw("CONCAT(alumno.nombres,' ',alumno.apellidos) as full_name"))
+                    ->get();
+        $fecha = Carbon::now();
+        $DatosEmail[0]->fecha = $fecha;
+        $DatosEmail[0]->nota = $nota;
+
         if($nota >= 4){
             $estado = 'A';
+            $DatosEmail[0]->estadonota = 'Aprobo';
         }else{
             $estado = 'R';
+            $DatosEmail[0]->estadonota = 'Reprobo';
         }
 
         Fit::find($id)->update(['nota'=>$nota,'estado'=>$estado]);
+   
+        Mail::to([$DatosEmail[0]->emailpg,$DatosEmail[0]->email])->queue(new MailNotafinal($DatosEmail[0]));
     }
 }

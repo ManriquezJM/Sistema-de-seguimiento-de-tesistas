@@ -60,6 +60,7 @@ Route::post('/administracion/vinculacion/setCambiarVinculacion', 'Administracion
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE TESIS (FIT)    **********/
 Route::get('/alumno/getListarTesis', 'AlumnoController@getListarTesis');
+Route::get('/alumno/getListarTesisView', 'AlumnoController@getListarTesisView');
 Route::post('/alumno/setRegistrarTesis', 'AlumnoController@setRegistrarTesis');
 Route::post('/alumno/setCambiarEstadoFIT', 'AlumnoController@setCambiarEstadoFIT');
 Route::Post('/alumno/setEditarTesis', 'AlumnoController@setEditarTesis');
@@ -104,7 +105,6 @@ Route::get('/administracion/reportes/getListarTesisReporte', 'Administracion\Rep
 Route::get('/administracion/reportes/export', 'Administracion\ReportesController@export');
 Route::post('/archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
 Route::post('/archivo/setRegistrarArchivoPDF', 'FilesController@setRegistrarArchivoPDF');
-
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE DOCUMENTOS ALUMNOS     **********/
 Route::get('/secretaria/getListarAlumnos', 'SecretariaController@getListarAlumnos');

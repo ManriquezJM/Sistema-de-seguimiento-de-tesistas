@@ -174,9 +174,12 @@
 
     <!-- Footer -->
     <footer class="py-5 bg-dark">
-        <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+        <div class="container" style="text-align: center">
+          <!-- Por favor por respeto a los colaboradores de este proyecto no eliminar las referencias de las personas que han participado-->
+        <strong >Este es un trabajo realizado por los siguientes colaboradores  <a href="https://github.com/ManriquezJM">J.M.M.T</a>.</strong> All rights
+    reserved.
         </div>
+        <!-- Por favor por respeto a los colaboradores de este proyecto no eliminar las referencias de las personas que han participado-->
         <!-- /.container -->
     </footer>
 

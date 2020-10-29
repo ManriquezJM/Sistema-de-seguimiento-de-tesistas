@@ -31,7 +31,6 @@
                             <div class="card-body">
                                 <form role="form">
                                     <div class="row">
-                                        
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Nota Final Tesis</label>

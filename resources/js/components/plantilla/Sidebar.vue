@@ -84,6 +84,14 @@
                   </p>
                 </router-link>  
               </template>
+              <template v-if="listPermisos.includes('registrar.tesis')">
+                <router-link class="nav-link" :to="'/registrodetesis'">
+                  <i class="nav-icon fas fa-user-graduate"></i>
+                  <p>
+                    Registrar tesis finalizadas
+                  </p>
+                </router-link>  
+              </template>
             </li>
           </template>
           <template  v-if="listPermisos.includes('escuelas.index', 'areatesis.index')">

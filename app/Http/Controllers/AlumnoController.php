@@ -265,7 +265,7 @@ class AlumnoController extends Controller
                                 DB::raw("CONCAT(profesor_guia.nombres,' ',profesor_guia.apellidos) as pg_fullname"),
                                 DB::raw("CONCAT(profesor_1.nombres,' ',profesor_1.apellidos) as p1_fullname"),
                                 DB::raw("CONCAT(profesor_2.nombres,' ',profesor_2.apellidos) as p2_fullname"),
-                                'comisiones.p_externo','comisiones.correo_p_externo','comisiones.institucion_p_externo','objetivo', 'contribucion', 'carrera', 'fit.tipo','titulo' )
+                                'comisiones.p_externo','comisiones.correo_p_externo','comisiones.institucion_p_externo','objetivo', 'contribucion',  'fit.tipo','titulo' )
                     ->where('fit.id', '=', $id)
                     ->get();
                     //return $datosfit;
@@ -299,5 +299,76 @@ class AlumnoController extends Controller
                         ])
                         ->get();
         return $profesores;
+    }
+
+    public function getListarEstudiantes(Request $request){
+
+        if(!$request->ajax()) return redirect('/');
+
+        $profesores = DB::table('users')
+                        ->join('users_roles', 'users_roles.id_user', '=', 'users.id_user')
+                        ->join('roles', 'roles.id', '=', 'users_roles.id_roles')
+                        ->select('users.id_user',DB::raw("CONCAT(users.nombres,' ',users.apellidos) as fullname"))
+                        ->where([
+                            ['roles.name', '=', 'Alumno'],
+                        ])
+                        ->orderBy('users.id_user', 'desc')
+                        ->get();
+        return $profesores;
+    }
+    public function setRegistrarTesisfinalizada(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        
+       /* $cTitulo            = $request->cTitulo;
+        $nIdPg              = $request->nIdPg;
+        $nIdEst             = $request->nIdEst;
+        $nIdVinculacion     = $request->nIdVinculacion;
+        $nIdFile            = $request->nIdFile;
+        $nIdFile1           = $request->nIdFile1;
+        $dFechaUR           = $request->dFechaUR;
+        $cTipo              = $request->cTipo;
+        $Nota               = $request->Nota;
+        $cObjetivo          = $request->cObjetivo;
+        $cDescripcion       = $request->cDescripcion;
+        $cContribucion      = $request->cContribucion;
+        $cNombreI1          = $request->cNombreI1;
+        $cRutI1             = $request->cRutI1;
+        $cTelefonoI1        = $request->cTelefonoI1;
+        $cIngresoI1         = $request->cIngresoI1;
+        $cEmailI1           = $request->cEmailI1;
+        $cNombreI2          = $request->cNombreI2;
+        $cRutI2             = $request->cRutI2;
+        $cEmailI2           = $request->cEmailI2;
+        $cIngresoI2         = $request->cIngresoI2;
+        $cTelefonoI2        = $request->cTelefonoI2;
+   */
+        $rpta                   = new Fit();
+        $rpta->id_alumno        = $request->nIdEst;
+        $rpta->id_profesorguia  = $request->nIdPg;
+        $rpta->id_vinculacion   = $request->nIdVinculacion;
+        $rpta->id_pdftesis      = $request->nIdFile;
+        $rpta->id_actadefensa   = $request->nIdFile1;
+        $rpta->nota             = $request->Nota;
+        $rpta->estado           = 'A';
+        $rpta->titulo           = $request->cTitulo;
+        $rpta->tipo             = $request->cTipo;
+        $rpta->fecha_ultimoramo = $request->dFechaUR;
+        $rpta->objetivo         = $request->cObjetivo;
+        $rpta->descripcion      = $request->cDescripcion;
+        $rpta->contribucion     = $request->cContribucion;
+        $rpta->nombre_int1      = $request->cNombreI1;
+        $rpta->rut_int1         = $request->cRutI1;
+        $rpta->email_int1       = $request->cEmailI1;
+        $rpta->ingreso_int1     = $request->cIngresoI1;
+        $rpta->telefono_int1    = $request->cTelefonoI1;
+        $rpta->nombre_int2      = $request->cNombreI2;
+        $rpta->rut_int2         = $request->cRutI2;
+        $rpta->email_int2       = $request->cEmailI2;
+        $rpta->ingreso_int2     = $request->cIngresoI2;
+        $rpta->telefono_int2    = $request->cTelefonoI2;
+        $rpta->aprobado_pg      = 'A';
+        $rpta->save(); 
+        
+        return $rpta;
     }
 }

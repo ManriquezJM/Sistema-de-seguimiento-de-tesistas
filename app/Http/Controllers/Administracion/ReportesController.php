@@ -32,7 +32,7 @@ class ReportesController extends Controller
 
         $reportdata = Fit::select('fit.id','nombre_int1', 'rut_int1', 'email_int1', 'ingreso_int1', 'bitacoras.fecha as fecha_bitacora',
                                     'bitacoras.comentario as comentario_bitacora','telefono_int1','fit.nombre_int2','fit.rut_int2',  DB::raw("CONCAT(profesor_guia.nombres,' ',profesor_guia.apellidos) as nombre_pt"),
-                                    'objetivo', 'contribucion', 'carrera', 'fit.tipo as tipo_trabajo','titulo', 'avancestesis.created_at as fecha_avance',
+                                    'objetivo', 'contribucion', 'fit.tipo as tipo_trabajo','titulo', 'avancestesis.created_at as fecha_avance',
                                     'vinculaciones.nombre AS namevinculacion', 'fit.estado','escuelas.nombre as escuela_nom','fit.created_at as fecha_inscripcion','alumno.id_user as IDalumno',
                                     'notaspendientes.fecha_propuesta as fecha_notap','notaspendientes.fecha_prorroga as prorroga_notap', 'notaspendientes.estado as estado_notap','fit.fecha_ultimoramo')
                             ->leftjoin('bitacoras', function ($query) {
@@ -78,7 +78,7 @@ class ReportesController extends Controller
         $idprofesor         = ($idprofesor == NULL) ?   ($idprofesor = '')  : $idprofesor;
         
         $reportdata = Fit::select('fit.id', DB::raw("CONCAT(profesor_guia.nombres,' ',profesor_guia.apellidos) as nombre_pt"),
-                                     'carrera', 'fit.tipo as tipo_trabajo','titulo','pdftesis.path'
+                                      'fit.tipo as tipo_trabajo','titulo','pdftesis.path'
                                     ,'escuelas.nombre as escuela_nom',
                                 )
                             ->join('pdftesis', 'pdftesis.id', '=', 'fit.id_pdftesis')

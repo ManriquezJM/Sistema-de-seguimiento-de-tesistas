@@ -465,7 +465,15 @@ export const rutas = [
         verificarAcceso(to, from, next);
     } 
  },
-
+/******** RUTAS MODULO DE REGISTRO DE TESIS FINALIZADAS *********/
+{ 
+    path: '/registrodetesis',
+    name: 'registrar.tesis',
+    component: require('./components/modulos/registrodetesis/registrotesisfinalizadas').default,
+    beforeEnter: (to, from, next) => {
+        verificarAcceso(to, from, next);
+    } 
+ },
 ]//cierre concentracion de rutas
 
 export default new Router({

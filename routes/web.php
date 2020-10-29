@@ -62,10 +62,13 @@ Route::post('/administracion/vinculacion/setCambiarVinculacion', 'Administracion
 Route::get('/alumno/getListarTesis', 'AlumnoController@getListarTesis');
 Route::get('/alumno/getListarTesisView', 'AlumnoController@getListarTesisView');
 Route::post('/alumno/setRegistrarTesis', 'AlumnoController@setRegistrarTesis');
+Route::post('/alumno/setRegistrarTesisfinalizada', 'AlumnoController@setRegistrarTesisfinalizada');
 Route::post('/alumno/setCambiarEstadoFIT', 'AlumnoController@setCambiarEstadoFIT');
 Route::Post('/alumno/setEditarTesis', 'AlumnoController@setEditarTesis');
 Route::get('/alumno/getListarProfesores', 'AlumnoController@getListarProfesores');
 Route::get('/alumno/getListarMiTesis','AlumnoController@getListarMiTesis');
+Route::get('/alumno/getListarEstudiantes','AlumnoController@getListarEstudiantes');
+
 
 /*********    RUTAS MODULO DE ADMINISTRACION DE AVANCES DE TESIS   **********/
 Route::get('/avances/getListarAvances', 'AvancesController@getListarAvances');
